@@ -1,0 +1,4 @@
+node_modules/
+.bitrix.env
+*.env
+data*.json
