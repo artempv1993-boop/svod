@@ -7,127 +7,139 @@
 <title>Свод по опросу владельцев процессов — СКС Ломбард</title>
 <style>
   :root{
-    --bg:#f4f6f9; --panel:#ffffff; --ink:#1c2330; --ink2:#3a4356; --muted:#6c7688;
-    --line:#e5e9f0; --line2:#eef1f6;
-    --accent:#3d5a80; --accent-soft:#e7edf5;
-    --good:#2f8f66; --good-soft:#e4f1ea;
-    --warn:#bd8a1f; --warn-soft:#f8f0d9;
-    --neg:#c15450;
-    --bar-track:#eceff4;
-    --shadow:0 1px 2px rgba(20,30,55,.04), 0 6px 20px rgba(20,30,55,.05);
-    --radius:14px;
+    --bg:#eef1f6; --panel:#ffffff; --panel2:#f7f9fc; --ink:#1a2130; --ink2:#3a4457; --muted:#6a7488;
+    --line:#e3e8f0; --line2:#eef1f7;
+    --accent:#37567d; --accent2:#5b81b0; --accent-soft:#e8eef6;
+    --good:#2f8f66; --warn:#c08a1e; --neg:#c1544f;
+    --track:#e7ebf2;
+    --shadow:0 1px 2px rgba(20,30,55,.05), 0 8px 24px rgba(20,30,55,.06);
+    --radius:16px;
   }
   @media (prefers-color-scheme:dark){
     :root{
-      --bg:#12151c; --panel:#1a1f29; --ink:#e9edf4; --ink2:#c2cad8; --muted:#8b96a8;
-      --line:#28303d; --line2:#222834;
-      --accent:#7ea3d1; --accent-soft:#22303f;
-      --good:#5cbf92; --good-soft:#193028;
-      --warn:#d7ad55; --warn-soft:#2f2a18;
-      --neg:#df7d79;
-      --bar-track:#252c39;
-      --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 26px rgba(0,0,0,.28);
+      --bg:#0f1218; --panel:#171c26; --panel2:#1c222e; --ink:#e9edf4; --ink2:#bfc8d8; --muted:#828da0;
+      --line:#262e3b; --line2:#20262f;
+      --accent:#7ea3d1; --accent2:#9db9dc; --accent-soft:#212f41;
+      --good:#5cbf92; --warn:#d8ad57; --neg:#df7d79;
+      --track:#232a36;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.3);
     }
   }
-  :root[data-theme="light"]{
-    --bg:#f4f6f9; --panel:#ffffff; --ink:#1c2330; --ink2:#3a4356; --muted:#6c7688;
-    --line:#e5e9f0; --line2:#eef1f6; --accent:#3d5a80; --accent-soft:#e7edf5;
-    --good:#2f8f66; --good-soft:#e4f1ea; --warn:#bd8a1f; --warn-soft:#f8f0d9;
-    --neg:#c15450; --bar-track:#eceff4;
-    --shadow:0 1px 2px rgba(20,30,55,.04), 0 6px 20px rgba(20,30,55,.05);
-  }
-  :root[data-theme="dark"]{
-    --bg:#12151c; --panel:#1a1f29; --ink:#e9edf4; --ink2:#c2cad8; --muted:#8b96a8;
-    --line:#28303d; --line2:#222834; --accent:#7ea3d1; --accent-soft:#22303f;
-    --good:#5cbf92; --good-soft:#193028; --warn:#d7ad55; --warn-soft:#2f2a18;
-    --neg:#df7d79; --bar-track:#252c39;
-    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 26px rgba(0,0,0,.28);
-  }
+  :root[data-theme="light"]{ --bg:#eef1f6; --panel:#fff; --panel2:#f7f9fc; --ink:#1a2130; --ink2:#3a4457; --muted:#6a7488; --line:#e3e8f0; --line2:#eef1f7; --accent:#37567d; --accent2:#5b81b0; --accent-soft:#e8eef6; --good:#2f8f66; --warn:#c08a1e; --neg:#c1544f; --track:#e7ebf2; --shadow:0 1px 2px rgba(20,30,55,.05),0 8px 24px rgba(20,30,55,.06); }
+  :root[data-theme="dark"]{ --bg:#0f1218; --panel:#171c26; --panel2:#1c222e; --ink:#e9edf4; --ink2:#bfc8d8; --muted:#828da0; --line:#262e3b; --line2:#20262f; --accent:#7ea3d1; --accent2:#9db9dc; --accent-soft:#212f41; --good:#5cbf92; --warn:#d8ad57; --neg:#df7d79; --track:#232a36; --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.3); }
+
   *{box-sizing:border-box}
   html,body{margin:0;background:var(--bg)}
-  body{
-    color:var(--ink);
-    font:15px/1.5 "Segoe UI",-apple-system,BlinkMacSystemFont,"Inter",Roboto,Arial,sans-serif;
-    -webkit-font-smoothing:antialiased; font-variant-numeric:tabular-nums;
-  }
-  .page{padding:32px 20px 56px}
-  .wrap{max-width:1080px;margin:0 auto}
+  body{color:var(--ink);font:15px/1.5 "Segoe UI",-apple-system,BlinkMacSystemFont,"Inter",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+  .page{padding:30px 20px 60px}
+  .wrap{max-width:1120px;margin:0 auto}
   .num{font-variant-numeric:tabular-nums}
+  code{font-family:ui-monospace,Consolas,monospace;font-size:.88em;background:var(--line2);padding:1px 5px;border-radius:5px}
 
-  header.top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:24px}
-  .h-title{font-size:26px;font-weight:750;letter-spacing:-.4px;line-height:1.15;margin:0}
-  .h-title .u{box-shadow:inset 0 -.32em 0 var(--accent-soft)}
-  .h-sub{color:var(--muted);font-size:13.5px;margin-top:8px;max-width:62ch}
+  header.top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:22px}
+  .h-title{font-size:27px;font-weight:770;letter-spacing:-.5px;line-height:1.12;margin:0}
+  .h-title .u{box-shadow:inset 0 -.3em 0 var(--accent-soft)}
+  .h-sub{color:var(--muted);font-size:13px;margin-top:8px;max-width:64ch}
   .h-meta{text-align:right;font-size:12.5px;color:var(--muted);white-space:nowrap}
   .h-meta .d{color:var(--ink2);font-weight:600}
-  .chip{display:inline-flex;align-items:center;gap:6px;background:var(--good-soft);color:var(--good);
-    border-radius:20px;padding:3px 11px;font-size:11.5px;font-weight:600;margin-top:8px}
+  .chip{display:inline-flex;align-items:center;gap:6px;background:color-mix(in srgb,var(--good) 14%,transparent);color:var(--good);border-radius:20px;padding:3px 11px;font-size:11.5px;font-weight:600;margin-top:8px}
   .chip::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--good)}
 
-  .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:26px}
-  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
-    padding:15px 16px;box-shadow:var(--shadow)}
-  .kpi .n{font-size:28px;font-weight:760;line-height:1;letter-spacing:-.5px}
-  .kpi .n small{font-size:15px;font-weight:600;color:var(--muted);letter-spacing:0}
+  .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:22px}
+  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:15px 16px;box-shadow:var(--shadow)}
+  .kpi .n{font-size:29px;font-weight:780;line-height:1;letter-spacing:-.6px}
+  .kpi .n small{font-size:15px;font-weight:600;color:var(--muted)}
   .kpi .l{font-size:11.5px;color:var(--muted);margin-top:7px;line-height:1.3}
   .kpi.accent .n{color:var(--accent)}
   .kpi.warn .n{color:var(--warn)}
 
-  h2.sec{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;
-    color:var(--muted);margin:0 0 13px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  h2.sec{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin:26px 0 13px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
   h2.sec .hint{font-weight:500;text-transform:none;letter-spacing:0;font-size:12px}
 
-  .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
-    box-shadow:var(--shadow);padding:20px 22px;margin-bottom:24px}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 22px}
 
-  .dir{display:grid;grid-template-columns:190px 1fr 46px;align-items:center;gap:14px;padding:5px 0}
-  .dir .nm{font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .dir.major .nm{font-weight:650}
-  .dir .track{background:var(--bar-track);border-radius:5px;height:12px;overflow:hidden}
-  .dir .fill{height:100%;background:var(--accent);border-radius:5px}
-  .dir .v{text-align:right;font-weight:650;font-size:13.5px}
+  /* dashboards */
+  .dash{display:grid;grid-template-columns:0.85fr 1.15fr 1fr;gap:14px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px}
+  .card .ct{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:14px}
+  .donut-wrap{display:flex;align-items:center;gap:16px}
+  .donut{width:104px;height:104px;border-radius:50%;flex:none;display:grid;place-items:center;position:relative}
+  .donut::after{content:"";position:absolute;width:66px;height:66px;border-radius:50%;background:var(--panel)}
+  .donut .dz{position:relative;z-index:1;text-align:center;line-height:1}
+  .donut .dz b{font-size:21px;font-weight:770}
+  .donut .dz span{font-size:9.5px;color:var(--muted);display:block;margin-top:2px}
+  .leg{display:flex;flex-direction:column;gap:9px;font-size:12.5px}
+  .leg .r{display:flex;align-items:center;gap:8px}
+  .leg .r i{width:11px;height:11px;border-radius:3px;flex:none}
+  .leg .r b{margin-left:auto;font-weight:700}
+  .leg .r small{color:var(--muted)}
 
-  .upr-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  .upr{border:1px solid var(--line);border-radius:12px;padding:14px 15px;background:var(--panel)}
-  .upr-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:4px}
-  .upr-h .name{font-weight:700;font-size:14.5px;letter-spacing:-.1px}
-  .upr-h .tot{font-weight:750;font-size:15px;white-space:nowrap}
+  .bars{display:flex;flex-direction:column;gap:7px}
+  .bar{display:grid;grid-template-columns:1fr auto;gap:10px 12px;align-items:center}
+  .bar .bn{font-size:12.8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar.maj .bn{font-weight:650}
+  .bar .bv{font-weight:680;font-size:12.8px}
+  .bar .bt{grid-column:1/3;background:var(--track);height:9px;border-radius:5px;overflow:hidden;margin-top:-2px}
+  .bar .bt>i{display:block;height:100%;background:var(--accent);border-radius:5px}
+  .bar.maj .bt>i{background:linear-gradient(90deg,var(--accent),var(--accent2))}
+
+  /* управления */
+  .upr-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .upr{border:1px solid var(--line);border-radius:14px;padding:15px 16px;background:var(--panel);box-shadow:var(--shadow)}
+  .upr.mini{background:var(--panel2);box-shadow:none}
+  .upr-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+  .upr-h .name{font-weight:720;font-size:15px;letter-spacing:-.2px}
+  .upr-h .tot{font-weight:780;font-size:16px;white-space:nowrap}
   .upr-h .tot small{color:var(--muted);font-weight:600;font-size:12px}
-  .upr-bar{background:var(--bar-track);height:5px;border-radius:3px;overflow:hidden;margin:6px 0 10px}
-  .upr-bar > i{display:block;height:100%;background:var(--accent);border-radius:3px}
-  .dep{display:grid;grid-template-columns:1fr auto;gap:8px;font-size:12.5px;padding:2.5px 0;color:var(--ink2)}
+  .upr-bar{background:var(--track);height:6px;border-radius:3px;overflow:hidden;margin:8px 0 11px}
+  .upr-bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px}
+  .dep{display:grid;grid-template-columns:1fr auto;gap:8px;font-size:12.6px;padding:3px 0;color:var(--ink2);border-top:1px solid var(--line2)}
+  .dep:first-of-type{border-top:none}
   .dep .dn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .dep .dn.ruk{font-style:italic;color:var(--muted)}
   .dep .dv{white-space:nowrap;color:var(--muted)}
-  .dep .dv b{color:var(--ink);font-weight:650}
+  .dep .dv b{color:var(--ink);font-weight:680}
 
-  .split{display:grid;grid-template-columns:1.35fr 1fr;gap:24px;align-items:start}
+  /* детализация */
+  .det{border:1px solid var(--line);border-radius:12px;background:var(--panel);margin-bottom:9px;overflow:hidden;box-shadow:var(--shadow)}
+  .det>summary{list-style:none;cursor:pointer;padding:13px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-weight:680;font-size:14px}
+  .det>summary::-webkit-details-marker{display:none}
+  .det>summary .caret{color:var(--muted);font-size:12px;transition:transform .2s}
+  .det[open]>summary .caret{transform:rotate(90deg)}
+  .det>summary .st{margin-left:auto;color:var(--muted);font-weight:600;font-size:12.5px}
+  .det .body{padding:2px 16px 14px;border-top:1px solid var(--line2)}
+  .drow{padding:8px 0;border-top:1px solid var(--line2);font-size:12.8px}
+  .drow:first-child{border-top:none}
+  .drow .dh{font-weight:650;margin-bottom:4px}
+  .drow .dh .rk{color:var(--muted);font-weight:600;font-style:italic}
+  .drow .dh small{color:var(--muted);font-weight:500}
+  .people{display:flex;flex-wrap:wrap;gap:6px}
+  .people .p{background:var(--panel2);border:1px solid var(--line);border-radius:7px;padding:2px 9px;font-size:12px;color:var(--ink2)}
+  .people .p b{color:var(--ink);font-weight:700;margin-left:3px}
+  .people .p.un{color:var(--warn);background:color-mix(in srgb,var(--warn) 12%,transparent);border-color:transparent}
 
-  .tg-people{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 12px}
+  .tg-people{display:flex;flex-wrap:wrap;gap:7px;margin:2px 0 12px}
   .tg-people .p{background:var(--accent-soft);color:var(--accent);border-radius:8px;padding:4px 10px;font-size:12.5px;font-weight:600}
-  .tg-people .p b{font-weight:750}
+  .tg-people .p b{font-weight:780}
   .tg-people .p.more{background:transparent;color:var(--muted);font-weight:500}
-  .kv{font-size:12.5px;color:var(--muted);margin-top:4px}
+  .kv{font-size:12.5px;color:var(--muted);margin-top:2px}
   .note{border-radius:11px;padding:13px 15px;font-size:12.8px;line-height:1.5;margin-top:14px;border:1px solid var(--line)}
-  .note.warn{background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 30%, transparent)}
+  .note.warn{background:color-mix(in srgb,var(--warn) 10%,transparent);border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
   .note .nt{font-weight:700;margin-bottom:3px;color:var(--ink)}
   .notes p{font-size:13px;line-height:1.55;margin:0 0 11px;color:var(--ink2)}
   .notes p b{color:var(--ink)}
 
-  footer{color:var(--muted);font-size:11.5px;line-height:1.6;margin-top:8px;border-top:1px solid var(--line);padding-top:14px}
-  code{font-family:ui-monospace,"Cascadia Code",Consolas,monospace;font-size:.9em;background:var(--line2);padding:1px 5px;border-radius:5px}
+  footer{color:var(--muted);font-size:11.5px;line-height:1.6;margin-top:22px;border-top:1px solid var(--line);padding-top:14px}
 
-  @media (max-width:820px){
+  @media (max-width:900px){
     .kpis{grid-template-columns:repeat(3,1fr)}
+    .dash{grid-template-columns:1fr}
     .upr-grid{grid-template-columns:1fr}
-    .split{grid-template-columns:1fr}
-    .dir{grid-template-columns:130px 1fr 40px}
   }
 </style>
 </head>
 <body>
-<div class="page">
-<div class="wrap">
+<div class="page"><div class="wrap">
 
   <header class="top">
     <div>
@@ -135,120 +147,119 @@
       <div class="h-sub">Слой 1А — методология бизнес-процессов ERP «АРМ», ООО «СКС&nbsp;Ломбард». Кто и сколько сдал: чат Битрикс24 «Интервью по процессам» + Telegram-бот <code>@ARM_opros_bot</code>.</div>
     </div>
     <div class="h-meta">
-      <div>Период: 14.07 – 27.07.2026</div>
-      <div>Снимок: <span class="d" id="snap">27.07.2026</span></div>
+      <div>Период: 14.07 – <span id="mSnap"></span></div>
+      <div>Снимок: <span class="d" id="mSnap2"></span></div>
       <div class="chip">актуально на дату снимка</div>
     </div>
   </header>
 
-  <section class="kpis">
-    <div class="kpi accent"><div class="n num">270</div><div class="l">Документов Слоя 1А</div></div>
-    <div class="kpi"><div class="n num">221</div><div class="l">Через чат Битрикс24</div></div>
-    <div class="kpi"><div class="n num">49</div><div class="l">Через Telegram-бот</div></div>
-    <div class="kpi"><div class="n num">64</div><div class="l">Человек предоставили</div></div>
-    <div class="kpi"><div class="n num">9<small> / 11</small></div><div class="l">Управлений сдали</div></div>
-    <div class="kpi warn"><div class="n num">15</div><div class="l">Автор не установлен</div></div>
-  </section>
+  <section class="kpis" id="kpis"></section>
 
-  <div class="split">
-    <div>
-      <h2 class="sec">По управлениям и отделам <span class="hint">разрез по чату — 221 док.</span></h2>
-      <div class="upr-grid" id="uprGrid"></div>
-    </div>
-    <div>
-      <h2 class="sec">По направлениям <span class="hint">все каналы — 270 док.</span></h2>
-      <div class="panel" id="dirPanel"></div>
-    </div>
+  <h2 class="sec">Дашборд <span class="hint">каналы приёма · направления · вклад управлений</span></h2>
+  <div class="dash">
+    <div class="card"><div class="ct">Каналы приёма</div><div class="donut-wrap"><div class="donut" id="donut"><div class="dz" id="donutZ"></div></div><div class="leg" id="chanLeg"></div></div></div>
+    <div class="card"><div class="ct">По направлениям — все каналы</div><div class="bars" id="dirBars"></div></div>
+    <div class="card"><div class="ct">Вклад управлений — чат</div><div class="bars" id="uprBars"></div></div>
   </div>
 
-  <h2 class="sec">Telegram-бот — линейное звено <span class="hint">49 анкет · к отделам не привязываются</span></h2>
+  <h2 class="sec">По управлениям и отделам <span class="hint">разрез по чату · «В отделе» — численность подразделения</span></h2>
+  <div class="upr-grid" id="uprGrid"></div>
+
+  <h2 class="sec">Детализация: кто присылал <span class="hint">разверните управление, чтобы увидеть авторов по отделам</span></h2>
+  <div id="detail"></div>
+
+  <h2 class="sec">Telegram-бот — линейное звено <span class="hint">анкеты товароведов · к отделам не привязываются</span></h2>
   <div class="panel">
     <div class="tg-people" id="tgPeople"></div>
-    <div class="kv"><b style="color:var(--ink2)">По направлениям:</b> Займы — 38 · Скупка — 8 · Розница и реализация — 2 · Обеспечивающие процессы — 1</div>
+    <div class="kv" id="tgDirs"></div>
     <div class="note warn">
       <div class="nt">Часть аккаунтов бота принадлежит точке, а не человеку</div>
-      С <code>@CKCLombard_70</code> анкеты сдавали Гульназ и Лиана; с <code>@skslombardnagaevo</code> — Кинзябаева Юлия Викторовна и Шаяхметова Рита Мухаметовна. Аккаунт общий на подразделение — опознать автора по нему нельзя, только уточнением у супервайзера точки.
+      С <code>@CKCLombard_70</code> и <code>@skslombardnagaevo</code> анкеты сдают разные товароведы одной точки — аккаунт общий на подразделение. Опознать автора по нему нельзя, только уточнением у супервайзера точки. Поэтому имена из бота со штаткой не сверяются и к отделам не относятся.
     </div>
   </div>
 
   <h2 class="sec">Замечания</h2>
   <div class="panel notes">
-    <p><b>«Коммерческое управление» — больше половины базы</b> (115 из 221 по чату). Ядро бизнеса — займы, скупка, розница, автозайм — описано плотнее всего; внутри лидируют Супервайзеры (41) и КМ Золото (29).</p>
-    <p><b>Автор не установлен у 15 документов:</b> указана только должность, а приславший заведомо не владелец процесса. Именной зачёт не проставлен намеренно — иначе свод покажет сдачу за тех, кто процесс не описывал. Отдел подставлен по отправителю; у 11 не определён и отдел.</p>
+    <p><b>«Коммерческое управление» — больше половины базы</b> (<span id="nKom"></span> из <span id="nChat"></span> по чату). Ядро бизнеса — займы, скупка, розница, автозайм — описано плотнее всего; внутри лидируют Супервайзеры и КМ Золото.</p>
+    <p><b>Автор не установлен у <span id="nUn"></span> документов:</b> указана только должность, а приславший заведомо не владелец процесса. Именной зачёт не проставлен намеренно — иначе свод покажет сдачу за тех, кто процесс не описывал. Отдел подставлен по отправителю; у <span id="nUnDep"></span> не определён и отдел.</p>
     <div class="note warn">
       <div class="nt">Щербакова Т. В. выбыла из компании — её отдел считаем как раньше</div>
       Щербакова Татьяна <b>Викторовна</b> (руководитель ОУиМ, 5 документов) больше не числится в активной оргструктуре Битрикс24. Автосвод по совпадению «фамилия + имя» приписывает её документы Щербаковой Татьяне <b>Евгеньевне</b> (проектное управление), игнорируя отчество. В этом снимке 5 документов вручную возвращены в Операционное управление — счёт по её отделу сохранён.
     </div>
-    <p style="margin-top:11px"><b>Линейное звено видно только через бота.</b> Товароведы (193 чел.) и обособленные подразделения сдают преимущественно через бота, поэтому их вклад — в блоке Telegram, а не в отделах Коммерческого управления.</p>
+    <p style="margin-top:11px"><b>Линейное звено видно только через бота.</b> Товароведы (194 чел.) и обособленные подразделения сдают преимущественно через бота, поэтому их вклад — в блоке Telegram, а не в отделах Коммерческого управления.</p>
   </div>
 
   <footer>
     Источник: уложенные документы Слоя 1А из базы знаний (только чтение) + оргструктура Битрикс24 + журнал Telegram-бота. Отнесение — по автору (<code>frontmatter owner</code>), опознанному по штатке; при неопознанном авторе — по отправителю в чате, отправитель автором не становится. Управление — родительское подразделение отдела по оргструктуре. Внутренний документ ООО «СКС Ломбард».
   </footer>
 
-</div>
-</div>
+</div></div>
 
 <script>
-  const DIRS=[
-    {n:"Займы",v:90,major:true},{n:"Обеспечивающие процессы",v:51,major:true},
-    {n:"CRM и маркетинг",v:48,major:true},{n:"Розница и реализация",v:25},{n:"Скупка",v:23},
-    {n:"ЗУП и кадры",v:17},{n:"Склад и товарный учёт",v:8},{n:"Бюджетирование",v:3},
-    {n:"Общие (ПОД/ФТ)",v:3},{n:"Касса и банк",v:2}
-  ];
-  const UPR=[
-    {name:"Коммерческое управление",docs:115,people:27,deps:[
-      ["Супервайзеры",41,7,7],["КМ Золото",29,5,5],["Отдел автозайм",16,6,10],
-      ["Отдел продаж техники",12,3,30],["Отдел коммерческих операций Регионы",8,1,1],
-      ["Отдел коммерческих операций Уфа",4,1,1],["Отдел инноваций",2,1,2],
-      ["Товароведы",2,2,193],["руководство управления",1,1,1,true]]},
-    {name:"Управление маркетинга",docs:36,people:6,deps:[
-      ["Отдел по развитию бренда",11,2,2],["руководство управления",11,1,2,true],
-      ["Отдел привлечения клиентов",8,2,2],["Колл-центр",6,1,10]]},
-    {name:"Управление тех. инфраструктуры и мат. обеспечения",docs:16,people:5,deps:[
-      ["Отдел закупок",6,1,1],["Отдел информационно-технической инфраструктуры",4,2,4],
-      ["Отдел по подбору недвижимости",3,1,1],["руководство управления",3,1,1,true]]},
-    {name:"Управление цифрового развития",docs:12,people:6,deps:[
-      ["Отдел технической поддержки",7,2,11],["Отдел ДевОпс",3,2,2],
-      ["Отдел проектного управления",1,1,3],["Отдел бизнес-анализа",1,1,5]]},
-    {name:"Управление безопасности",docs:9,people:6,deps:[
-      ["Правовой отдел",5,2,5],["руководство управления",2,2,9,true],
-      ["Отдел видеонаблюдения",1,1,7],["Отдел ревизии",1,1,6]]},
-    {name:"Операционное управление",docs:9,people:4,deps:[
-      ["Отдел операционного управления и методологии",9,4,7]]},
-    {name:"Финансовое управление",docs:6,people:4,deps:[
-      ["Планово-экономический отдел",4,2,2],["Бухгалтерия",2,2,14]]},
-    {name:"Управление персонала",docs:6,people:4,deps:[
-      ["Отдел кадрового делопроизводства",3,1,1],["Отдел подбора",1,1,1],
-      ["Отдел обучения и развития",1,1,3],["руководство управления",1,1,8,true]]},
-    {name:"Служба финансового мониторинга",docs:1,people:1,deps:[
-      ["руководство управления",1,1,2,true]]},
-    {name:"Автор / отдел не определён",docs:11,people:null,deps:[]}
-  ];
-  const TG=[["Исламова Элина Вакилевна",4],["Алимгафарова Анна",3],["Диярова Регина Раисовна",3],
-    ["Сиухина И.Б.",2],["Татьяна",2],["Регина",2],["Оксана",2]];
+const DATA = {"meta": {"total": 303, "chat": 229, "bot": 74, "people": 65, "upr": 9, "depts": 33, "unresAuthor": 15, "unresDept": 12, "snapshot": "28.07.2026"}, "channels": [{"name": "Чат Битрикс24", "docs": 229}, {"name": "Telegram-бот", "docs": 74}], "directions": [{"n": "Займы", "v": 108, "major": true}, {"n": "Обеспечивающие процессы", "v": 54, "major": true}, {"n": "CRM и маркетинг", "v": 50, "major": true}, {"n": "Скупка", "v": 29, "major": false}, {"n": "Розница и реализация", "v": 28, "major": false}, {"n": "ЗУП и кадры", "v": 17, "major": false}, {"n": "Склад и товарный учёт", "v": 9, "major": false}, {"n": "Бюджетирование", "v": 3, "major": false}, {"n": "Общие (ПОД/ФТ)", "v": 3, "major": false}, {"n": "Касса и банк", "v": 2, "major": false}], "upr": [{"name": "Коммерческое управление", "docs": 116, "people": 28, "deps": [{"name": "Супервайзеры", "ruk": false, "docs": 41, "people": 7, "staff": 7, "unresolved": 2, "sub": [["Васьков Максим Игоревич", 11], ["Напалкова Валерия Евгеньевна", 9], ["Камаров Антон Александрович", 6], ["Абдеев Айдар Расимович", 6], ["Павлова Алина Ринатовна", 3], ["Тухватуллина Лариса Рисияновна", 2], ["Калмацкий Сергей Евгеньевич", 2]]}, {"name": "КМ Золото", "ruk": false, "docs": 29, "people": 5, "staff": 5, "unresolved": 0, "sub": [["Банникова Ольга Васильевна", 8], ["Кузьмина Айгуль Казбековна", 8], ["Сакриев Алексей Владимирович", 7], ["Конкина Екатерина Владимировна", 3], ["Хакимова Айгуль Асхатовна", 3]]}, {"name": "Отдел автозайм", "ruk": false, "docs": 16, "people": 6, "staff": 10, "unresolved": 0, "sub": [["Чуракова Гульнара Вазиховна", 11], ["Бажанов Алексей", 1], ["Ахметшина Эльвира", 1], ["Латыпова Регина Шамильевна", 1], ["Емельянов Владислав Викторович", 1], ["Пугачева Кристина Александровна", 1]]}, {"name": "Отдел продаж техники", "ruk": false, "docs": 12, "people": 3, "staff": 30, "unresolved": 1, "sub": [["Палиенко Алексей Вячеславович", 9], ["Газизов Арслан Айдарович", 1], ["Искандаров Рамиль Русланович", 1]]}, {"name": "Отдел коммерческих операций Регионы", "ruk": false, "docs": 8, "people": 1, "staff": 1, "unresolved": 1, "sub": [["Миньязов Евгений Олегович", 7]]}, {"name": "Отдел коммерческих операций Уфа", "ruk": false, "docs": 4, "people": 1, "staff": 1, "unresolved": 0, "sub": [["Клейменова Евгения Владимировна", 4]]}, {"name": "Товароведы", "ruk": false, "docs": 3, "people": 3, "staff": 194, "unresolved": 0, "sub": [["Канагатуллина Зиля Закировна", 1], ["Макушева Кристина Алексеевна", 1], ["Самохвалова Полина Вячеславовна", 1]]}, {"name": "Отдел инноваций", "ruk": false, "docs": 2, "people": 1, "staff": 2, "unresolved": 1, "sub": [["Золотых Светлана Витальевна", 1]]}, {"name": "руководство управления", "ruk": true, "docs": 1, "people": 1, "staff": 1, "unresolved": 0, "sub": [["Шашков Максим Анатольевич", 1]]}]}, {"name": "Управление маркетинга", "docs": 38, "people": 6, "deps": [{"name": "руководство управления", "ruk": true, "docs": 12, "people": 1, "staff": 2, "unresolved": 0, "sub": [["Соснин Роман Михайлович", 12]]}, {"name": "Отдел по развитию бренда", "ruk": false, "docs": 11, "people": 2, "staff": 2, "unresolved": 0, "sub": [["Салимова Айгуль Салиховна", 6], ["Порубова Анастасия Владимировна", 5]]}, {"name": "Отдел привлечения клиентов", "ruk": false, "docs": 9, "people": 2, "staff": 2, "unresolved": 0, "sub": [["Фахретдинова Лена Ренатовна", 5], ["Гадельшин Вильдан Ильвирович", 4]]}, {"name": "Колл-центр", "ruk": false, "docs": 6, "people": 1, "staff": 10, "unresolved": 0, "sub": [["Гуторова Диана Александровна", 6]]}]}, {"name": "Управление тех. инфраструктуры и мат. обеспечения", "docs": 19, "people": 5, "deps": [{"name": "Отдел закупок", "ruk": false, "docs": 6, "people": 1, "staff": 1, "unresolved": 0, "sub": [["Сулейманов Руслан Рамилевич", 6]]}, {"name": "руководство управления", "ruk": true, "docs": 6, "people": 1, "staff": 1, "unresolved": 0, "sub": [["Заляков Ренат Асгатович", 6]]}, {"name": "Отдел информационно-технической инфраструктуры", "ruk": false, "docs": 4, "people": 2, "staff": 4, "unresolved": 0, "sub": [["Зимовец Дмитрий Александрович", 3], ["Хисматов Артур Айдарович", 1]]}, {"name": "Отдел по подбору недвижимости", "ruk": false, "docs": 3, "people": 1, "staff": 1, "unresolved": 0, "sub": [["Хасанова Алина Файрузовна", 3]]}]}, {"name": "Управление цифрового развития", "docs": 12, "people": 6, "deps": [{"name": "Отдел технической поддержки", "ruk": false, "docs": 7, "people": 2, "staff": 11, "unresolved": 2, "sub": [["Остапенко Дмитрий Олегович", 4], ["Лазненко Павел Алексеевич", 1]]}, {"name": "Отдел Девопс", "ruk": false, "docs": 3, "people": 2, "staff": 2, "unresolved": 0, "sub": [["Мулин Павел Андреевич", 2], ["Лынов Данил Эдуардович", 1]]}, {"name": "Отдел проектного управления", "ruk": false, "docs": 1, "people": 1, "staff": 3, "unresolved": 0, "sub": [["Щербакова Татьяна Евгеньевна", 1]]}, {"name": "Отдел бизнес-анализа", "ruk": false, "docs": 1, "people": 1, "staff": 5, "unresolved": 0, "sub": [["Пронин Артем Вадимович", 1]]}]}, {"name": "Управление безопасности", "docs": 10, "people": 6, "deps": [{"name": "Правовой отдел", "ruk": false, "docs": 6, "people": 2, "staff": 5, "unresolved": 0, "sub": [["Багаутдинова Алия Маратовна", 5], ["Каюмов Тимур Тимербаевич", 1]]}, {"name": "руководство управления", "ruk": true, "docs": 2, "people": 2, "staff": 9, "unresolved": 0, "sub": [["Никифоров Денис Андреевич", 1], ["Байтурин Ирек Хасанович", 1]]}, {"name": "Отдел видеонаблюдения", "ruk": false, "docs": 1, "people": 1, "staff": 7, "unresolved": 0, "sub": [["Кисличко Юлия Юрьевна", 1]]}, {"name": "Отдел ревизии", "ruk": false, "docs": 1, "people": 1, "staff": 6, "unresolved": 0, "sub": [["Гарипова Лиана Наилевна", 1]]}]}, {"name": "Операционное управление", "docs": 9, "people": 4, "deps": [{"name": "Отдел операционного управления и методологии", "ruk": false, "docs": 9, "people": 4, "staff": 7, "unresolved": 0, "sub": [["Щербакова Татьяна Викторовна", 5], ["Майструк Светлана Владиковна", 2], ["Богданова Олеся Аликовна", 1], ["Зимина Ангелина Юрьевна", 1]]}]}, {"name": "Финансовое управление", "docs": 6, "people": 4, "deps": [{"name": "Планово-экономический отдел", "ruk": false, "docs": 4, "people": 2, "staff": 2, "unresolved": 0, "sub": [["Балтабаева Елена Талгатовна", 2], ["Газизова Наиля Маратовна", 2]]}, {"name": "Бухгалтерия", "ruk": false, "docs": 2, "people": 2, "staff": 14, "unresolved": 0, "sub": [["Галимзянова Роза Маратовна", 1], ["Утяев Ришат Хамидуллович", 1]]}]}, {"name": "Управление персонала", "docs": 6, "people": 4, "deps": [{"name": "Отдел кадрового делопроизводства", "ruk": false, "docs": 3, "people": 1, "staff": 1, "unresolved": 0, "sub": [["Саликаева Марина Анатольевна", 3]]}, {"name": "Отдел подбора", "ruk": false, "docs": 1, "people": 1, "staff": 1, "unresolved": 0, "sub": [["Ершова Ирина Назыфовна", 1]]}, {"name": "Отдел обучения и развития", "ruk": false, "docs": 1, "people": 1, "staff": 3, "unresolved": 0, "sub": [["Бикмухаметова Алина Радиковна", 1]]}, {"name": "руководство управления", "ruk": true, "docs": 1, "people": 1, "staff": 8, "unresolved": 0, "sub": [["Ханнанов Айрат Ирекович", 1]]}]}, {"name": "Служба финансового мониторинга", "docs": 1, "people": 1, "deps": [{"name": "руководство управления", "ruk": true, "docs": 1, "people": 1, "staff": 2, "unresolved": 0, "sub": [["Юсупова Гульшат Ильдаровна", 1]]}]}, {"name": "Автор / отдел не определён", "docs": 12, "people": null, "deps": []}], "tg": {"total": 74, "top": [["Исламова Элина Вакилевна", 4], ["Хабибуллина Олеся Фанавиевна", 4], ["Алимгафарова Анна", 3], ["Татьяна", 3], ["Диярова Регина Раисовна", 3], ["Сиухина Ирина Борисовна", 3], ["Федорова Наталья Александровна", 2], ["Олеся", 2], ["Регина", 2], ["Сагинбаева Айгуль", 2], ["Оксана", 2]], "singles": 44, "dirs": [["Займы", 55], ["Скупка", 14], ["Розница и реализация", 4], ["Обеспечивающие процессы", 1]]}};
+const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const M=DATA.meta, el=id=>document.getElementById(id);
 
-  const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
-  const dmax=Math.max(...DIRS.map(d=>d.v));
-  document.getElementById("dirPanel").innerHTML=DIRS.map(d=>
-    `<div class="dir ${d.major?"major":""}"><div class="nm" title="${esc(d.n)}">${esc(d.n)}</div>`
-    +`<div class="track"><div class="fill" style="width:${(d.v/dmax*100).toFixed(1)}%"></div></div>`
-    +`<div class="v num">${d.v}</div></div>`).join("");
+el("mSnap").textContent=M.snapshot; el("mSnap2").textContent=M.snapshot;
+el("nKom").textContent=DATA.upr[0].docs; el("nChat").textContent=M.chat;
+el("nUn").textContent=M.unresAuthor; el("nUnDep").textContent=M.unresDept;
 
-  const umax=Math.max(...UPR.map(u=>u.docs));
-  document.getElementById("uprGrid").innerHTML=UPR.map(u=>{
-    const rows=u.deps.map(d=>
-      `<div class="dep"><div class="dn ${d[4]?"ruk":""}" title="${esc(d[0])}">${esc(d[0])}</div>`
-      +`<div class="dv"><b>${d[1]}</b> док · ${d[2]} чел${d[3]?` <span style="opacity:.7">/ ${d[3]}</span>`:""}</div></div>`).join("");
-    const ppl=u.people!=null?`<span class="tot"><small> · ${u.people} чел</small></span>`:"";
-    return `<div class="upr"><div class="upr-h"><span class="name">${esc(u.name)}</span>`
-      +`<span class="tot">${u.docs}${ppl}</span></div>`
-      +`<div class="upr-bar"><i style="width:${(u.docs/umax*100).toFixed(1)}%"></i></div>${rows}</div>`;
+/* KPI */
+el("kpis").innerHTML=[
+  ["accent",M.total,"Документов Слоя 1А"],["",M.chat,"Через чат Битрикс24"],
+  ["",M.bot,"Через Telegram-бот"],["",M.people,"Человек предоставили"],
+  ["",M.upr+'<small> / 11</small>',"Управлений сдали"],["warn",M.unresAuthor,"Автор не установлен"]
+].map(([c,n,l])=>`<div class="kpi ${c}"><div class="n num">${n}</div><div class="l">${l}</div></div>`).join("");
+
+/* Донат каналов */
+const ch=DATA.channels, tot=ch[0].docs+ch[1].docs, chatPct=ch[0].docs/tot*100;
+el("donut").style.background=`conic-gradient(var(--accent) 0 ${chatPct}%, var(--accent2) ${chatPct}% 100%)`;
+el("donutZ").innerHTML=`<b class="num">${tot}</b><span>документов</span>`;
+el("chanLeg").innerHTML=[["var(--accent)",ch[0].name,ch[0].docs],["var(--accent2)",ch[1].name,ch[1].docs]]
+  .map(([c,n,v])=>`<div class="r"><i style="background:${c}"></i>${esc(n)}<b class="num">${v}</b> <small>${(v/tot*100).toFixed(0)}%</small></div>`).join("");
+
+/* Направления */
+const dmax=Math.max(...DATA.directions.map(d=>d.v));
+el("dirBars").innerHTML=DATA.directions.map(d=>
+  `<div class="bar ${d.major?"maj":""}"><span class="bn" title="${esc(d.n)}">${esc(d.n)}</span><span class="bv num">${d.v}</span>`
+  +`<span class="bt"><i style="width:${(d.v/dmax*100).toFixed(1)}%"></i></span></div>`).join("");
+
+/* Вклад управлений (топ по чату) */
+const realUpr=DATA.upr.filter(u=>u.people!=null);
+const umax=Math.max(...realUpr.map(u=>u.docs));
+el("uprBars").innerHTML=realUpr.map(u=>{
+  const short=u.name.replace(/^Управление /,"Упр. ").replace("тех. инфраструктуры и мат. обеспечения","тех.инфраструктуры");
+  return `<div class="bar maj"><span class="bn" title="${esc(u.name)}">${esc(short)}</span><span class="bv num">${u.docs}</span>`
+  +`<span class="bt"><i style="width:${(u.docs/umax*100).toFixed(1)}%"></i></span></div>`;}).join("");
+
+/* Карточки управлений + отделы */
+const gmax=Math.max(...DATA.upr.map(u=>u.docs));
+el("uprGrid").innerHTML=DATA.upr.map(u=>{
+  const rows=u.deps.map(d=>
+    `<div class="dep"><div class="dn ${d.ruk?"ruk":""}" title="${esc(d.name)}">${esc(d.name)}</div>`
+    +`<div class="dv"><b>${d.docs}</b> док · ${d.people} чел${d.staff?` <span style="opacity:.65">/ ${d.staff}</span>`:""}</div></div>`).join("");
+  const ppl=u.people!=null?`<small> · ${u.people} чел</small>`:"";
+  return `<div class="upr ${u.deps.length?"":"mini"}"><div class="upr-h"><span class="name">${esc(u.name)}</span>`
+    +`<span class="tot">${u.docs}${ppl}</span></div>`
+    +`<div class="upr-bar"><i style="width:${(u.docs/gmax*100).toFixed(1)}%"></i></div>${rows}</div>`;
+}).join("");
+
+/* Детализация — раскрывающиеся управления */
+el("detail").innerHTML=DATA.upr.filter(u=>u.deps.length).map((u,i)=>{
+  const body=u.deps.map(d=>{
+    const chips=d.sub.map(([f,n])=>`<span class="p">${esc(f)}<b>${n}</b></span>`).join("")
+      +(d.unresolved?`<span class="p un">не установлен<b>${d.unresolved}</b></span>`:"");
+    const nm=d.ruk?`<span class="rk">${esc(d.name)}</span>`:esc(d.name);
+    return `<div class="drow"><div class="dh">${nm} <small>· ${d.docs} док · ${d.people} чел${d.staff?` из ${d.staff}`:""}</small></div><div class="people">${chips}</div></div>`;
   }).join("");
+  return `<details class="det" ${i===0?"open":""}><summary><span class="caret">▶</span> ${esc(u.name)} <span class="st">${u.docs} док · ${u.people} чел</span></summary><div class="body">${body}</div></details>`;
+}).join("");
 
-  document.getElementById("tgPeople").innerHTML=
-    TG.map(([n,v])=>`<span class="p">${esc(n)} <b>${v}</b></span>`).join("")
-    +`<span class="p more">и ещё 31 человек — по одной анкете</span>`;
+/* Telegram */
+el("tgPeople").innerHTML=DATA.tg.top.map(([n,v])=>`<span class="p">${esc(n)} <b>${v}</b></span>`).join("")
+  +`<span class="p more">и ещё ${DATA.tg.singles} чел. — по одной анкете</span>`;
+el("tgDirs").innerHTML=`<b style="color:var(--ink2)">Всего ${DATA.tg.total} анкет. По направлениям:</b> `
+  +DATA.tg.dirs.map(([n,v])=>`${esc(n)} — ${v}`).join(" · ");
 </script>
 </body>
 </html>
