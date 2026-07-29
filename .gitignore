@@ -1,4 +1,11 @@
 node_modules/
 .bitrix.env
 *.env
+
+# Сгенерированные файлы сборки — содержат ПДн (ФИО, ОП) или промежуточны.
+# В ПУБЛИЧНЫЙ репозиторий не коммитим! Публикуется только собранный index.html.
+build/roster.json
+build/dept2upr.json
+build/payload.json
+build/report.md
 data*.json
