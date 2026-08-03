@@ -114,6 +114,23 @@
   .drow .dh .rk{color:var(--muted);font-weight:600;font-style:italic}
   .drow .dh small{color:var(--muted);font-weight:500}
   .people{display:flex;flex-wrap:wrap;gap:6px}
+
+  /* вкладки */
+  .tabs{display:flex;gap:4px;margin:0 0 22px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .tab{appearance:none;background:none;border:none;cursor:pointer;font:inherit;font-weight:650;font-size:14px;color:var(--muted);padding:10px 16px;border-bottom:2.5px solid transparent;margin-bottom:-1px}
+  .tab:hover{color:var(--ink2)}
+  .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+  .tabpanel[hidden]{display:none}
+  .sv-people{display:flex;flex-direction:column;gap:4px;margin-top:8px}
+  .sv-p{display:grid;grid-template-columns:1fr auto;gap:10px;font-size:12.8px;padding:3px 0;border-top:1px solid var(--line2)}
+  .sv-p:first-child{border-top:none}
+  .sv-p .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .sv-p .nm small{color:var(--muted);font-weight:500}
+  .sv-p .sc{color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .sv-p .sc b{color:var(--good)}
+  .sv-empty{color:var(--muted);font-size:12.5px;padding:4px 0}
+  .sv-scn{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--ink2);margin:2px 0 10px}
+  .sv-scn b{color:var(--accent)}
   .people .p{background:var(--panel2);border:1px solid var(--line);border-radius:7px;padding:2px 9px;font-size:12px;color:var(--ink2)}
   .people .p b{color:var(--ink);font-weight:700;margin-left:3px}
   .people .p.un{color:var(--warn);background:color-mix(in srgb,var(--warn) 12%,transparent);border-color:transparent}
@@ -154,16 +171,22 @@
 
   <header class="top">
     <div>
-      <h1 class="h-title">Свод по опросу <span class="u">владельцев процессов</span></h1>
-      <div class="h-sub">Слой 1А — методология бизнес-процессов ERP «АРМ», ООО «СКС&nbsp;Ломбард». Кто и сколько сдал: чат Битрикс24 «Интервью по процессам» + Telegram-бот <code>@ARM_opros_bot</code>.</div>
+      <h1 class="h-title" id="hTitle">Свод по опросу <span class="u">владельцев процессов</span></h1>
+      <div class="h-sub" id="hSub">Слой 1А — методология бизнес-процессов ERP «АРМ», ООО «СКС&nbsp;Ломбард». Кто и сколько сдал: чат Битрикс24 «Интервью по процессам» + Telegram-бот <code>@ARM_opros_bot</code>.</div>
     </div>
     <div class="h-meta">
-      <div>Период: 14.07 – <span id="mSnap"></span></div>
+      <div id="mPeriod">Период: 14.07 – <span id="mSnap"></span></div>
       <div>Снимок: <span class="d" id="mSnap2"></span></div>
       <div class="chip">актуально на дату снимка</div>
     </div>
   </header>
 
+  <nav class="tabs">
+    <button class="tab active" data-tab="svod">Опрос владельцев процессов (Слой 1А)</button>
+    <button class="tab" data-tab="survey">Охват survey-bot</button>
+  </nav>
+
+  <div id="panel-svod" class="tabpanel">
   <section class="kpis" id="kpis"></section>
 
   <h2 class="sec">Дашборд <span class="hint">каналы приёма · направления · вклад управлений</span></h2>
@@ -200,6 +223,23 @@
   <footer>
     Источник: уложенные документы Слоя 1А из базы знаний (только чтение) + оргструктура Битрикс24 + журнал Telegram-бота. Отнесение — по автору (<code>frontmatter owner</code>), опознанному по штатке; при неопознанном авторе — по отправителю в чате, отправитель автором не становится. Управление — родительское подразделение отдела по оргструктуре. Внутренний документ ООО «СКС Ломбард».
   </footer>
+  </div>
+
+  <div id="panel-survey" class="tabpanel" hidden>
+    <section class="kpis" id="sv-kpis"></section>
+    <div class="sv-scn">Сценарии: <b>S1</b> Процессы (описание процесса) · <b>S2</b> Пробелы (доопрос) · <b>S3</b> Фото рабочего дня</div>
+
+    <h2 class="sec">Охват по управлениям <span class="hint">прошли ≥1 сценария из штата · разверните управление, чтобы увидеть сотрудников</span></h2>
+    <div id="sv-upr"></div>
+
+    <div class="panel notes" style="margin-top:18px">
+      <p><b>Опрос стартовал.</b> survey-bot собирает три сценария — <b>Процессы</b>, <b>Пробелы</b>, <b>Фото рабочего дня</b>. В отличие от прежнего бота, он сам определяет ФИО, отдел и управление по Битрикс24, поэтому ручная сверка имён не нужна, а охват считается сразу от штата.</p>
+      <p><b>«Не прошли» показаны счётчиком</b> по управлениям — без пофамильного списка (ссылка публичная, хоть и <code>noindex</code>). Поимённо видно только тех, кто уже прошёл.</p>
+    </div>
+    <footer>
+      Источник: survey-bot — журнал завершённых сессий + оргструктура Битрикс24. Охват = доля активных сотрудников, прошедших ≥1 сценария. Персональные данные (телефоны) в свод не выгружаются. Внутренний документ ООО «СКС Ломбард».
+    </footer>
+  </div>
 
 </div></div>
 
@@ -275,6 +315,50 @@ el("tgSplit").innerHTML=[
 ].map(([t,v,s,c])=>`<div class="tgs"><div class="tgs-n" style="color:${c}">${v}</div><div class="tgs-t">${t}</div><div class="tgs-s">${s}</div></div>`).join("");
 el("tgDirs").innerHTML=`<b style="color:var(--ink2)">По направлениям (бот):</b> `
   +DATA.botDirs.map(([n,v])=>`${esc(n)} — ${v}`).join(" · ");
+
+/* ==================== Вкладка «Охват survey-bot» ==================== */
+const DATA2 = /*__PAYLOAD2__*/null;
+(function(){
+  if(!DATA2) return;
+  const m=DATA2.meta, sc=v=> v? `<b>${v}</b>` : "·";
+  el("sv-kpis").innerHTML=[
+    ["accent", m.passedAny, "Прошли ≥1 сценария"],
+    ["", m.employees, "Сотрудников в штате"],
+    ["warn", m.passedNone, "Ещё не проходили"],
+    ["", m.pct+'<small>%</small>', "Охват"],
+    ["", m.completions, "Завершённых сессий"],
+    ["", m.s1+" / "+m.s2+" / "+m.s3, "Процессы / Пробелы / Фото"],
+  ].map(([c,n,l])=>`<div class="kpi ${c}"><div class="n num">${n}</div><div class="l">${l}</div></div>`).join("");
+
+  el("sv-upr").innerHTML=DATA2.upr.map((u,i)=>{
+    const deps=u.deps.filter(d=>d.any>0);
+    const body=(deps.length ? deps.map(d=>{
+      const ppl=d.people.map(p=>`<div class="sv-p"><span class="nm">${esc(p.fio)}${p.pos?` <small>· ${esc(p.pos)}</small>`:""}</span>`
+        +`<span class="sc">S1 ${sc(p.s1)} · S2 ${sc(p.s2)} · S3 ${sc(p.s3)}</span></div>`).join("");
+      return `<div class="drow"><div class="dh">${esc(d.name)} <small>· прошли ${d.any} из ${d.staff}</small></div><div class="sv-people">${ppl}</div></div>`;
+    }).join("") : `<div class="sv-empty">Прохождений пока нет — в управлении ${u.staff} чел.</div>`)
+      +`<div class="sv-scn" style="margin-top:10px">S1 Процессы ${u.s1} · S2 Пробелы ${u.s2} · S3 Фото ${u.s3} · <span style="color:var(--warn)">не прошли ${u.notPassed}</span></div>`;
+    return `<details class="det" ${i===0&&u.any?"open":""}><summary><span class="caret">▶</span> ${esc(u.name)} <span class="st">${u.any}/${u.staff} · ${u.pct}%</span></summary>`
+      +`<div class="body"><div class="upr-bar"><i style="width:${u.pct}%"></i></div>${body}</div></details>`;
+  }).join("");
+})();
+
+/* переключение вкладок */
+(function(){
+  const origSub=el("hSub").innerHTML;
+  const t2Title="Охват <span class=\"u\">survey-bot</span>";
+  const t1Title="Свод по опросу <span class=\"u\">владельцев процессов</span>";
+  const t2Sub="Прохождение опроса сотрудниками (survey-bot): сценарии Процессы · Пробелы · Фото рабочего дня. Охват по управлениям и отделам от штата Битрикс24.";
+  document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{
+    const t=b.dataset.tab, svod=(t==="svod");
+    document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===b));
+    el("panel-svod").hidden=!svod; el("panel-survey").hidden=svod;
+    el("hTitle").innerHTML=svod?t1Title:t2Title;
+    el("hSub").innerHTML=svod?origSub:t2Sub;
+    el("mPeriod").style.display=svod?"":"none";
+    el("mSnap2").textContent=(svod?M.snapshot:(DATA2?DATA2.meta.snapshot:M.snapshot));
+  }));
+})();
 </script>
 </body>
 </html>
