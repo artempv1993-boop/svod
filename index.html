@@ -228,11 +228,11 @@
 
   <div id="panel-survey" class="tabpanel" hidden>
     <section class="kpis" id="sv-kpis"></section>
-    <div class="sv-scn">Собрано по <b>фактически выложенным файлам</b> бота. Каждый файл проверен: <b>содержательный</b> — заполнен по стандарту · <b>частичный</b> — сессия оборвана / мало ответов · <b>пустой</b> — файл без содержания (в зачёт не идёт).</div>
+    <div class="sv-scn">Собрано по <b>фактически выложенным файлам</b> бота. Каждый файл проверен: <b>содержательный</b> — заполнен по стандарту · <b>частичный</b> — собраны не все ответы.</div>
     <div id="sv-scen"></div>
     <div class="panel notes" style="margin-top:18px">
-      <p><b>Вторая итерация — новый бот <code>survey-bot</code></b> (три сценария: <b>Основной опрос</b> — описание процесса, <b>Доопрос</b> — закрытие пробелов, <b>Фото рабочего дня</b>). Бот сам определяет ФИО, отдел и управление по Битрикс24. Идёт тест-фаза — много частичных/оборванных сессий, они показаны отдельно от содержательных.</p>
-      <p><b>Считаем по каждому файлу</b> результата (повторные сессии одного человека — каждая отдельно). Поимённо видно только тех, у кого есть непустой файл; пустые/оборванные — счётчиком.</p>
+      <p><b>Вторая итерация — новый бот <code>survey-bot</code></b> (три сценария: <b>Основной опрос</b> — описание процесса, <b>Доопрос</b> — закрытие пробелов, <b>Фото рабочего дня</b>). Бот сам определяет ФИО, отдел и управление по Битрикс24. Содержательные и частичные (собраны не все ответы) файлы показаны раздельно.</p>
+      <p><b>Считаем по каждому файлу</b> результата (повторные сессии одного человека — каждая отдельно). Поимённо показаны все участники.</p>
     </div>
     <footer>
       Источник: <code>survey-bot/storage/output/&lt;сценарий&gt;</code> — фактические файлы результатов + оргструктура Битрикс24. Автор/отдел/управление — по <code>bitrix_id</code> из frontmatter. ПДн (телефоны) не выгружаются. Внутренний документ ООО «СКС Ломбард».
@@ -336,12 +336,13 @@ const DATA2 = {"meta": {"snapshot": "03.08.2026", "sessions": 23, "good": 15, "p
 (function(){
   if(!DATA2) return;
   const m=DATA2.meta, byS=k=>DATA2.scenarios.find(s=>s.key===k)||{good:0,total:0};
+  const uprCount=new Set(DATA2.scenarios.flatMap(s=>s.upr.map(u=>u.name))).size;
   el("sv-kpis").innerHTML=kpis([
     ["accent", m.good, "Содержательных файлов"],
     ["", m.sessions, "Сессий (файлов) всего"],
-    ["warn", m.partial, "Частичных / оборванных"],
-    ["", m.empty, "Пустых (без содержания)"],
+    ["warn", m.partial, "Частичных"],
     ["", m.people, "Участников"],
+    ["", uprCount, "Управлений затронуто"],
     ["", `${byS("process").good} / ${byS("gap").good} / ${byS("workday").good}`, "Содерж.: осн / доопр / фото"],
   ]);
 
@@ -386,7 +387,7 @@ const DATA2 = {"meta": {"snapshot": "03.08.2026", "sessions": 23, "good": 15, "p
   const iter2=`<div class="upr"><div class="upr-h"><span class="name">Вторая итерация — survey-bot</span><span class="tot">${m2.sessions}<small> сес.</small></span></div>`
     +["process","gap","workday"].map(k=>{const s=byS(k);
        return `<div class="dep"><span class="dn">${esc(s.name)}</span><span class="dv"><b>${s.good}</b> содерж. из ${s.total}</span></div>`;}).join("")
-    +`<div class="dep"><span class="dn">Пустых / частичных</span><span class="dv">${m2.empty} · ${m2.partial}</span></div></div>`;
+    +`<div class="dep"><span class="dn">Частичных</span><span class="dv">${m2.partial}</span></div></div>`;
   el("ov-iter").innerHTML=`<div class="upr-grid">${iter1}${iter2}</div>`;
 })();
 
