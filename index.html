@@ -359,7 +359,7 @@ const DATA2 = {"meta": {"snapshot": "03.08.2026", "sessions": 23, "good": 15, "p
       return `<details class="det" ${i===0?"open":""}><summary><span class="caret">▶</span> ${esc(u.name)} <span class="st">${u.total} сес · ${u.good} содерж</span></summary><div class="body">${deps}</div></details>`;
     }).join("");
     return `<div style="margin-bottom:20px">`
-      +`<h2 class="sec" style="margin-top:6px">${esc(s.name)} <span class="hint">всего ${s.total} · содержательных ${s.good} · частичных ${s.partial}${s.empty?` · пустых ${s.empty}`:""}</span></h2>`
+      +`<h2 class="sec" style="margin-top:6px">${esc(s.name)} <span class="hint">всего ${s.total} · содержательных ${s.good} · частичных ${s.partial}</span></h2>`
       +`<div class="upr-bar" style="margin:0 0 11px"><i style="width:${pct}%;background:var(--good)"></i></div>`
       +dom+upr+`</div>`;
   }).join("");
