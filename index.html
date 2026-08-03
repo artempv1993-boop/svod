@@ -182,8 +182,9 @@
   </header>
 
   <nav class="tabs">
-    <button class="tab active" data-tab="svod">Опрос владельцев процессов (Слой 1А)</button>
-    <button class="tab" data-tab="survey">Охват survey-bot</button>
+    <button class="tab active" data-tab="svod">Первая итерация опроса</button>
+    <button class="tab" data-tab="survey">Вторая итерация</button>
+    <button class="tab" data-tab="overview">Общий свод</button>
   </nav>
 
   <div id="panel-svod" class="tabpanel">
@@ -227,17 +228,29 @@
 
   <div id="panel-survey" class="tabpanel" hidden>
     <section class="kpis" id="sv-kpis"></section>
-    <div class="sv-scn">Сценарии: <b>S1</b> Процессы (описание процесса) · <b>S2</b> Пробелы (доопрос) · <b>S3</b> Фото рабочего дня</div>
-
-    <h2 class="sec">Охват по управлениям <span class="hint">прошли ≥1 сценария из штата · разверните управление, чтобы увидеть сотрудников</span></h2>
-    <div id="sv-upr"></div>
-
+    <div class="sv-scn">Собрано по <b>фактически выложенным файлам</b> бота. Каждый файл проверен: <b>содержательный</b> — заполнен по стандарту · <b>частичный</b> — сессия оборвана / мало ответов · <b>пустой</b> — файл без содержания (в зачёт не идёт).</div>
+    <div id="sv-scen"></div>
     <div class="panel notes" style="margin-top:18px">
-      <p><b>Опрос стартовал.</b> survey-bot собирает три сценария — <b>Процессы</b>, <b>Пробелы</b>, <b>Фото рабочего дня</b>. В отличие от прежнего бота, он сам определяет ФИО, отдел и управление по Битрикс24, поэтому ручная сверка имён не нужна, а охват считается сразу от штата.</p>
-      <p><b>«Не прошли» показаны счётчиком</b> по управлениям — без пофамильного списка (ссылка публичная, хоть и <code>noindex</code>). Поимённо видно только тех, кто уже прошёл.</p>
+      <p><b>Вторая итерация — новый бот <code>survey-bot</code></b> (три сценария: <b>Основной опрос</b> — описание процесса, <b>Доопрос</b> — закрытие пробелов, <b>Фото рабочего дня</b>). Бот сам определяет ФИО, отдел и управление по Битрикс24. Идёт тест-фаза — много частичных/оборванных сессий, они показаны отдельно от содержательных.</p>
+      <p><b>Считаем по каждому файлу</b> результата (повторные сессии одного человека — каждая отдельно). Поимённо видно только тех, у кого есть непустой файл; пустые/оборванные — счётчиком.</p>
     </div>
     <footer>
-      Источник: survey-bot — журнал завершённых сессий + оргструктура Битрикс24. Охват = доля активных сотрудников, прошедших ≥1 сценария. Персональные данные (телефоны) в свод не выгружаются. Внутренний документ ООО «СКС Ломбард».
+      Источник: <code>survey-bot/storage/output/&lt;сценарий&gt;</code> — фактические файлы результатов + оргструктура Битрикс24. Автор/отдел/управление — по <code>bitrix_id</code> из frontmatter. ПДн (телефоны) не выгружаются. Внутренний документ ООО «СКС Ломбард».
+    </footer>
+  </div>
+
+  <div id="panel-overview" class="tabpanel" hidden>
+    <section class="kpis" id="ov-kpis"></section>
+    <h2 class="sec">По направлениям <span class="hint">первая итерация (Слой 1А) — основной корпус документов</span></h2>
+    <div class="card"><div class="bars" id="ov-dirs"></div></div>
+    <h2 class="sec">Итерации и сценарии <span class="hint">общая картина сбора</span></h2>
+    <div id="ov-iter"></div>
+    <div class="panel notes" style="margin-top:18px">
+      <p><b>Общая картина.</b> <b>Первая итерация</b> — уложенный корпус Слоя 1А (документы по процессам, чат + Telegram-бот), разложен по направлениям выше. <b>Вторая итерация</b> — новый бот <code>survey-bot</code>, пока тест-фаза (сессии по трём сценариям).</p>
+      <p>Итерации меряют разное: первая — <b>готовые документы процессов</b>, вторая — <b>сессии опроса сотрудников</b>. Поэтому сведены рядом, а не в одну сумму.</p>
+    </div>
+    <footer>
+      Первая итерация — база знаний Слоя 1А (NAS) + оргструктура Битрикс24. Вторая — файлы результатов survey-bot. Снимок на дату. Внутренний документ ООО «СКС Ломбард».
     </footer>
   </div>
 
@@ -316,47 +329,83 @@ el("tgSplit").innerHTML=[
 el("tgDirs").innerHTML=`<b style="color:var(--ink2)">По направлениям (бот):</b> `
   +DATA.botDirs.map(([n,v])=>`${esc(n)} — ${v}`).join(" · ");
 
-/* ==================== Вкладка «Охват survey-bot» ==================== */
-const DATA2 = {"meta": {"snapshot": "30.07.2026", "employees": 486, "passedAny": 1, "passedNone": 485, "pct": 0, "s1": 0, "s2": 1, "s3": 1, "completions": 2}, "scenarios": [{"key": "s1", "name": "Процессы", "full": "process_survey"}, {"key": "s2", "name": "Пробелы", "full": "gap_survey"}, {"key": "s3", "name": "Фото рабочего дня", "full": "workday_photo"}], "upr": [{"name": "Управление цифрового развития", "staff": 38, "any": 1, "pct": 3, "s1": 0, "s2": 1, "s3": 1, "notPassed": 37, "deps": [{"name": "Отдел бизнес-анализа", "staff": 5, "any": 1, "people": [{"fio": "Чусовитина Аделина Эриковна", "pos": "Руководитель отдела бизнес-анализа", "s1": 0, "s2": 1, "s3": 1, "total": 2, "last": "2026-07-30"}]}, {"name": "Отдел разработки цифровых продуктов", "staff": 14, "any": 0, "people": []}, {"name": "Отдел технической поддержки", "staff": 10, "any": 0, "people": []}, {"name": "Отдел проектного управления", "staff": 3, "any": 0, "people": []}, {"name": "Подрядчики(внешние пользователи)", "staff": 2, "any": 0, "people": []}, {"name": "Отдел Девопс", "staff": 2, "any": 0, "people": []}, {"name": "Отдел финансового анализа", "staff": 1, "any": 0, "people": []}, {"name": "Заместитель директора цифрового развития по аналитике и проектам", "staff": 1, "any": 0, "people": []}]}, {"name": "Коммерческое управление", "staff": 350, "any": 0, "pct": 0, "s1": 0, "s2": 0, "s3": 0, "notPassed": 350, "deps": [{"name": "Товароведы", "staff": 194, "any": 0, "people": []}, {"name": "Обособленные подразделения", "staff": 91, "any": 0, "people": []}, {"name": "Отдел продаж техники", "staff": 29, "any": 0, "people": []}, {"name": "Отдел автозайм", "staff": 8, "any": 0, "people": []}, {"name": "Супервайзеры", "staff": 7, "any": 0, "people": []}, {"name": "Отдел оборота ДМДК", "staff": 7, "any": 0, "people": []}, {"name": "КМ Золото", "staff": 5, "any": 0, "people": []}, {"name": "Офис-менеджер", "staff": 4, "any": 0, "people": []}, {"name": "Отдел инноваций", "staff": 2, "any": 0, "people": []}, {"name": "Отдел коммерческих операций Уфа", "staff": 1, "any": 0, "people": []}, {"name": "Отдел коммерческих операций Регионы", "staff": 1, "any": 0, "people": []}, {"name": "Коммерческое управление", "staff": 1, "any": 0, "people": []}]}, {"name": "Управление безопасности", "staff": 28, "any": 0, "pct": 0, "s1": 0, "s2": 0, "s3": 0, "notPassed": 28, "deps": [{"name": "Управление безопасности", "staff": 9, "any": 0, "people": []}, {"name": "Отдел видеонаблюдения", "staff": 6, "any": 0, "people": []}, {"name": "Отдел ревизии", "staff": 6, "any": 0, "people": []}, {"name": "Правовой отдел", "staff": 5, "any": 0, "people": []}, {"name": "Отдел информационной безопасности", "staff": 1, "any": 0, "people": []}, {"name": "Отдел по охране труда", "staff": 1, "any": 0, "people": []}]}, {"name": "Финансовое управление", "staff": 17, "any": 0, "pct": 0, "s1": 0, "s2": 0, "s3": 0, "notPassed": 17, "deps": [{"name": "Бухгалтерия", "staff": 14, "any": 0, "people": []}, {"name": "Планово-экономический отдел", "staff": 2, "any": 0, "people": []}, {"name": "Финансовое управление", "staff": 1, "any": 0, "people": []}]}, {"name": "Управление маркетинга", "staff": 15, "any": 0, "pct": 0, "s1": 0, "s2": 0, "s3": 0, "notPassed": 15, "deps": [{"name": "Колл-центр", "staff": 9, "any": 0, "people": []}, {"name": "Отдел привлечения клиентов", "staff": 2, "any": 0, "people": []}, {"name": "Отдел по развитию бренда", "staff": 2, "any": 0, "people": []}, {"name": "Управление маркетинга", "staff": 2, "any": 0, "people": []}]}, {"name": "Управление тех.инфраструктуры и мат.обеспечения", "staff": 14, "any": 0, "pct": 0, "s1": 0, "s2": 0, "s3": 0, "notPassed": 14, "deps": [{"name": "Отдел эксплуатации и строительства", "staff": 6, "any": 0, "people": []}, {"name": "Отдел информационно-технической инфраструктуры", "staff": 4, "any": 0, "people": []}, {"name": "Управление тех.инфраструктуры и мат.обеспечения", "staff": 1, "any": 0, "people": []}, {"name": "Склад-архив", "staff": 1, "any": 0, "people": []}, {"name": "Отдел закупок", "staff": 1, "any": 0, "people": []}, {"name": "Отдел по подбору недвижимости", "staff": 1, "any": 0, "people": []}]}, {"name": "Управление персонала", "staff": 11, "any": 0, "pct": 0, "s1": 0, "s2": 0, "s3": 0, "notPassed": 11, "deps": [{"name": "Управление персонала", "staff": 6, "any": 0, "people": []}, {"name": "Отдел обучения и развития", "staff": 3, "any": 0, "people": []}, {"name": "Отдел подбора", "staff": 1, "any": 0, "people": []}, {"name": "Отдел кадрового делопроизводства", "staff": 1, "any": 0, "people": []}]}, {"name": "Операционное управление", "staff": 7, "any": 0, "pct": 0, "s1": 0, "s2": 0, "s3": 0, "notPassed": 7, "deps": [{"name": "Отдел операционного управления и методологии", "staff": 7, "any": 0, "people": []}]}, {"name": "СКС-Ломбард", "staff": 2, "any": 0, "pct": 0, "s1": 0, "s2": 0, "s3": 0, "notPassed": 2, "deps": [{"name": "СКС-Ломбард", "staff": 2, "any": 0, "people": []}]}, {"name": "Автоматизаторы", "staff": 2, "any": 0, "pct": 0, "s1": 0, "s2": 0, "s3": 0, "notPassed": 2, "deps": [{"name": "Автоматизаторы", "staff": 2, "any": 0, "people": []}]}, {"name": "Служба финансового мониторинга", "staff": 2, "any": 0, "pct": 0, "s1": 0, "s2": 0, "s3": 0, "notPassed": 2, "deps": [{"name": "Служба финансового мониторинга", "staff": 2, "any": 0, "people": []}]}]};
+const kpis=(arr)=>arr.map(([c,n,l])=>`<div class="kpi ${c}"><div class="n num">${n}</div><div class="l">${l}</div></div>`).join("");
+
+/* ==================== Вторая итерация — survey-bot ==================== */
+const DATA2 = {"meta": {"snapshot": "03.08.2026", "sessions": 46, "good": 18, "partial": 23, "empty": 5, "people": 13}, "scenarios": [{"key": "process", "name": "Основной опрос", "code": "process_survey", "total": 16, "good": 7, "partial": 4, "empty": 5, "byDomain": [["Общие", 8], ["Касса и банк", 3]], "upr": [{"name": "Управление цифрового развития", "total": 6, "good": 2, "deps": [{"name": "Отдел бизнес-анализа", "people": [{"fio": "Абдуллин Венер Фаритович", "pos": "Аналитик данных", "n": 1, "good": 0, "best": 0.1, "domain": "Общие"}, {"fio": "Пронин Артем Вадимович", "pos": "Бизнес-аналитик", "n": 2, "good": 1, "best": 0.55, "domain": "Касса и банк"}, {"fio": "Чусовитина Аделина Эриковна", "pos": "Руководитель отдела бизнес-анализа", "n": 1, "good": 0, "best": 0.05, "domain": "Общие"}]}, {"name": "Отдел разработки цифровых продуктов", "people": [{"fio": "Васильев Петр Петрович", "pos": "Программист", "n": 1, "good": 0, "best": 0.2, "domain": "Общие"}]}, {"name": "Отдел финансового анализа", "people": [{"fio": "Петров Дмитрий Юрьевич", "pos": "Руководитель отдела финансового анализа", "n": 1, "good": 1, "best": 0.52, "domain": "Касса и банк"}]}]}, {"name": "Управление безопасности", "total": 5, "good": 5, "deps": [{"name": "Отдел видеонаблюдения", "people": [{"fio": "Лукманова Элина", "pos": "Оператор видеонаблюдения", "n": 3, "good": 3, "best": 0.76, "domain": "Общие"}, {"fio": "Артамкина Екатерина", "pos": "Оператор видеонаблюдения", "n": 1, "good": 1, "best": 0.68, "domain": "Общие"}, {"fio": "Валитова Алсу Габдульяновна", "pos": "оператор видеонаблюдения", "n": 1, "good": 1, "best": 0.76, "domain": "Общие"}]}]}]}, {"key": "gap", "name": "Доопрос", "code": "gap_survey", "total": 23, "good": 7, "partial": 16, "empty": 0, "byDomain": [], "upr": [{"name": "Управление цифрового развития", "total": 14, "good": 1, "deps": [{"name": "Отдел бизнес-анализа", "people": [{"fio": "Пронин Артем Вадимович", "pos": "Бизнес-аналитик", "n": 10, "good": 0, "best": 0.0, "domain": "Займы / Скупка"}, {"fio": "Абдуллин Венер Фаритович", "pos": "Аналитик данных", "n": 2, "good": 1, "best": 2, "domain": "Сквозной аналитический контур АРМ"}, {"fio": "Чусовитина Аделина Эриковна", "pos": "Руководитель отдела бизнес-анализа", "n": 1, "good": 0, "best": 0.0, "domain": "Займы"}, {"fio": "Данилова Дарина Александровна", "pos": "Бизнес-аналитик", "n": 1, "good": 0, "best": 0.0, "domain": "Данные и объекты АРМ"}]}]}, {"name": "Управление безопасности", "total": 7, "good": 4, "deps": [{"name": "Отдел видеонаблюдения", "people": [{"fio": "Артамкина Екатерина", "pos": "Оператор видеонаблюдения", "n": 3, "good": 2, "best": 7, "domain": "Ядро АРМ / контроль и ИБ"}, {"fio": "Исламова Алина Рафисовна", "pos": "Оператор видеонаблюдения", "n": 1, "good": 1, "best": 1, "domain": "Контроль доступа и ИБ"}, {"fio": "Валитова Алсу Габдульяновна", "pos": "оператор видеонаблюдения", "n": 1, "good": 0, "best": 0.0, "domain": "Ядро АРМ / контроль и информационная безопасность"}, {"fio": "Гейфман Ирина Валентиновна", "pos": "Оператор видеонаблюдения", "n": 1, "good": 0, "best": 0.0, "domain": "Интеграции"}, {"fio": "Лукманова Элина", "pos": "Оператор видеонаблюдения", "n": 1, "good": 1, "best": 5, "domain": "Контроль и безопасность / видеонаблюдение"}]}]}, {"name": "Коммерческое управление", "total": 2, "good": 2, "deps": [{"name": "Товароведы", "people": [{"fio": "Абдрахманова Земфира Нажиповна", "pos": "товаровед", "n": 1, "good": 1, "best": 2, "domain": "Займы / Скупка"}]}, {"name": "Отдел коммерческих операций Уфа", "people": [{"fio": "Клейменова Евгения Владимировна", "pos": "Руководитель отдела коммерческих операций Уфа", "n": 1, "good": 1, "best": 8, "domain": "Займы"}]}]}]}, {"key": "workday", "name": "Фото рабочего дня", "code": "workday_photo", "total": 7, "good": 4, "partial": 3, "empty": 0, "byDomain": [], "upr": [{"name": "Управление цифрового развития", "total": 5, "good": 2, "deps": [{"name": "Отдел бизнес-анализа", "people": [{"fio": "Абдуллин Венер Фаритович", "pos": "Аналитик данных", "n": 1, "good": 0, "best": 0.12, "domain": ""}, {"fio": "Пронин Артем Вадимович", "pos": "Бизнес-аналитик", "n": 1, "good": 1, "best": 0.7, "domain": ""}, {"fio": "Чусовитина Аделина Эриковна", "pos": "Руководитель отдела бизнес-анализа", "n": 3, "good": 1, "best": 0.55, "domain": ""}]}]}, {"name": "Управление безопасности", "total": 2, "good": 2, "deps": [{"name": "Отдел видеонаблюдения", "people": [{"fio": "Валитова Алсу Габдульяновна", "pos": "оператор видеонаблюдения", "n": 1, "good": 1, "best": 0.72, "domain": ""}, {"fio": "Лукманова Элина", "pos": "Оператор видеонаблюдения", "n": 1, "good": 1, "best": 0.68, "domain": ""}]}]}]}]};
 (function(){
   if(!DATA2) return;
-  const m=DATA2.meta, sc=v=> v? `<b>${v}</b>` : "·";
-  el("sv-kpis").innerHTML=[
-    ["accent", m.passedAny, "Прошли ≥1 сценария"],
-    ["", m.employees, "Сотрудников в штате"],
-    ["warn", m.passedNone, "Ещё не проходили"],
-    ["", m.pct+'<small>%</small>', "Охват"],
-    ["", m.completions, "Завершённых сессий"],
-    ["", m.s1+" / "+m.s2+" / "+m.s3, "Процессы / Пробелы / Фото"],
-  ].map(([c,n,l])=>`<div class="kpi ${c}"><div class="n num">${n}</div><div class="l">${l}</div></div>`).join("");
+  const m=DATA2.meta, byS=k=>DATA2.scenarios.find(s=>s.key===k)||{good:0,total:0};
+  el("sv-kpis").innerHTML=kpis([
+    ["accent", m.good, "Содержательных файлов"],
+    ["", m.sessions, "Сессий (файлов) всего"],
+    ["warn", m.partial, "Частичных / оборванных"],
+    ["", m.empty, "Пустых (без содержания)"],
+    ["", m.people, "Участников"],
+    ["", `${byS("process").good} / ${byS("gap").good} / ${byS("workday").good}`, "Содерж.: осн / доопр / фото"],
+  ]);
 
-  el("sv-upr").innerHTML=DATA2.upr.map((u,i)=>{
-    const deps=u.deps.filter(d=>d.any>0);
-    const body=(deps.length ? deps.map(d=>{
-      const ppl=d.people.map(p=>`<div class="sv-p"><span class="nm">${esc(p.fio)}${p.pos?` <small>· ${esc(p.pos)}</small>`:""}</span>`
-        +`<span class="sc">S1 ${sc(p.s1)} · S2 ${sc(p.s2)} · S3 ${sc(p.s3)}</span></div>`).join("");
-      return `<div class="drow"><div class="dh">${esc(d.name)} <small>· прошли ${d.any} из ${d.staff}</small></div><div class="sv-people">${ppl}</div></div>`;
-    }).join("") : `<div class="sv-empty">Прохождений пока нет — в управлении ${u.staff} чел.</div>`)
-      +`<div class="sv-scn" style="margin-top:10px">S1 Процессы ${u.s1} · S2 Пробелы ${u.s2} · S3 Фото ${u.s3} · <span style="color:var(--warn)">не прошли ${u.notPassed}</span></div>`;
-    return `<details class="det" ${i===0&&u.any?"open":""}><summary><span class="caret">▶</span> ${esc(u.name)} <span class="st">${u.any}/${u.staff} · ${u.pct}%</span></summary>`
-      +`<div class="body"><div class="upr-bar"><i style="width:${u.pct}%"></i></div>${body}</div></details>`;
+  el("sv-scen").innerHTML=DATA2.scenarios.map(s=>{
+    const pct=s.total?Math.round(100*s.good/s.total):0;
+    const dom=(s.byDomain&&s.byDomain.length)
+      ? `<div class="sv-scn" style="margin:0 0 10px">Домены: `+s.byDomain.map(([n,v])=>`${esc(n)} — ${v}`).join(" · ")+`</div>` : "";
+    const upr=s.upr.map((u,i)=>{
+      const deps=u.deps.map(d=>{
+        const ppl=d.people.map(p=>`<div class="sv-p"><span class="nm">${esc(p.fio)}${p.pos?` <small>· ${esc(p.pos)}</small>`:""}</span>`
+          +`<span class="sc">${p.n} сес.${p.good?` · <b>${p.good}</b> содерж.`:""}</span></div>`).join("");
+        return `<div class="drow"><div class="dh">${esc(d.name)}</div><div class="sv-people">${ppl}</div></div>`;
+      }).join("");
+      return `<details class="det" ${i===0?"open":""}><summary><span class="caret">▶</span> ${esc(u.name)} <span class="st">${u.total} сес · ${u.good} содерж</span></summary><div class="body">${deps}</div></details>`;
+    }).join("");
+    return `<div style="margin-bottom:20px">`
+      +`<h2 class="sec" style="margin-top:6px">${esc(s.name)} <span class="hint">всего ${s.total} · содержательных ${s.good} · частичных ${s.partial}${s.empty?` · пустых ${s.empty}`:""}</span></h2>`
+      +`<div class="upr-bar" style="margin:0 0 11px"><i style="width:${pct}%;background:var(--good)"></i></div>`
+      +dom+upr+`</div>`;
   }).join("");
 })();
 
-/* переключение вкладок */
+/* ==================== Общий свод ==================== */
+(function(){
+  if(!DATA2) return;
+  const m2=DATA2.meta, byS=k=>DATA2.scenarios.find(s=>s.key===k)||{good:0,total:0,name:k};
+  el("ov-kpis").innerHTML=kpis([
+    ["accent", M.total, "Документов Слоя 1А (итер. 1)"],
+    ["", M.people, "Авторов (итер. 1)"],
+    ["", M.upr+'<small> / 11</small>', "Управлений (итер. 1)"],
+    ["accent", m2.sessions, "Сессий бота (итер. 2)"],
+    ["", m2.good, "Содержательных (итер. 2)"],
+    ["", m2.people, "Участников (итер. 2)"],
+  ]);
+  const dmax=Math.max(...DATA.directions.map(d=>d.v));
+  el("ov-dirs").innerHTML=DATA.directions.map(d=>
+    `<div class="bar ${d.major?"maj":""}"><div class="bn">${esc(d.n)}</div><div class="bv">${d.v}</div><div class="bt"><i style="width:${(d.v/dmax*100).toFixed(1)}%"></i></div></div>`).join("");
+  const iter1=`<div class="upr"><div class="upr-h"><span class="name">Первая итерация — Слой 1А</span><span class="tot">${M.total}<small> док.</small></span></div>`
+    +`<div class="dep"><span class="dn">Чат Битрикс24</span><span class="dv"><b>${M.chat}</b></span></div>`
+    +`<div class="dep"><span class="dn">Telegram-бот @ARM_opros_bot</span><span class="dv"><b>${M.bot}</b></span></div>`
+    +`<div class="dep"><span class="dn">Авторов · управлений</span><span class="dv"><b>${M.people}</b> · ${M.upr}</span></div></div>`;
+  const iter2=`<div class="upr"><div class="upr-h"><span class="name">Вторая итерация — survey-bot</span><span class="tot">${m2.sessions}<small> сес.</small></span></div>`
+    +["process","gap","workday"].map(k=>{const s=byS(k);
+       return `<div class="dep"><span class="dn">${esc(s.name)}</span><span class="dv"><b>${s.good}</b> содерж. из ${s.total}</span></div>`;}).join("")
+    +`<div class="dep"><span class="dn">Пустых / частичных</span><span class="dv">${m2.empty} · ${m2.partial}</span></div></div>`;
+  el("ov-iter").innerHTML=`<div class="upr-grid">${iter1}${iter2}</div>`;
+})();
+
+/* переключение вкладок (3 раздела) */
 (function(){
   const origSub=el("hSub").innerHTML;
-  const t2Title="Охват <span class=\"u\">survey-bot</span>";
-  const t1Title="Свод по опросу <span class=\"u\">владельцев процессов</span>";
-  const t2Sub="Прохождение опроса сотрудниками (survey-bot): сценарии Процессы · Пробелы · Фото рабочего дня. Охват по управлениям и отделам от штата Битрикс24.";
+  const T={
+    svod:["Первая итерация <span class=\"u\">опроса</span>", origSub, true],
+    survey:["Вторая итерация — <span class=\"u\">survey-bot</span>", "Новый бот: Основной опрос · Доопрос · Фото рабочего дня. Свод по фактическим файлам результатов, с проверкой качества каждого.", false],
+    overview:["Общий <span class=\"u\">свод</span>", "Общая картина по обеим итерациям: документы Слоя 1А по направлениям + сессии нового бота по сценариям.", false],
+  };
+  const panels={svod:"panel-svod",survey:"panel-survey",overview:"panel-overview"};
   document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{
-    const t=b.dataset.tab, svod=(t==="svod");
+    const t=b.dataset.tab;
     document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===b));
-    el("panel-svod").hidden=!svod; el("panel-survey").hidden=svod;
-    el("hTitle").innerHTML=svod?t1Title:t2Title;
-    el("hSub").innerHTML=svod?origSub:t2Sub;
-    el("mPeriod").style.display=svod?"":"none";
-    el("mSnap2").textContent=(svod?M.snapshot:(DATA2?DATA2.meta.snapshot:M.snapshot));
+    Object.entries(panels).forEach(([k,pid])=>{el(pid).hidden = k!==t;});
+    el("hTitle").innerHTML=T[t][0]; el("hSub").innerHTML=T[t][1];
+    el("mPeriod").style.display=T[t][2]?"":"none";
+    el("mSnap2").textContent=(t==="survey"&&DATA2?DATA2.meta.snapshot:M.snapshot);
   }));
 })();
 </script>
