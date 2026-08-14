@@ -120,6 +120,41 @@ details.doc[open]>summary::before{content:"▾ "}
 .todo li{margin-bottom:4px}
 footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);text-align:center}
 @media (max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr}.todo{grid-template-columns:1fr}}
+
+/* кнопка «Кратко» рядом со статусом и проверкой */
+details.brief{position:relative}
+details.brief>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:5px;
+  background:transparent;color:var(--brand);border:1px solid var(--brand);border-radius:3px;
+  padding:3px 10px;font-size:11px;font-weight:650;transition:.15s;user-select:none;white-space:nowrap}
+details.brief>summary::-webkit-details-marker{display:none}
+details.brief>summary::after{content:"▾";font-size:9px;opacity:.8}
+details.brief[open]>summary::after{content:"▴"}
+details.brief>summary:hover{background:var(--brand);color:#fff}
+.briefbox{position:absolute;right:0;top:calc(100% + 6px);z-index:20;width:340px;max-height:300px;overflow:auto;
+  background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--brand);border-radius:var(--radius);
+  box-shadow:0 6px 20px rgba(0,0,0,.14);padding:11px 14px;text-align:left}
+.briefbox .bh{font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);
+  font-weight:700;margin-bottom:7px;padding-bottom:6px;border-bottom:1px solid var(--line2)}
+.briefbox p{margin:4px 0;font-size:12.5px;color:var(--ink2);line-height:1.45}
+@media (max-width:900px){.briefbox{width:260px}}
+
+/* раскраска строк: сдал рабочий проект — зелёная, описание без проекта — оранжевая, только ТЗ — красная */
+tr.r-good  td{background:rgba(46,125,50,.055)}
+tr.r-warn2 td{background:rgba(194,118,42,.075)}
+tr.r-neg   td{background:rgba(193,84,79,.075)}
+tr.r-mut   td{background:transparent}
+tbody tr.r-good:hover  td{background:rgba(46,125,50,.11)}
+tbody tr.r-warn2:hover td{background:rgba(194,118,42,.14)}
+tbody tr.r-neg:hover   td{background:rgba(193,84,79,.14)}
+td.who{font-weight:600}
+td.pr{padding-left:14px}
+tr.multi td.pr{position:relative}
+tr.multi td.pr::before{content:"";position:absolute;left:4px;top:14px;width:5px;height:5px;
+  border-radius:50%;background:var(--muted);opacity:.55}
+tr.multi td.who,tr.multi td.mut,tr.multi td:nth-last-child(-n+2){vertical-align:middle}
+/* красный для «только ТЗ» */
+:root{--neg:#c1544f; --neg-soft:#fbeceb}
+@media (prefers-color-scheme:dark){:root{--neg:#df7d79; --neg-soft:#33211f}}
 </style></head>
 <body><div class="page">
   <header class="top"><div class="wrap">
@@ -130,68 +165,216 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
   </div></header>
   <div class="wrap">
   <div class="kpis">
-    <div class="kpi accent"><div class="n">43</div><div class="l">участников сдали работу</div></div>
-    <div class="kpi good"><div class="n">28</div><div class="l">готовых проектов<br>(инструмент приложен)</div></div>
-    <div class="kpi good"><div class="n">25</div><div class="l">подтверждена<br>работоспособность</div></div>
-    <div class="kpi warn2"><div class="n">8</div><div class="l">описание есть,<br>инструмента нет</div></div>
-    <div class="kpi neg"><div class="n">7</div><div class="l">только ТЗ,<br>без проекта</div></div></div>
+    <div class="kpi accent"><div class="n">30</div><div class="l">сдали проект<br>(из 45 приславших)</div></div>
+    <div class="kpi good"><div class="n">47</div><div class="l">всего рабочих<br>проектов</div></div>
+    <div class="kpi good"><div class="n">27</div><div class="l">подтверждена<br>работоспособность</div></div>
+    <div class="kpi warn2"><div class="n">8</div><div class="l">описание без проекта<br>(не засчитано)</div></div>
+    <div class="kpi neg"><div class="n">7</div><div class="l">только ТЗ<br>(не засчитано)</div></div></div>
   <div class="note"><b>Как читать.</b> Работа отнесена сотруднику по ФИО в имени файла, иначе — по отправителю.
   <b>Результат</b> — работающий инструмент <b>и</b> описание в .md; только техническое задание результатом не считается.</div>
   <h2 class="sec">Сводная таблица</h2>
   <div class="panel"><div class="tbl-wrap"><table>
   <thead><tr><th>Сотрудник</th><th>Подразделение</th><th>Проект</th><th>Статус сдачи</th><th>Проверка</th></tr></thead>
-  <tbody><tr><td>Акбашева Юлия Викторовна</td><td class='mut'>Бухгалтерия</td><td>ReconPro — сверка АРМ ↔ 1С</td><td><span class='badge good'>Проект с описанием</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Акбулатова Айгуль Сагитовна</td><td class='mut'>Бухгалтерия</td><td>Сверщик платёжной заявки со счётом</td><td><span class='badge good'>Проект с описанием</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Амирханова Елена Николаевна</td><td class='mut'>Бухгалтерия</td><td>Checker поступлений ТМЦ без обязательного списания (Python)</td><td><span class='badge good'>Проект с описанием</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Волкова Полина Петровна</td><td class='mut'>Бухгалтерия</td><td>Сверка переноса зарплаты «1С ЗУП → АРМ»</td><td><span class='badge good'>Проект с описанием</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Галимзянова Роза Маратовна</td><td class='mut'>Бухгалтерия</td><td>Сверщик ОСВ «АРМ ↔ 1С» (два решения)</td><td><span class='badge good'>Проект с описанием</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Джумалиева Альбина Анваровна</td><td class='mut'>Бухгалтерия</td><td>FIN-04 — локализатор расхождения АРМ ↔ 1С</td><td><span class='badge good'>Проект с описанием</span></td><td><span class='badge warn'>проверено: частично</span></td></tr>
-<tr><td>Зеленкова Людмила Николаевна</td><td class='mut'>Бухгалтерия</td><td>Checker ТМЦ без списания (Excel-шаблон, ТЗ-11)</td><td><span class='badge good'>Проект с описанием</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Самматова Динара Рафаэлевна</td><td class='mut'>Бухгалтерия</td><td>Сверщик ОСВ АРМ ↔ 1С (Python)</td><td><span class='badge good'>Проект с описанием</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Майструк Светлана Владиковна</td><td class='mut'>Коммерческое управление</td><td>Автоматизация подготовки тарифов для АРМ</td><td><span class='badge good'>Проект с описанием</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Емельянов Владислав Викторович</td><td class='mut'>Отдел автозайм</td><td>Четыре MVP автоломбарда (ФНП, тарифы, контакты, просрочка)</td><td><span class='badge good'>Проект с описанием</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Байтурин Ирек Хасанович</td><td class='mut'>Отдел безопасности</td><td>Контроль учёта ОПС и СВН + комплект журналов ревизии и СБ</td><td><span class='badge good'>Проект с описанием</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Блохина Евгения Сергеевна</td><td class='mut'>Отдел информационной безопасности</td><td>Дашборд мониторинга реестра ОРД по информационной безопасности</td><td><span class='badge good'>Проект с описанием</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Саликаева Марина Анатольевна</td><td class='mut'>Отдел кадрового делопроизводства</td><td>Два MVP кадрового делопроизводства: календарь воинского учёта и табель АРМ → 1С:ЗУП</td><td><span class='badge good'>Проект с описанием</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Клейменова Евгения Владимировна</td><td class='mut'>Отдел коммерческих операций Уфа</td><td>Веб-приложение KPI на Google Apps Script</td><td><span class='badge good'>Проект с описанием</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Бикмухаметова Алина Радиковна</td><td class='mut'>Отдел обучения и развития</td><td>Два MVP обучения: трекер корректирующего обучения и контроль передачи результата экзамена</td><td><span class='badge good'>Проект с описанием</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Давлетбаева Елена Александровна</td><td class='mut'>Отдел обучения и развития</td><td>Калькулятор премии наставникам КМЗ</td><td><span class='badge good'>Проект с описанием</span></td><td><span class='badge warn'>проверено: частично</span></td></tr>
-<tr><td>Зимина Ангелина Юрьевна</td><td class='mut'>Отдел операционного управления и методологии</td><td>MVP — контроль внешнего аудита</td><td><span class='badge good'>Проект с описанием</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Хасанова Алина Файрузовна</td><td class='mut'>Отдел по подбору недвижимости</td><td>Напоминалка платежей по аренде</td><td><span class='badge good'>Проект с описанием</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Палиенко Алексей Вячеславович</td><td class='mut'>Отдел продаж техники</td><td>«Остатки и пополнение» — утилита по товарным остаткам КМТ</td><td><span class='badge good'>Проект с описанием</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Балтабаева Елена Талгатовна</td><td class='mut'>Планово-экономический отдел</td><td>Финансовый дашборд ООО «СКС Ломбард»</td><td><span class='badge good'>Проект с описанием</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Газизова Наиля Маратовна</td><td class='mut'>Планово-экономический отдел</td><td>Два MVP: «Финансовый контроль» и «Внутригрупповые займы»</td><td><span class='badge good'>Проект с описанием</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Абдеев Айдар Расимович</td><td class='mut'>Супервайзеры</td><td>Автономные калькуляторы зарплаты товароведов</td><td><span class='badge good'>Проект с описанием</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Заляков Ренат Асгатович</td><td class='mut'>Управление тех.инфраструктуры и мат.обеспечения</td><td>Шесть проектов: диспетчерская курьеров, агенты рутины, аналитика Битрикс, разбор резюме, склад ломбарда</td><td><span class='badge good'>Проект с описанием</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Гордеева Гульнара Альбертовна</td><td class='mut'>Бухгалтерия</td><td>Сверка аренды АРМ ↔ 1С (МФО)</td><td><span class='badge warn'>Проект без описания</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Утяев Ришат Хамидуллович</td><td class='mut'>Бухгалтерия</td><td>Сверка АРМ ↔ 1С (Excel)</td><td><span class='badge warn'>Проект без описания</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Конкина Екатерина Владимировна</td><td class='mut'>КМ Золото</td><td>Центр управления ДМДК (Excel MVP 1.0)</td><td><span class='badge warn'>Проект без описания</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Остапенко Дмитрий Олегович</td><td class='mut'>Отдел технической поддержки</td><td>VpnManager</td><td><span class='badge warn'>Проект без описания</span></td><td><span class='badge mut'>не проверялось</span></td></tr>
-<tr><td>Камаров Антон Александрович</td><td class='mut'>Супервайзеры</td><td>Контроль открытия подразделений через мессенджер MAX (облачная функция)</td><td><span class='badge warn'>Проект без описания</span></td><td><span class='badge good'>проверено: работает</span></td></tr>
-<tr><td>Мухамадисламова Эльвира Верновна</td><td class='mut'>Бухгалтерия</td><td>Учёт облигаций «Отчёт брокера → проводки»</td><td><span class='badge warn2'>Описание без проекта</span></td><td><span class='badge mut'>не проверялось</span></td></tr>
-<tr><td>Бажанов Алексей Владимирович</td><td class='mut'>Отдел автозайм</td><td>Журнал постановки и снятия залога ТС в ФНП (MVP-AUTO-01)</td><td><span class='badge warn2'>Описание без проекта</span></td><td><span class='badge mut'>не проверялось</span></td></tr>
-<tr><td>Мохамедов Исмаил</td><td class='mut'>Отдел информационной безопасности</td><td>Система мониторинга утечек данных (darkweb)</td><td><span class='badge warn2'>Описание без проекта</span></td><td><span class='badge mut'>не проверялось</span></td></tr>
-<tr><td>Петров Дмитрий Юрьевич</td><td class='mut'>Отдел финансового анализа</td><td>Кнопка «Управленческий отчёт ГК СКС»</td><td><span class='badge warn2'>Описание без проекта</span></td><td><span class='badge mut'>не проверялось</span></td></tr>
-<tr><td>Деев Виталий Валерьевич</td><td class='mut'>Правовой отдел</td><td>LEGAL-X01 — сравнение двух редакций договора</td><td><span class='badge warn2'>Описание без проекта</span></td><td><span class='badge mut'>не проверялось</span></td></tr>
-<tr><td>Каюмов Тимур Тимербаевич</td><td class='mut'>Правовой отдел</td><td>Калькулятор корпоративных сроков АО «ГК СКС»</td><td><span class='badge warn2'>Описание без проекта</span></td><td><span class='badge warn'>проверено: частично</span></td></tr>
-<tr><td>Петряева Карина Ринатовна</td><td class='mut'>Правовой отдел</td><td>«Правовая сводка РФ» — ежедневный мониторинг законодательства</td><td><span class='badge warn2'>Описание без проекта</span></td><td><span class='badge mut'>не проверялось</span></td></tr>
-<tr><td>Никифоров Денис Андреевич</td><td class='mut'>Управление безопасности</td><td>Опросник расчёта заработной платы</td><td><span class='badge warn2'>Описание без проекта</span></td><td><span class='badge mut'>не проверялось</span></td></tr>
-<tr><td>Кузьмина Айгуль Казбековна</td><td class='mut'>КМ Золото</td><td>Пакет документов «Скупка и оборот ДМДК» v3</td><td><span class='badge neg'>ТЗ без проекта</span></td><td><span class='badge mut'>не проверялось</span></td></tr>
-<tr><td>Костюхина Елена Александровна</td><td class='mut'>Отдел операционного управления и методологии</td><td>Требования к автоматизации «Управление табелем учёта рабочего времени»</td><td><span class='badge neg'>ТЗ без проекта</span></td><td><span class='badge mut'>не проверялось</span></td></tr>
-<tr><td>Фахретдинова Лена Ренатовна</td><td class='mut'>Отдел привлечения клиентов</td><td>Методология процесса «Управление репутацией и отзывами»</td><td><span class='badge neg'>ТЗ без проекта</span></td><td><span class='badge mut'>не проверялось</span></td></tr>
-<tr><td>Гареев Айрат</td><td class='mut'>Отдел эксплуатации и строительства</td><td>Четыре методологии процессов эксплуатации и строительства</td><td><span class='badge neg'>ТЗ без проекта</span></td><td><span class='badge mut'>не проверялось</span></td></tr>
-<tr><td>Месхи Дмитрий Валерьевич</td><td class='mut'>Правовой отдел</td><td>Помощник подготовки иска и письма по данным из АРМ</td><td><span class='badge neg'>ТЗ без проекта</span></td><td><span class='badge mut'>не проверялось</span></td></tr>
-<tr><td>Напалкова Валерия Евгеньевна</td><td class='mut'>Супервайзеры</td><td>Общий дашборд показателей «Восток»</td><td><span class='badge neg'>ТЗ без проекта</span></td><td><span class='badge mut'>не проверялось</span></td></tr>
-<tr><td>Рахимова Анна Андреевна</td><td class='mut'>Товароведы</td><td>Семь методологий процессов склада, ОП и финмониторинга</td><td><span class='badge neg'>ТЗ без проекта</span></td><td><span class='badge mut'>не проверялось</span></td></tr></tbody></table></div></div>
+  <tbody><tr class='r-good'><td rowspan='1' class='who'>Акбашева Юлия Викторовна</td><td rowspan='1' class='mut'>Бухгалтерия</td><td class='pr'>ReconPro — сверка АРМ ↔ 1С</td><td rowspan='1'><span class='badge good'>Проект с описанием</span></td><td rowspan='1'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good'><td rowspan='1' class='who'>Акбулатова Айгуль Сагитовна</td><td rowspan='1' class='mut'>Бухгалтерия</td><td class='pr'>Сверщик платёжной заявки со счётом</td><td rowspan='1'><span class='badge good'>Проект с описанием</span></td><td rowspan='1'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good'><td rowspan='1' class='who'>Амирханова Елена Николаевна</td><td rowspan='1' class='mut'>Бухгалтерия</td><td class='pr'>Checker поступлений ТМЦ без обязательного списания (Python)</td><td rowspan='1'><span class='badge good'>Проект с описанием</span></td><td rowspan='1'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good'><td rowspan='1' class='who'>Волкова Полина Петровна</td><td rowspan='1' class='mut'>Бухгалтерия</td><td class='pr'>Сверка переноса зарплаты «1С ЗУП → АРМ»</td><td rowspan='1'><span class='badge good'>Проект с описанием</span></td><td rowspan='1'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good multi'><td rowspan='2' class='who'>Галимзянова Роза Маратовна</td><td rowspan='2' class='mut'>Бухгалтерия</td><td class='pr'>MVP-ACC-01 — сверщик АРМ ↔ 1С (Python)</td><td rowspan='2'><span class='badge good'>Проект с описанием</span></td><td rowspan='2'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good multi'><td class='pr'>Сверщик ОСВ АРМ ↔ 1С (Excel, реальные данные июля 2026)</td></tr>
+<tr class='r-good'><td rowspan='1' class='who'>Джумалиева Альбина Анваровна</td><td rowspan='1' class='mut'>Бухгалтерия</td><td class='pr'>FIN-04 — локализатор расхождения АРМ ↔ 1С</td><td rowspan='1'><span class='badge good'>Проект с описанием</span></td><td rowspan='1'><span class='badge warn'>проверено: частично</span></td></tr>
+<tr class='r-good'><td rowspan='1' class='who'>Зеленкова Людмила Николаевна</td><td rowspan='1' class='mut'>Бухгалтерия</td><td class='pr'>Checker ТМЦ без списания (Excel-шаблон, ТЗ-11)</td><td rowspan='1'><span class='badge good'>Проект с описанием</span></td><td rowspan='1'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good'><td rowspan='1' class='who'>Самматова Динара Рафаэлевна</td><td rowspan='1' class='mut'>Бухгалтерия</td><td class='pr'>Сверщик ОСВ АРМ ↔ 1С (Python)</td><td rowspan='1'><span class='badge good'>Проект с описанием</span></td><td rowspan='1'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good'><td rowspan='1' class='who'>Майструк Светлана Владиковна</td><td rowspan='1' class='mut'>Коммерческое управление</td><td class='pr'>Автоматизация подготовки тарифов для АРМ</td><td rowspan='1'><span class='badge good'>Проект с описанием</span></td><td rowspan='1'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good multi'><td rowspan='4' class='who'>Емельянов Владислав Викторович</td><td rowspan='4' class='mut'>Отдел автозайм</td><td class='pr'>MVP-AUTO-01 — журнал постановки и снятия залога ТС в ФНП</td><td rowspan='4'><span class='badge good'>Проект с описанием</span></td><td rowspan='4'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good multi'><td class='pr'>MVP-AUTO-02 — реестр тарифов и ознакомления сотрудников</td></tr>
+<tr class='r-good multi'><td class='pr'>MVP-AUTO-X01 — контроль частоты контактов и границы передачи просрочки</td></tr>
+<tr class='r-good multi'><td class='pr'>MVP-AUTO-X02 — контроль просрочки</td></tr>
+<tr class='r-good multi'><td rowspan='3' class='who'>Байтурин Ирек Хасанович</td><td rowspan='3' class='mut'>Отдел безопасности</td><td class='pr'>Контроль учёта ОПС и СВН (локальный прототип)</td><td rowspan='3'><span class='badge good'>Проект с описанием</span></td><td rowspan='3'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good multi'><td class='pr'>АвтоОсмотр (AutoInspect)</td></tr>
+<tr class='r-good multi'><td class='pr'>Комплект журналов ревизии и СБ</td></tr>
+<tr class='r-good'><td rowspan='1' class='who'>Блохина Евгения Сергеевна</td><td rowspan='1' class='mut'>Отдел информационной безопасности</td><td class='pr'>Дашборд мониторинга реестра ОРД по информационной безопасности</td><td rowspan='1'><span class='badge good'>Проект с описанием</span></td><td rowspan='1'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good multi'><td rowspan='2' class='who'>Саликаева Марина Анатольевна</td><td rowspan='2' class='mut'>Отдел кадрового делопроизводства</td><td class='pr'>MVP-HRADM-X01 — календарь кадровых событий воинского учёта</td><td rowspan='2'><span class='badge good'>Проект с описанием</span></td><td rowspan='2'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good multi'><td class='pr'>MVP-HRADM-X02 — табель АРМ в формат 1С:ЗУП</td></tr>
+<tr class='r-good'><td rowspan='1' class='who'>Клейменова Евгения Владимировна</td><td rowspan='1' class='mut'>Отдел коммерческих операций Уфа</td><td class='pr'>Веб-приложение KPI на Google Apps Script</td><td rowspan='1'><span class='badge good'>Проект с описанием</span></td><td rowspan='1'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good multi'><td rowspan='2' class='who'>Бикмухаметова Алина Радиковна</td><td rowspan='2' class='mut'>Отдел обучения и развития</td><td class='pr'>MVP-LND-01 — трекер корректирующего обучения</td><td rowspan='2'><span class='badge good'>Проект с описанием</span></td><td rowspan='2'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good multi'><td class='pr'>MVP-LND-02 — контроль передачи результата экзамена супервайзеру</td></tr>
+<tr class='r-good'><td rowspan='1' class='who'>Давлетбаева Елена Александровна</td><td rowspan='1' class='mut'>Отдел обучения и развития</td><td class='pr'>Калькулятор премии наставникам КМЗ</td><td rowspan='1'><span class='badge good'>Проект с описанием</span></td><td rowspan='1'><span class='badge warn'>проверено: частично</span></td></tr>
+<tr class='r-good'><td rowspan='1' class='who'>Зимина Ангелина Юрьевна</td><td rowspan='1' class='mut'>Отдел операционного управления и методологии</td><td class='pr'>MVP — контроль внешнего аудита</td><td rowspan='1'><span class='badge good'>Проект с описанием</span></td><td rowspan='1'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good'><td rowspan='1' class='who'>Хасанова Алина Файрузовна</td><td rowspan='1' class='mut'>Отдел по подбору недвижимости</td><td class='pr'>Напоминалка платежей по аренде</td><td rowspan='1'><span class='badge good'>Проект с описанием</span></td><td rowspan='1'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good'><td rowspan='1' class='who'>Палиенко Алексей Вячеславович</td><td rowspan='1' class='mut'>Отдел продаж техники</td><td class='pr'>«Остатки и пополнение» — утилита по товарным остаткам КМТ</td><td rowspan='1'><span class='badge good'>Проект с описанием</span></td><td rowspan='1'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good multi'><td rowspan='3' class='who'>Щербакова Татьяна Евгеньевна</td><td rowspan='3' class='mut'>Отдел проектного управления</td><td class='pr'>MVP-PMO-01 — структурированная заявка на задачу или проект</td><td rowspan='3'><span class='badge good'>Проект с описанием</span></td><td rowspan='3'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good multi'><td class='pr'>MVP-PMO-02 — план проекта в пакет черновиков задач</td></tr>
+<tr class='r-good multi'><td class='pr'>MVP-PMO-X01 — обработка выгрузки Битрикс24</td></tr>
+<tr class='r-good'><td rowspan='1' class='who'>Балтабаева Елена Талгатовна</td><td rowspan='1' class='mut'>Планово-экономический отдел</td><td class='pr'>Финансовый дашборд ООО «СКС Ломбард»</td><td rowspan='1'><span class='badge good'>Проект с описанием</span></td><td rowspan='1'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good multi'><td rowspan='2' class='who'>Газизова Наиля Маратовна</td><td rowspan='2' class='mut'>Планово-экономический отдел</td><td class='pr'>Финансовый контроль — MVP 1.0 (остатки и потребности)</td><td rowspan='2'><span class='badge good'>Проект с описанием</span></td><td rowspan='2'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good multi'><td class='pr'>Внутригрупповые займы — MVP 1.0</td></tr>
+<tr class='r-good'><td rowspan='1' class='who'>Абдеев Айдар Расимович</td><td rowspan='1' class='mut'>Супервайзеры</td><td class='pr'>Автономные калькуляторы зарплаты товароведов</td><td rowspan='1'><span class='badge good'>Проект с описанием</span></td><td rowspan='1'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good multi'><td rowspan='2' class='who'>Васьков Максим Игоревич</td><td rowspan='2' class='mut'>Супервайзеры</td><td class='pr'>UnlockTracker — учёт открытия точки (мобильное приложение)</td><td rowspan='2'><span class='badge good'>Проект с описанием</span></td><td rowspan='2'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good multi'><td class='pr'>Обзвон по просроченной задолженности (Google Apps Script)</td></tr>
+<tr class='r-good multi'><td rowspan='6' class='who'>Заляков Ренат Асгатович</td><td rowspan='6' class='mut'>Управление тех.инфраструктуры и мат.обеспечения</td><td class='pr'>Диспетчерская тикет-система курьеров и техников (Битрикс24 + карта)</td><td rowspan='6'><span class='badge good'>Проект с описанием</span></td><td rowspan='6'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good multi'><td class='pr'>Агенты рутинных действий («обучение по показу»)</td></tr>
+<tr class='r-good multi'><td class='pr'>Битрикс24 — аналитика и дашборд</td></tr>
+<tr class='r-good multi'><td class='pr'>Агент разбора резюме</td></tr>
+<tr class='r-good multi'><td class='pr'>Склад ломбарда</td></tr>
+<tr class='r-good multi'><td class='pr'>Логистика курьеров (ранняя версия)</td></tr>
+<tr class='r-good'><td rowspan='1' class='who'>Гордеева Гульнара Альбертовна</td><td rowspan='1' class='mut'>Бухгалтерия</td><td class='pr'>Сверка аренды АРМ ↔ 1С (МФО)</td><td rowspan='1'><span class='badge warn'>Проект без описания</span></td><td rowspan='1'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good'><td rowspan='1' class='who'>Утяев Ришат Хамидуллович</td><td rowspan='1' class='mut'>Бухгалтерия</td><td class='pr'>Сверка АРМ ↔ 1С (Excel)</td><td rowspan='1'><span class='badge warn'>Проект без описания</span></td><td rowspan='1'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good'><td rowspan='1' class='who'>Конкина Екатерина Владимировна</td><td rowspan='1' class='mut'>КМ Золото</td><td class='pr'>Центр управления ДМДК (Excel MVP 1.0)</td><td rowspan='1'><span class='badge warn'>Проект без описания</span></td><td rowspan='1'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-good'><td rowspan='1' class='who'>Остапенко Дмитрий Олегович</td><td rowspan='1' class='mut'>Отдел технической поддержки</td><td class='pr'>VpnManager</td><td rowspan='1'><span class='badge warn'>Проект без описания</span></td><td rowspan='1'><span class='badge mut'>не проверялось</span></td></tr>
+<tr class='r-good'><td rowspan='1' class='who'>Камаров Антон Александрович</td><td rowspan='1' class='mut'>Супервайзеры</td><td class='pr'>Контроль открытия подразделений через мессенджер MAX (облачная функция)</td><td rowspan='1'><span class='badge warn'>Проект без описания</span></td><td rowspan='1'><span class='badge good'>проверено: работает</span></td></tr>
+<tr class='r-warn2'><td rowspan='1' class='who'>Мухамадисламова Эльвира Верновна</td><td rowspan='1' class='mut'>Бухгалтерия</td><td class='pr'>Учёт облигаций «Отчёт брокера → проводки»</td><td rowspan='1'><span class='badge warn2'>Описание без проекта</span></td><td rowspan='1'><span class='badge mut'>не проверялось</span></td></tr>
+<tr class='r-warn2'><td rowspan='1' class='who'>Бажанов Алексей Владимирович</td><td rowspan='1' class='mut'>Отдел автозайм</td><td class='pr'>Журнал постановки и снятия залога ТС в ФНП (MVP-AUTO-01)</td><td rowspan='1'><span class='badge warn2'>Описание без проекта</span></td><td rowspan='1'><span class='badge mut'>не проверялось</span></td></tr>
+<tr class='r-warn2'><td rowspan='1' class='who'>Мохамедов Исмаил</td><td rowspan='1' class='mut'>Отдел информационной безопасности</td><td class='pr'>Система мониторинга утечек данных (darkweb)</td><td rowspan='1'><span class='badge warn2'>Описание без проекта</span></td><td rowspan='1'><span class='badge mut'>не проверялось</span></td></tr>
+<tr class='r-warn2'><td rowspan='1' class='who'>Петров Дмитрий Юрьевич</td><td rowspan='1' class='mut'>Отдел финансового анализа</td><td class='pr'>Кнопка «Управленческий отчёт ГК СКС»</td><td rowspan='1'><span class='badge warn2'>Описание без проекта</span></td><td rowspan='1'><span class='badge mut'>не проверялось</span></td></tr>
+<tr class='r-warn2'><td rowspan='1' class='who'>Деев Виталий Валерьевич</td><td rowspan='1' class='mut'>Правовой отдел</td><td class='pr'>LEGAL-X01 — сравнение двух редакций договора</td><td rowspan='1'><span class='badge warn2'>Описание без проекта</span></td><td rowspan='1'><span class='badge mut'>не проверялось</span></td></tr>
+<tr class='r-warn2'><td rowspan='1' class='who'>Каюмов Тимур Тимербаевич</td><td rowspan='1' class='mut'>Правовой отдел</td><td class='pr'>Калькулятор корпоративных сроков АО «ГК СКС»</td><td rowspan='1'><span class='badge warn2'>Описание без проекта</span></td><td rowspan='1'><span class='badge warn'>проверено: частично</span></td></tr>
+<tr class='r-warn2'><td rowspan='1' class='who'>Петряева Карина Ринатовна</td><td rowspan='1' class='mut'>Правовой отдел</td><td class='pr'>«Правовая сводка РФ» — ежедневный мониторинг законодательства</td><td rowspan='1'><span class='badge warn2'>Описание без проекта</span></td><td rowspan='1'><span class='badge mut'>не проверялось</span></td></tr>
+<tr class='r-warn2'><td rowspan='1' class='who'>Никифоров Денис Андреевич</td><td rowspan='1' class='mut'>Управление безопасности</td><td class='pr'>Опросник расчёта заработной платы</td><td rowspan='1'><span class='badge warn2'>Описание без проекта</span></td><td rowspan='1'><span class='badge mut'>не проверялось</span></td></tr>
+<tr class='r-neg'><td rowspan='1' class='who'>Кузьмина Айгуль Казбековна</td><td rowspan='1' class='mut'>КМ Золото</td><td class='pr'>Пакет документов «Скупка и оборот ДМДК» v3</td><td rowspan='1'><span class='badge neg'>ТЗ без проекта</span></td><td rowspan='1'><span class='badge mut'>не проверялось</span></td></tr>
+<tr class='r-neg'><td rowspan='1' class='who'>Костюхина Елена Александровна</td><td rowspan='1' class='mut'>Отдел операционного управления и методологии</td><td class='pr'>Требования к автоматизации «Управление табелем учёта рабочего времени»</td><td rowspan='1'><span class='badge neg'>ТЗ без проекта</span></td><td rowspan='1'><span class='badge mut'>не проверялось</span></td></tr>
+<tr class='r-neg'><td rowspan='1' class='who'>Фахретдинова Лена Ренатовна</td><td rowspan='1' class='mut'>Отдел привлечения клиентов</td><td class='pr'>Методология процесса «Управление репутацией и отзывами»</td><td rowspan='1'><span class='badge neg'>ТЗ без проекта</span></td><td rowspan='1'><span class='badge mut'>не проверялось</span></td></tr>
+<tr class='r-neg'><td rowspan='1' class='who'>Гареев Айрат</td><td rowspan='1' class='mut'>Отдел эксплуатации и строительства</td><td class='pr'>Четыре методологии процессов эксплуатации и строительства</td><td rowspan='1'><span class='badge neg'>ТЗ без проекта</span></td><td rowspan='1'><span class='badge mut'>не проверялось</span></td></tr>
+<tr class='r-neg'><td rowspan='1' class='who'>Месхи Дмитрий Валерьевич</td><td rowspan='1' class='mut'>Правовой отдел</td><td class='pr'>Помощник подготовки иска и письма по данным из АРМ</td><td rowspan='1'><span class='badge neg'>ТЗ без проекта</span></td><td rowspan='1'><span class='badge mut'>не проверялось</span></td></tr>
+<tr class='r-neg'><td rowspan='1' class='who'>Напалкова Валерия Евгеньевна</td><td rowspan='1' class='mut'>Супервайзеры</td><td class='pr'>Общий дашборд показателей «Восток»</td><td rowspan='1'><span class='badge neg'>ТЗ без проекта</span></td><td rowspan='1'><span class='badge mut'>не проверялось</span></td></tr>
+<tr class='r-neg'><td rowspan='1' class='who'>Рахимова Анна Андреевна</td><td rowspan='1' class='mut'>Товароведы</td><td class='pr'>Семь методологий процессов склада, ОП и финмониторинга</td><td rowspan='1'><span class='badge neg'>ТЗ без проекта</span></td><td rowspan='1'><span class='badge mut'>не проверялось</span></td></tr></tbody></table></div></div>
   <h2 class="sec">Проекты подробно — с описанием реализации</h2>
   <div class="cards">
     <article class="card good"><div class="card-h">
       <div><div class="card-t">ReconPro — сверка АРМ ↔ 1С</div><div class="card-p">Акбашева Юлия Викторовна <span class="dot">·</span> Бухгалтерия</div></div>
-      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span></div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">README.md</div><p>ReconPro локально сравнивает две Excel-выгрузки — из АРМ и 1С — и формирует Excel-отчёт только с найденными расхождениями.</p><p>В версии MVP проверяются:</p><p>• входящие остатки;</p><p>• дебетовые обороты;</p><p>• кредитовые обороты;</p><p>• исходящие остатки;</p><p>• счёт учёта;</p><p>• наименование контрагента;</p><p>• ФИО;</p></div></details></div></div>
       <p class="card-d">Локальный Python-инструмент: сравнивает две Excel-выгрузки (АРМ и 1С) и формирует Excel-отчёт только с расхождениями — по остаткам, оборотам, счёту учёта, контрагенту и ФИО. Исходные файлы не изменяются, записи в АРМ/1С нет.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручное построчное сличение двух оборотно-сальдовых выгрузок.</div><div><b>Проверка:</b> автотесты ReconPro пройдены (4 из 4); скрипт запускается на приложенных выгрузках АРМ и 1С</div>
       <div class="sys">АРМ · 1С · Excel</div><div><b>В комплекте:</b> Python-скрипт, автотесты, синтетические выгрузки, ожидаемый результат, 5 документов (ТЗ, журнал тестов, ограничения, оценка времени, безопасная остановка)</div></div>
       <div class="card-act"><span class="hint">файлов с описанием: 3</span><details class="docbox"><summary>Открыть описание</summary><div class="docwrap"><div class="dh">Описание реализации</div><details class="doc"><summary>README.md</summary><div class="md"><h3>ReconPro MVP — сверка данных АРМ ↔ 1С</h3>
+
+<h4>Что делает MVP</h4>
+
+<p>ReconPro локально сравнивает две Excel-выгрузки — из <b>АРМ</b> и <b>1С</b> — и формирует Excel-отчёт только с найденными расхождениями.</p>
+
+<p>В версии MVP проверяются:</p>
+
+<ul>
+<li>входящие остатки;</li>
+<li>дебетовые обороты;</li>
+<li>кредитовые обороты;</li>
+<li>исходящие остатки;</li>
+<li>счёт учёта;</li>
+<li>наименование контрагента;</li>
+<li>ФИО;</li>
+<li>наличие записи в обеих системах.</li>
+</ul>
+
+<p>Исходные файлы <b>не изменяются</b>. ReconPro ничего не записывает в АРМ или 1С и не исправляет данные автоматически.</p>
+
+<h4>Состав папки</h4>
+
+<ul>
+<li><code>src/reconpro.py</code> — рабочий исходный файл решения;</li>
+<li><code>samples/ARM_sample.xlsx</code> — синтетическая выгрузка АРМ;</li>
+<li><code>samples/1C_sample.xlsx</code> — синтетическая выгрузка 1С;</li>
+<li><code>reports/ExpectedResult.xlsx</code> — ожидаемый результат для синтетического примера;</li>
+<li><code>tests/test_core.py</code> — автоматические тесты ядра;</li>
+<li><code>docs/TZ_ReconPro.md</code> — ТЗ с зафиксированными уточнениями;</li>
+<li><code>docs/Test_Log.md</code> — журнал тестов;</li>
+<li><code>docs/Known_Limitations.md</code> — ограничения и отложенные функции;</li>
+<li><code>docs/Time_Estimate.md</code> — оценка времени до/после MVP;</li>
+<li><code>docs/Recovery_and_Safe_Stop.md</code> — инструкция безопасной остановки и восстановления;</li>
+<li><code>requirements.txt</code> — единственная внешняя библиотека;</li>
+<li><code>run.bat</code> — простой запуск в Windows.</li>
+</ul>
+
+<h4>Требования</h4>
+
+<ul>
+<li>Windows 10/11 или другая ОС с Python;</li>
+<li>Python 3.10+;</li>
+<li>Microsoft Excel для просмотра результата не обязателен для выполнения сверки, но удобен для просмотра отчёта;</li>
+<li>интернет не требуется после установки зависимости <code>openpyxl</code>.</li>
+</ul>
+
+<h4>Первый запуск — самый простой способ (Windows)</h4>
+
+<ul>
+<li>Распакуйте папку проекта.</li>
+<li>Дважды нажмите <code>run.bat</code>.</li>
+<li>При первом запуске установится библиотека <code>openpyxl</code>.</li>
+<li>В окне ReconPro нажмите <b>«Выбрать»</b> напротив файла АРМ.</li>
+<li>Выберите Excel-файл из АРМ (<code>.xlsx</code>).</li>
+<li>Выберите Excel-файл из 1С (<code>.xlsx</code>).</li>
+<li>Выберите, куда сохранить отчёт.</li>
+<li>Нажмите <b>«СВЕРИТЬ»</b>.</li>
+<li>После завершения откройте созданный Excel-отчёт.</li>
+</ul>
+
+<h4>Проверка на готовом синтетическом примере</h4>
+
+<p>Используйте:</p>
+
+<ul>
+<li><code>samples/ARM_sample.xlsx</code>;</li>
+<li><code>samples/1C_sample.xlsx</code>.</li>
+</ul>
+
+<p>Ожидаемый результат находится в:</p>
+
+<ul>
+<li><code>reports/ExpectedResult.xlsx</code>.</li>
+</ul>
+
+<p>На синтетическом наборе программа должна получить:</p>
+
+<ul>
+<li>строк АРМ: <b>8</b>;</li>
+<li>строк 1С: <b>8</b>;</li>
+<li>уникальных ключей: <b>9</b>;</li>
+<li>полностью совпавших ключей: <b>2</b>;</li>
+<li>расхождений: <b>8</b>.</li>
+</ul>
+
+<h4>Требуемые колонки Excel</h4>
+
+<p>MVP автоматически распознаёт распространённые варианты названий. Базовый набор:</p>
+
+<ul>
+<li><code>Код</code> — стабильный ключ строки для сопоставления АРМ и 1С;</li>
+<li><code>Счет учета</code>;</li>
+<li><code>Контрагент</code>;</li>
+<li><code>ФИО</code>;</li>
+<li><code>Входящий остаток</code>;</li>
+<li><code>Оборот Дт</code>;</li>
+<li><code>Оборот Кт</code>;</li>
+<li><code>Исходящий остаток</code>.</li>
+</ul>
+
+<p>Если колонки нет, ReconPro останавливает сверку и выводит понятное сообщение — исходные файлы при этом не изменяются.</p>
+
+<h4>Как сравниваются данные</h4>
+
+<ul>
+<li>Денежные значения сравниваются с допуском <b>0,01</b>.</li>
+<li>Счёт учёта сравнивается после удаления лишних пробелов.</li>
+<li>Контрагент и ФИО перед сравнением приводятся к нижнему регистру, очищаются от кавычек и части пунктуации, убираются двойные пробелы.</li>
+<li>Например, <code>ООО Альфа</code> и <code>ООО &quot;АЛЬФА&quot;</code> считаются совпадающими.</li>
+<li><code>Сидоров Сергей Сергеевич</code> и <code>Сидоров С. С.</code> в MVP считаются различающимися — интеллектуальное сопоставление ФИО отложено.</li>
+</ul>
+
+<h4>Запуск из командной строки</h4>
+
+<p>``<code>bash</p>
+<p>python src/reconpro.py --arm samples/ARM_sample.xlsx --onec samples/1C_sample.xlsx --out reports/result.xlsx</p>
+<p></code>`<code></p>
+
+<h4>Запуск тестов</h4>
+
+<p></code>`<code>bash</p>
+<p>python -m unittest tests/test_core.py -v</p>
+<p></code>``</p>
+
+<h4>Важно по безопасности</h4>
+
+<p>Не загружайте в тестовые файлы реальные ПДн и конфиденциальные данные без разрешения владельца данных. Для демонстрации используйте синтетические или обезличенные примеры.</p>
+
+<p>Если требуется прямое подключение к АРМ/1С, автоматическая запись, API или изменение боевых данных — это <b>за границами данного MVP</b>.</p></div></details><details class="doc"><summary>README.md</summary><div class="md"><h3>ReconPro MVP — сверка данных АРМ ↔ 1С</h3>
 
 <h4>Что делает MVP</h4>
 
@@ -332,44 +515,11 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
 <li>[x] 7. Ограничения и отложенные функции — <code>docs/Known_Limitations.md</code></li>
 <li>[x] 8. Оценка активного времени до/после — <code>docs/Time_Estimate.md</code></li>
 <li>[x] 9. Восстановление/безопасная остановка — <code>docs/Recovery_and_Safe_Stop.md</code></li>
-</ul></div></details><details class="doc"><summary>Known_Limitations.md</summary><div class="md"><h3>Известные ограничения и отложенные функции</h3>
-
-<h4>Ограничения MVP 1.0</h4>
-
-<ul>
-<li>Основной входной формат — только <code>.xlsx</code>.</li>
-<li>Старый формат <code>.xls</code> не поддерживается.</li>
-<li>Для надёжного сопоставления требуется стабильное поле <code>Код</code>/<code>ID</code>/<code>Ключ</code> в обеих выгрузках.</li>
-<li>В MVP нет маппинга счетов N:1 и 1:N. Счёт учёта сравнивается напрямую.</li>
-<li>Нет автоматического семантического сопоставления ФИО «полное имя ↔ инициалы».</li>
-<li>Нет интеллектуального fuzzy matching контрагентов; выполняется только нормализация регистра, пробелов и части пунктуации.</li>
-<li>Нет сверки договоров, ЦФО, подразделений, номенклатурных групп и прочей аналитики, если она не включена в текущий набор полей.</li>
-<li>Нет автоматического поиска конкретного документа-причины по дням.</li>
-<li>Нет истории предыдущих сверок.</li>
-<li>Нет прямой интеграции с АРМ или 1С.</li>
-<li>Нет API, фонового запуска и многопользовательского режима.</li>
-<li>Программа не исправляет найденные ошибки автоматически.</li>
-</ul>
-
-<h4>Отложено после MVP</h4>
-
-<ul>
-<li>таблица маппинга счетов АРМ ↔ 1С, включая N:1 и 1:N;</li>
-<li>выбор дополнительных аналитик для сверки;</li>
-<li>сверка по документам и локализация «период → день → документ»;</li>
-<li>расширенное сопоставление ФИО;</li>
-<li>расширенное сопоставление контрагентов по ИНН/КПП;</li>
-<li>поддержка CSV и других форматов;</li>
-<li>архив сверок;</li>
-<li>повторная сверка после исправлений;</li>
-<li>расширенный dashboard;</li>
-<li>упаковка в <code>.exe</code> без необходимости устанавливать Python;</li>
-<li>интеграции — только после отдельного согласования ИТ и владельцев данных.</li>
 </ul></div></details></div></details></div>
     </article>
     <article class="card good"><div class="card-h">
       <div><div class="card-t">Сверщик платёжной заявки со счётом</div><div class="card-p">Акбулатова Айгуль Сагитовна <span class="dot">·</span> Бухгалтерия</div></div>
-      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span></div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">README.md</div><p>Перед проведением заявки в АРМ автоматически сравнить данные счёта с подготовленной заявкой и получить короткий результат: `МОЖНО ПРОВОДИТЬ` или список расхождений.</p><p>1. `input/invoice_data.csv` — реквизиты счёта. В этом MVP они вводятся из скана вручную.</p><p>2. `input/arm_request.xlsx` — выгрузка/экспорт заявки из АРМ.</p><p>1. Установить Python 3.11+.</p><p>2. Открыть командную строку в папке проекта.</p><p>3. Выполнить:</p><p>`pip install -r requirements.txt`</p><p>4. Положить свои входные файлы в `input/`.</p><p>5. Запустить:</p></div></details></div></div>
       <p class="card-d">Python-инструмент перед проведением заявки в АРМ сравнивает реквизиты счёта с подготовленной заявкой и выдаёт короткий вердикт «МОЖНО ПРОВОДИТЬ» или список расхождений с указанием, какое именно не сошлось. В комплекте входные примеры, ожидаемый результат и журнал тестов.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручную сверку счёта с заявкой перед проведением платежа в АРМ.</div><div><b>Проверка:</b> таблица открывается, но формул нет; скрипт sverka_platezhnoi_zayavki.py: синтаксис ок</div>
       <div class="sys">АРМ · Excel/CSV · Python</div><div><b>В комплекте:</b> Скрипт, requirements.txt, входные и выходные файлы, ожидаемый результат, журнал тестов, README, манифест проекта</div></div>
@@ -446,7 +596,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card good"><div class="card-h">
       <div><div class="card-t">Checker поступлений ТМЦ без обязательного списания (Python)</div><div class="card-p">Амирханова Елена Николаевна <span class="dot">·</span> Бухгалтерия</div></div>
-      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span></div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">README.md</div><p>Проверяет поступления ТМЦ, которые по правилу должны списываться сразу, и ищет для них связанное списание.</p><p>MVP работает только с Excel/CSV и не изменяет исходные файлы и не записывает документы обратно в 1С/АРМ.</p><p>1. Установить Python 3.10+.</p><p>2. Установить зависимости:</p><p>`pip install -r requirements.txt`</p><p>3. Положить входные файлы в `input/`:</p><p>• `поступления.xlsx`</p><p>• `движения.xlsx`</p><p>• `правила_списания.xlsx`</p></div></details></div></div>
       <p class="card-d">Python-инструмент проверяет поступления ТМЦ, которые по правилу должны списываться сразу (канцтовары, хозтовары), и ищет для них связанное списание. Работает только с Excel/CSV, исходные файлы не изменяет и ничего не пишет обратно в 1С/АРМ. В комплекте входные примеры, ожидаемый и фактический результат, сводка, журнал тестов и манифест.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручной поиск поступлений, по которым забыли оформить списание.</div><div><b>Проверка:</b> таблица открывается, но формул нет; скрипт checker.py: синтаксис ок</div>
       <div class="sys">1С · АРМ · Excel/CSV · Python</div><div><b>В комплекте:</b> Скрипт checker.py, requirements.txt, входные и выходные файлы, README, ТЗ с уточнениями, журнал тестов, ограничения, безопасная остановка</div></div>
@@ -599,7 +749,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card good"><div class="card-h">
       <div><div class="card-t">Сверка переноса зарплаты «1С ЗУП → АРМ»</div><div class="card-p">Волкова Полина Петровна <span class="dot">·</span> Бухгалтерия</div></div>
-      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span></div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">README.md</div><p>MVP-инструмент для отдела «Бухгалтерия и финансы» (процесс FIN-07).</p><p>Готовит суммы проводок зарплаты для ввода в АРМ и автоматически сверяет их с фактической выгрузкой из АРМ.</p><p>1. Открыть `01_reshenie/Сверка_ЗУП_АРМ_шаблон.xlsx`.</p><p>2. На вкладках «Начислено_ЗУП», «НДФЛ_ЗУП» — вставить свежий свод из 1С ЗУП по подразделениям (заменить пример своими данными).</p><p>3. На вкладке «Взносы_ЗУП» — вставить суммы взносов по организации из отчёта «Анализ взносов в фонды».</p><p>4. Открыть вкладку «Проводки_для_АРМ» — проверить строку «Проверка итогов» (должна быть 0), взять готовые суммы по счетам 70 / 68.01 / 69.01 / 69.11.</p><p>5. Ввести эти суммы проводками в АРМ вручную (инструмент ничего не пишет в АРМ автоматически).</p><p>6. Сделать в АРМ выгрузку ОСВ по этим счетам, вставить строками на вкладку «АРМ_ОСВ».</p></div></details></div></div>
       <p class="card-d">Excel-шаблон готовит суммы проводок зарплаты по счетам 70 / 68.01 / 69.01 / 69.11 из свода 1С ЗУП и автоматически сверяет их с выгрузкой ОСВ из АРМ. Проверен на реальных данных за июль 2026 — все счета сошлись.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручной подсчёт сумм проводок и ручную сверку с АРМ по каждому счёту.</div><div><b>Проверка:</b> таблица: 7 листов, 42 живых формул</div>
       <div class="sys">1С ЗУП · АРМ · Excel</div><div><b>В комплекте:</b> Рабочий Excel-шаблон, входной пример, ожидаемый результат, журнал тестов, ТЗ, ограничения, оценка времени, инструкция восстановления</div></div>
@@ -726,7 +876,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card good"><div class="card-h">
       <div><div class="card-t">Сверщик ОСВ «АРМ ↔ 1С» (два решения)</div><div class="card-p">Галимзянова Роза Маратовна <span class="dot">·</span> Бухгалтерия</div></div>
-      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span></div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">README.md</div><p>Локальный сверяльщик двух выгрузок (АРМ и 1С), который находит отсутствующие,</p><p>отличающиеся по сумме и задублированные документы — без записи куда-либо,</p><p>без интернета и без изменения входных файлов.</p><p>• Python 3.8 или новее (стандартная библиотека, ничего дополнительно ставить не нужно).</p><p>• Три CSV-файла: выгрузка АРМ, выгрузка 1С, таблица соответствия счетов (примеры лежат в `data/`).</p><p>MVP-ACC-01/</p><p>├── README.md                        — этот файл</p><p>├── reconcile.py                     — исходник (единственный скрипт)</p><p>├── data/</p></div></details></div></div>
       <p class="card-d">Два инструмента: Python-скрипт MVP-ACC-01 (находит отсутствующие, отличающиеся по сумме и задвоенные документы) и Excel-сверщик ОСВ, заполненный реальными данными за июль 2026. Маппинг счетов вынесен в отдельную таблицу, допуск — до копейки.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручную сверку оборотов по Excel-маппингу счёт за счётом.</div><div><b>Проверка:</b> прогон на синтетике: совпало 8, найдено 5 расхождений (отсутствие в базе, разная сумма, дубликат); Excel-сверщик — 7 листов, 286 формул</div>
       <div class="sys">АРМ · 1С · Excel · CSV</div><div><b>В комплекте:</b> Python-скрипт, Excel-сверщик на реальных данных, таблица маппинга, 4 тестовых сценария, ТЗ с уточнениями, журнал тестов</div></div>
@@ -950,7 +1100,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card good"><div class="card-h">
       <div><div class="card-t">FIN-04 — локализатор расхождения АРМ ↔ 1С</div><div class="card-p">Джумалиева Альбина Анваровна <span class="dot">·</span> Бухгалтерия</div></div>
-      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge warn">проверено: частично</span></div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge warn">проверено: частично</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">README.md</div><p>MVP локализует расхождение по цепочке:</p><p>месяц → счёт → день → документ → проводка/БНФО → возможная причина.</p><p>Поддерживаемые варианты маппинга:</p><p>• 1:1</p><p>• N:1</p><p>• 1:N</p><p>1. Сделайте копии исходных выгрузок АРМ и 1С.</p><p>2. Не изменяйте оригиналы.</p><p>3. Приведите выгрузки к структуре листов `АРМ_пример` и `1С_пример` в рабочем шаблоне.</p></div></details></div></div>
       <p class="card-d">Excel-шаблон локализует расхождение по цепочке месяц → счёт → день → документ → проводка и подсказывает вероятную причину. Поддерживает маппинг 1:1, N:1 и 1:N, сравнение до копейки.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручной поиск «где именно не сошлось» по дням и документам.</div><div><b>Проверка:</b> шаблон открывается (6 листов), но формул в нём нет — это макет структуры и методика, автоматического расчёта не выполняет</div>
       <div class="sys">АРМ · 1С · Excel</div><div><b>В комплекте:</b> Рабочий Excel-шаблон, синтетические входные данные, ожидаемый результат, журнал тестов, ТЗ с уточнениями, безопасная остановка</div></div>
@@ -1050,7 +1200,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card good"><div class="card-h">
       <div><div class="card-t">Checker ТМЦ без списания (Excel-шаблон, ТЗ-11)</div><div class="card-p">Зеленкова Людмила Николаевна <span class="dot">·</span> Бухгалтерия</div></div>
-      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span></div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">README.md</div><p>MVP по ТЗ-11 из каталога «Бухгалтерия и финансы». Из выгрузок поступлений и списаний</p><p>за месяц находит поступления номенклатуры «списывается сразу» (канцтовары, хозтовары</p><p>и т.п.), по которым нет связанного списания той же партии.</p><p>1. Откройте `Checker_ТМЦ_без_списания_шаблон.xlsx` в Excel или Google Таблицах.</p><p>2. На вкладке «Спишите_сразу» проверьте/дополните список счетов и номенклатуры,</p><p>которые по регламенту списываются в расходы сразу при поступлении.</p><p>3. На вкладке «Поступления» замените строки-примеры (столбцы A–D: Дата,</p><p>Номенклатура, Счёт, Партия) на свою реальную выгрузку поступлений за месяц.</p><p>Столбцы E, F, G считаются сами.</p></div></details></div></div>
       <p class="card-d">Excel-инструмент по ТЗ-11 из каталога «Бухгалтерия и финансы»: из выгрузок поступлений и списаний за месяц находит поступления номенклатуры «списывается сразу», по которым нет связанного списания той же партии. Сейчас шаблон заполнен синтетическим примером; проведены 4 проверки.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручную сверку поступлений и списаний по номенклатуре, которая должна списываться сразу.</div><div><b>Проверка:</b> таблица: 5 листов, 42 живых формул</div>
       <div class="sys">1С · АРМ · Excel</div><div><b>В комплекте:</b> Excel-шаблон, ТЗ с уточнениями, журнал тестов (4 проверки), известные ограничения, оценка времени, инструкция восстановления</div></div>
@@ -1214,7 +1364,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card good"><div class="card-h">
       <div><div class="card-t">Сверщик ОСВ АРМ ↔ 1С (Python)</div><div class="card-p">Самматова Динара Рафаэлевна <span class="dot">·</span> Бухгалтерия</div></div>
-      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span></div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">README_Сверщик_ОСВ.md</div><p>Программа принимает две Excel-выгрузки ОСВ — из АРМ и 1С — и формирует отчёт по расхождениям.</p><p>• выбрать Excel АРМ;</p><p>• выбрать Excel 1С;</p><p>• автоматически найти строки заголовков ОСВ;</p><p>• сравнить начальное сальдо, обороты и конечное сальдо по Дт/Кт;</p><p>• показать строки с расхождениями;</p><p>• сохранить Excel-отчёт.</p><p>1. Установить зависимости:</p><p>`pip install -r requirements.txt`</p></div></details></div></div>
       <p class="card-d">Программа принимает две Excel-выгрузки ОСВ (из АРМ и из 1С), сама находит строки заголовков, сравнивает начальное сальдо, обороты и конечное сальдо по дебету и кредиту, показывает строки с расхождениями и сохраняет Excel-отчёт. В комплекте синтетический пример, ожидаемый результат и журнал тестов.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручное построчное сличение оборотно-сальдовых ведомостей АРМ и 1С.</div><div><b>Проверка:</b> таблица открывается, но формул нет; скрипт sverщик_osv_arm_1c.py: синтаксис ок</div>
       <div class="sys">АРМ · 1С · Excel · Python</div><div><b>В комплекте:</b> Python-скрипт, README с запуском для новичка, ТЗ с уточнениями, журнал тестов, синтетический пример и ожидаемый результат</div></div>
@@ -1306,7 +1456,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card good"><div class="card-h">
       <div><div class="card-t">Автоматизация подготовки тарифов для АРМ</div><div class="card-p">Майструк Светлана Владиковна <span class="dot">·</span> Коммерческое управление</div></div>
-      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span></div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">Проект_Автоматизация_тарифов_АРМ (1).md</div><p>Дата: 12.08.2026\</p><p>Статус: подготовлен первый MVP\</p><p>Основной рабочий файл: `Проект_Автоматизация_тарифов_АРМ.xlsx`</p><p>• Excel с формулами.</p><p>• Google Таблицы.</p><p>Ручной перенос данных между системами.</p><p>• Excel → АРМ: тарифы.</p><p>• АРМ → Битрикс: отчёты.</p><p>&gt; «Нажал одну кнопку --- тарифы готовы к загрузке в АРМ».</p></div></details></div></div>
       <p class="card-d">Excel-инструмент готовит данные тарифов в проверенном виде для последующего ручного ввода в АРМ. В ходе брифинга выяснилось, что АРМ не принимает файл импорта тарифов, поэтому задача сведена к безопасной подготовке данных.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручную подготовку и перепроверку тарифов перед вводом в АРМ.</div><div><b>Проверка:</b> таблица: 12 листов, 780 живых формул</div>
       <div class="sys">Excel · АРМ · Битрикс24</div><div><b>В комплекте:</b> Excel-файл проекта + описание реализации (.md)</div></div>
@@ -2174,7 +2324,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card good"><div class="card-h">
       <div><div class="card-t">Четыре MVP автоломбарда (ФНП, тарифы, контакты, просрочка)</div><div class="card-p">Емельянов Владислав Викторович <span class="dot">·</span> Отдел автозайм</div></div>
-      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span></div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">Описание_реализации_MVP-AUTO-01.md</div><p>mvp_id: MVP-AUTO-01</p><p>date: 2026-08-12</p><p>Реализован работающий локальный инструмент — Python-скрипт</p><p>`fnp_zalog_journal.py`, который на основе реестра договоров строит</p><p>контрольный журнал в Excel с рассчитанными сроками и статусами по</p><p>постановке/снятию залога ТС в ФНП. Инструмент прогнан и проверен на 13</p><p>синтетических записях, включая обычные, граничные (перенос срока через</p><p>выходные) и ошибочные (битые данные) случаи — все совпали с ручным</p><p>расчётом (см. `test_log.md` в комплекте).</p></div></details></div></div>
       <p class="card-d">Реализованы четыре локальных Python-инструмента: журнал постановки и снятия залога ТС в ФНП со сроками; реестр версий тарифов и ознакомления сотрудников; контроль частоты контактов и границы передачи просрочки; четвёртый инструмент MVP-AUTO-X02. Каждый прогнан на синтетических данных с обычными, граничными и ошибочными случаями.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручной контроль сроков ФНП, ручной учёт ознакомления с тарифами и ручную проверку частоты контактов с должниками.</div><div><b>Проверка:</b> приложенный скрипт запускается и принимает параметры (реестр тарифов + журнал событий → Excel); три из четырёх описанных скриптов в чат не приложены</div>
       <div class="sys">АРМ · АТС · CSV · Excel</div><div><b>В комплекте:</b> 4 описания реализации (.md) + 1 Python-скрипт (tariff_registry.py). Остальные три скрипта в чат не приложены</div></div>
@@ -2534,7 +2684,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card good"><div class="card-h">
       <div><div class="card-t">Контроль учёта ОПС и СВН + комплект журналов ревизии и СБ</div><div class="card-p">Байтурин Ирек Хасанович <span class="dot">·</span> Отдел безопасности</div></div>
-      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span></div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">Описание прототипа — Контроль учета ОПС и СВН.md</div><p>«Контроль учета ОПС и СВН» — локальный прототип программы для ведения адресного реестра обособленных подразделений, учёта оборудования систем охранно-пожарной сигнализации (ОПС) и контроля работ по техническому обслуживанию и ремонту.</p><p>Прототип предназначен для проверки логики работы интерфейса и состава данных перед созданием многопользовательской версии с серверной базой данных.</p><p>Программа не предназначена для проверки КС-2, КС-3, смет или стоимости строительных работ.</p><p>1. Распаковать архив в любую папку на компьютере.</p><p>2. Дважды щёлкнуть файл `Запустить программу контроля ОПС.cmd`.</p><p>3. Программа откроется в браузере по умолчанию. Рекомендуется Google Chrome.</p><p>Интернет для запуска не требуется.</p><p>В прототип загружены 94 записи обособленных подразделений. Для каждого объекта предусмотрены:</p></div></details></div></div>
       <p class="card-d">Прислан работающий локальный прототип «Контроль учёта ОПС и СВН»: адресный реестр обособленных подразделений, учёт оборудования охранно-пожарной сигнализации и контроль работ по обслуживанию и ремонту. Запускается двойным кликом по .cmd, открывается в браузере, интернет не нужен. Отдельно — девять документов по работе отдела ревизии и СБ: журнал ревизора, дашборд, ежедневный отчёт, журнал KPI операторов видеонаблюдения, программы контроля АХЧ и обучения товароведов, ТЗ на автоматизацию видеопроверки.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручное ведение реестра ОПС и контроль работ по обслуживанию; журналы ревизии и СБ переводит из разрозненных таблиц в единый формат.</div><div><b>Проверка:</b> таблица открывается, но формул нет; скрипт audit_methodology.py: синтаксис ок</div>
       <div class="sys">Битрикс24 · браузер (локально) · Excel · Google Таблицы</div><div><b>В комплекте:</b> Прототип: 7 файлов (HTML, 6 JS/CSS) + запускающий .cmd + описание прототипа; плюс 9 документов по ревизии и СБ</div></div>
@@ -2906,7 +3056,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card good"><div class="card-h">
       <div><div class="card-t">Дашборд мониторинга реестра ОРД по информационной безопасности</div><div class="card-p">Блохина Евгения Сергеевна <span class="dot">·</span> Отдел информационной безопасности</div></div>
-      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span></div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">dashboard-reestr-ib.md</div><p>Группа СКС · 8 организаций · 155 файлов · 27 уникальных типов документов</p><p>Дата отчёта: 12.08.2026</p><p>По состоянию на 12.08.2026 реестр насчитывает 155 файлов ОРД по ИБ для 8 организаций группы СКС. 21 из 27 уникальных типов документов актуальны (78%). 2 документа просрочены — требуется срочный пересмотр Политики обработки ПДн (СКС Ломбард) и Регламента управления уязвимостями (АО ГК СКС). 3 документа находятся на пересмотре, ближайший — Приказ об утверждении Модели угроз (крайний срок 25.08.2026). Покрытие требований НПА/стандартов составляет 77% (10 из 13), выявлено 3 пробела, требующих разработки документов. Все документы закреплены за отделом ИБ.</p><p>Покрыто: 77% (10 из 13 требований)</p><p>• Положение ЦБ РФ № 683-П (операционная надёжность) — требуется разработка документов</p></div></details></div></div>
       <p class="card-d">HTML-дашборд по реестру организационно-распорядительных документов ИБ группы: 155 файлов, 8 организаций, 27 типов документов. Показывает, что актуально, что просрочено, что на пересмотре и что утратило силу.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручной контроль актуальности и сроков пересмотра документов ИБ по всем организациям группы.</div><div><b>Проверка:</b> HTML-инструмент 35 КБ, ~7 функций</div>
       <div class="sys">HTML/браузер · Excel</div><div><b>В комплекте:</b> HTML-дашборд + аналитическая записка (.md) с ключевыми показателями</div></div>
@@ -3056,7 +3206,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card good"><div class="card-h">
       <div><div class="card-t">Два MVP кадрового делопроизводства: календарь воинского учёта и табель АРМ → 1С:ЗУП</div><div class="card-p">Саликаева Марина Анатольевна <span class="dot">·</span> Отдел кадрового делопроизводства</div></div>
-      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span></div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">README.md</div><p>Прототип. Работает только на синтетических данных. Ничего не пишет в исходные</p><p>файлы и не подключается к рабочим системам (АРМ, 1С, Битрикс24, АТС, HH, Авито и др.).</p><p>1. Проверяет вид события, дату основания, обезличенный ID сотрудника и ответственного.</p><p>2. Рассчитывает срок по правилу рабочих дней (из утверждённого плана — файл `input/02_plan_kontrolnyh_srokov...xlsx`).</p><p>3. Проверяет наличие отметки уведомления и почтовой квитанции.</p><p>4. Формирует календарь ближайших сроков, просрочек и неполных доказательств.</p><p>5. Формирует новый файл `XLSX-календарь событий и просрочек` с предпросмотром, статистикой и понятными ошибками.</p><p>Требуется Python 3 с библиотекой `openpyxl` (`pip install openpyxl`, если её ещё нет).</p></div></details></div></div>
       <p class="card-d">MVP-HRADM-X01 — календарь кадровых событий воинского учёта: проверяет вид события и основание, считает срок по рабочим дням, контролирует отметку уведомления и почтовую квитанцию, формирует календарь ближайших сроков и просрочек. MVP-HRADM-X02 — преобразует табель АРМ в фиксированный формат для ручной загрузки в 1С:ЗУП по утверждённому справочнику кодов. Оба работают на синтетических данных и ничего не пишут в рабочие системы.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручной контроль сроков воинского учёта и ручное переформатирование табеля из АРМ в 1С:ЗУП.</div><div><b>Проверка:</b> таблица открывается, но формул нет; скрипт build_inputs.py: синтаксис ок</div>
       <div class="sys">АРМ · 1С:ЗУП · Excel · Python</div><div><b>В комплекте:</b> 2 архива: 3 Python-скрипта, синтетические примеры (обычный, ошибочный, граничный), ожидаемые результаты, справочник кодов, журналы тестов, ТЗ с уточнениями, ограничения и восстановление</div></div>
@@ -3330,7 +3480,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card good"><div class="card-h">
       <div><div class="card-t">Веб-приложение KPI на Google Apps Script</div><div class="card-p">Клейменова Евгения Владимировна <span class="dot">·</span> Отдел коммерческих операций Уфа</div></div>
-      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span></div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">README.md</div><p>Обезличенный демонстрационный проект Google Apps Script + Google Sheets.</p><p>1. Создайте новую Google-таблицу.</p><p>2. Откройте Расширения → Apps Script.</p><p>3. Замените содержимое `Code.gs` файлом из архива.</p><p>4. Создайте HTML-файл `Index` и вставьте содержимое `Index.html`.</p><p>5. При необходимости перенесите настройки из `appsscript.json`.</p><p>6. Один раз запустите функцию `seedDemoData()` из редактора Apps Script и выдайте требуемые разрешения.</p><p>7. Выполните Deploy → New deployment → Web app.</p><p>8. Откройте полученную ссылку.</p></div></details></div></div>
       <p class="card-d">Обезличенный веб-инструмент на Google Apps Script и Google Таблицах: ведёт планы и факты по KPI сотрудников (вал, скупка 585, скупка техники, QR, актив металла и техники, лимит вылета), считает выполнение и публикуется как веб-приложение. В комплекте модель данных и инструкция по развёртыванию за 8 шагов.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручной сбор и сведение планов и фактов по KPI сотрудников точек.</div><div><b>Проверка:</b> HTML-инструмент 5 КБ, ~15 функций</div>
       <div class="sys">Google Apps Script · Google Таблицы · АРМ</div><div><b>В комплекте:</b> Code.gs, Index.html, appsscript.json, README с развёртыванием, модель данных, демо-данные</div></div>
@@ -3581,7 +3731,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card good"><div class="card-h">
       <div><div class="card-t">Два MVP обучения: трекер корректирующего обучения и контроль передачи результата экзамена</div><div class="card-p">Бикмухаметова Алина Радиковна <span class="dot">·</span> Отдел обучения и развития</div></div>
-      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span></div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">Описание реализации.md</div><p>Статус: инструмент реализован, работает и протестирован.</p><p>Владелец: Бикмухаметова Алина Радиковна, направление «Обучение и развитие».</p><p>Работающий продукт: [открыть MVP-LND-02 «Контроль передачи результата экзамена супервайзеру»](https://claude.ai/code/artifact/b749cb71-e901-406c-af74-9391e83d0fdf)</p><p>По ссылке открывается готовый инструмент с автоматически загруженными демонстрационными карточками и вымышленными именами.</p><p>• Локальный файл: `Контроль передачи результата экзамена.html`.</p><p>• Версия для просмотра по ссылке указана в разделе «Ссылка на продукт» выше.</p><p>HTML-файл запускается в браузере двойным щелчком, не требует установки, сервера, Python или прав администратора. В опубликованной версии автоматически загружается демонстрационный набор с вымышленными именами.</p></div></details></div></div>
       <p class="card-d">MVP-LND-01 — локальный трекер: из обезличенной выгрузки среза знаний строит приоритетную очередь корректирующего обучения, распределяя по зонам (красная ниже 80%, жёлтая 80–89%, зелёная от 90%), проверяет обязательные поля и показывает ошибки по строкам. MVP-LND-02 — контроль передачи результата экзамена от отдела обучения супервайзеру и последующего решения в одном интерфейсе. Оба — HTML, запускаются двойным щелчком без установки.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручное формирование списка на дообучение и устную передачу результатов экзамена супервайзеру.</div><div><b>Проверка:</b> HTML-инструмент 32 КБ, ~85 функций</div>
       <div class="sys">HTML/браузер · CSV · Excel</div><div><b>В комплекте:</b> 2 архива: 2 HTML-инструмента, описания реализации, примеры CSV (обычный, с ошибками), ожидаемые очереди решений</div></div>
@@ -3830,7 +3980,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card good"><div class="card-h">
       <div><div class="card-t">Калькулятор премии наставникам КМЗ</div><div class="card-p">Давлетбаева Елена Александровна <span class="dot">·</span> Отдел обучения и развития</div></div>
-      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge warn">проверено: частично</span></div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge warn">проверено: частично</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">Описание_реализации_Калькулятор_премии_наставникам (2).md</div><p>Работающий калькулятор с общим доступом доступен по ссылке:</p><p>[Открыть калькулятор премии наставникам](https://mentor-bonus-calculator.davletbaevaea6585.chatgpt.site)</p><p>Ссылка открывается у любого пользователя без отдельного предоставления доступа. Инструмент уже содержит синтетический пример, поэтому основные функции и результат расчёта можно проверить сразу после открытия.</p><p>Создан работающий веб-инструмент для расчёта премии наставникам КМЗ. Калькулятор принимает обезличенный реестр Excel, проверяет заполнение и корректность данных, объединяет записи по стажёру и распределяет утверждённую сумму премии между наставниками пропорционально фактическим дням наставничества.</p><p>В инструменте реализованы следующие функции:</p></div></details></div></div>
       <p class="card-d">Работающий веб-инструмент: принимает обезличенный реестр Excel, проверяет данные, группирует наставников по стажёру и распределяет утверждённую сумму премии пропорционально фактическим дням наставничества, формирует Excel с листами «Расчёт», «Исключения» и «Контроль». Опубликован по ссылке, доступен без отдельных прав.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручной расчёт и распределение премии наставникам между несколькими наставниками одного стажёра.</div><div><b>Проверка:</b> инструмент опубликован по внешней ссылке и, по описанию, используется; файлы в чат не приложены — локально проверить нечего</div>
       <div class="sys">Excel · веб-инструмент</div><div><b>В комплекте:</b> Описание реализации (.md) + ссылка на работающий инструмент. Исходный файл не приложен</div></div>
@@ -3976,7 +4126,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card good"><div class="card-h">
       <div><div class="card-t">MVP — контроль внешнего аудита</div><div class="card-p">Зимина Ангелина Юрьевна <span class="dot">·</span> Отдел операционного управления и методологии</div></div>
-      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span></div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">README — для руководства.md</div><p>MVP делает прозрачным маршрут каждого запроса аудитора: от постановки задачи до размещения подписанного комплекта. Он показывает, где запрос остановился, что просрочено и какие замечания остаются открытыми.</p><p>• Бухгалтерия владеет графиком проверок и коммуникацией с аудиторами.</p><p>• Методолог в переходный период контролирует полноту комплекта и прохождение маршрута.</p><p>• Генеральный директор подписывает документы в случаях, предусмотренных внутренним порядком.</p><p>1. Откройте файл `Демонстрация MVP.html`.</p><p>2. Покажите сводку: общее число запросов, просрочки, незавершённый маршрут и замечания.</p><p>3. Откройте любой запрос через кнопку «Изменить».</p><p>4. Покажите обязательные этапы: задача Bitrix24, комплект, письмо, подпись ГД и размещение аудитору.</p></div></details></div></div>
       <p class="card-d">HTML-инструмент делает прозрачным маршрут каждого запроса аудитора: задача в Битрикс24 → комплект документов → письмо → подпись ГД → размещение аудитору. Показывает просрочки, незавершённый маршрут и замечания, есть демонстрационная версия на синтетических данных.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручной контроль полноты комплекта и стадии прохождения запросов аудиторов.</div><div><b>Проверка:</b> таблица: 3 листов, 107 живых формул; HTML-инструмент 14 КБ, ~26 функций</div>
       <div class="sys">Битрикс24 · Excel · HTML</div><div><b>В комплекте:</b> 2 HTML-файла (рабочий и демонстрация), Excel-реестр, README для руководства, ТЗ MVP-METH-03</div></div>
@@ -4169,7 +4319,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card good"><div class="card-h">
       <div><div class="card-t">Напоминалка платежей по аренде</div><div class="card-p">Хасанова Алина Файрузовна <span class="dot">·</span> Отдел по подбору недвижимости</div></div>
-      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span></div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">ОПИСАНИЕ-ПРОЕКТА.md</div><p>&gt; Готовый мини-инструмент для контроля оплат по договорам аренды/субаренды нежилых помещений и земельных участков. Одна HTML-страница: открывается двойным кликом в браузере, работает офлайн, ничего устанавливать не нужно.</p><p>Проект закрывает пробел ТЗ-8 из карты процессов направления «Закупки, АХО, инфраструктура, транспорт» (процесс FAC-03, эксплуатация/аренда):</p><p>• Специалист по аренде вручную отслеживает по каждому договору дату и период оплаты — напоминаний в программе нет (SRC-0068).</p><p>• Заявка на расходование ДС создаётся копированием прошлой заявки со сменой месяца (ASIS-FAC-03-01.05).</p><p>Что меняет инструмент: ведёт все договоры в одном месте, сам считает ближайшие даты оплаты, напоминает за 5 дней до перечисления, готовит заготовку заявки на расходование и следит за сроком действия договоров.</p></div></details></div></div>
       <p class="card-d">Одна HTML-страница для контроля оплат по договорам аренды и субаренды: реестр договоров (плательщик, арендодатель, объект, номер и дата, срок, сумма, день оплаты, счёт, назначение), автоматический расчёт ближайших дат оплаты и напоминание за 5 дней до перечисления. Закрывает пробел ТЗ-8 процесса FAC-03, где сроки отслеживались вручную, а заявка создавалась копированием прошлой.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручное отслеживание дат оплаты по каждому договору аренды и копирование прошлых заявок.</div><div><b>Проверка:</b> HTML-инструмент 35 КБ, ~92 функций</div>
       <div class="sys">HTML/браузер · АРМ · Excel</div><div><b>В комплекте:</b> HTML-инструмент + подробное описание проекта с привязкой к пробелам карты процессов</div></div>
@@ -4381,7 +4531,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card good"><div class="card-h">
       <div><div class="card-t">«Остатки и пополнение» — утилита по товарным остаткам КМТ</div><div class="card-p">Палиенко Алексей Вячеславович <span class="dot">·</span> Отдел продаж техники</div></div>
-      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span></div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">Описание_утилиты_Печать_ценников_КМТ_3.6.md</div><p>«Печать ценников КМТ» — утилита для подготовки и печати ценников по актуальному файлу остатков. Она помогает сотруднику ОП:</p><p>• загрузить свежие данные по товарам;</p><p>• выбрать своё ОП;</p><p>• найти и отфильтровать нужные позиции;</p><p>• проверить и при необходимости исправить текст ценника;</p><p>• автоматически рассчитать актуальные цены;</p><p>• выбрать подходящий стандартный или собственный формат;</p><p>• напечатать обычные ценники, ценники со скидкой или отдельные этикетки со штрихкодами.</p><p>Утилита рассчитана на ежедневную работу без ручного переноса цен и повторного исправления уже обработанных товаров.</p></div></details></div></div>
       <p class="card-d">Локальная браузерная утилита (один HTML-файл): анализирует продажи и остатки по ОП, сравнивает 30 дней с предыдущими 30, учитывает историю за 90 дней, считает потребность по схемам продаж, подбирает ОП для перемещения залежалого товара, выгружает рекомендации в Excel. Данные хранятся локально в браузере.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручной анализ остатков и ручной подбор товара для пополнения и перемещения между ОП.</div><div><b>Проверка:</b> HTML-инструмент 192 КБ, ~304 функций</div>
       <div class="sys">АРМ · Excel · браузер</div><div><b>В комплекте:</b> HTML-утилита v6.1 + руководство пользователя</div></div>
@@ -5324,8 +5474,236 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
 </ul></div></details></div></details></div>
     </article>
     <article class="card good"><div class="card-h">
+      <div><div class="card-t">Три MVP проектного управления: заявка, план проекта, реестр</div><div class="card-p">Щербакова Татьяна Евгеньевна <span class="dot">·</span> Отдел проектного управления</div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">MVP-PMO-01 — Описание реализации — Структурированная заявка на задачу или проект.md</div><p>created: 2026-08-12</p><p>document_type: implementation-description</p><p>status: реализовано, протестировано</p><p>implementation_path: &quot;Р1/&quot;</p><p>&gt; Реализованный и работающий инструмент, не план и не техническое задание. Исходный код,</p><p>&gt; синтетические тестовые данные и полная техническая документация — в папке `Р1/`.</p><p>Реализован и протестирован локальный инструмент на Python (`Р1/src/mvp_pmo_01.py`, запускается</p><p>через `Р1/Запустить.bat` без набора команд). На входе — заполненная форма заявки (9 полей) и,</p><p>опционально, локальный реестр ранее поданных заявок. Инструмент:</p></div></details></div></div>
+      <p class="card-d">Комплект реализованных локальных инструментов на Python с запуском одним .bat без набора команд. MVP-PMO-01 принимает заполненную форму заявки из 9 полей, сверяет с локальным реестром ранее поданных и выдаёт структурированную заявку. MVP-PMO-02 читает план проекта в XLSX (этап, задача, ответственный, участники, даты, зависимости) и формирует пакет черновиков задач. Третий инструмент работает с выгрузкой Битрикс24. Каждый снабжён синтетическими данными (обычные, граничные, с ошибками) и полной документацией.</p>
+      <div class="card-f"><div><b>Убирает:</b> Убирает ручное оформление заявок на задачу или проект и ручное заведение задач по плану проекта в Битрикс24.</div><div><b>Проверка:</b> таблица открывается, но формул нет; скрипт mvp_pmo_x01.py: синтаксис ок</div>
+      <div class="sys">Битрикс24 · Excel/CSV · Python</div><div><b>В комплекте:</b> Архив на 77 файлов: 3 инструмента с исходниками и запускающими .bat/.ps1, синтетические наборы данных, описания реализации и техдокументация</div></div>
+      <div class="card-act"><span class="hint">файлов с описанием: 3</span><details class="docbox"><summary>Открыть описание</summary><div class="docwrap"><div class="dh">Описание реализации</div><details class="doc"><summary>MVP-PMO-01 — Описание реализации — Структурированная заявка на задачу или проект.md</summary><div class="md"><p>created: 2026-08-12</p>
+<p>mvp_id: &quot;MVP-PMO-01&quot;</p>
+<p>title: &quot;Структурированная заявка на задачу или проект&quot;</p>
+<p>owner: &quot;Щербакова Татьяна Евгеньевна&quot;</p>
+<p>department: &quot;Проектное управление&quot;</p>
+<p>document_type: implementation-description</p>
+<p>status: реализовано, протестировано</p>
+<p>implementation_path: &quot;Р1/&quot;</p>
+
+<h3>MVP-PMO-01 — Описание реализации</h3>
+
+<p>&gt; Реализованный и работающий инструмент, не план и не техническое задание. Исходный код,</p>
+<p>&gt; синтетические тестовые данные и полная техническая документация — в папке <code>Р1/</code>.</p>
+
+<h4>Что фактически сделано и как работает</h4>
+
+<p>Реализован и протестирован локальный инструмент на Python (<code>Р1/src/mvp_pmo_01.py</code>, запускается</p>
+<p>через <code>Р1/Запустить.bat</code> без набора команд). На входе — заполненная форма заявки (9 полей) и,</p>
+<p>опционально, локальный реестр ранее поданных заявок. Инструмент:</p>
+
+<ul>
+<li>проверяет заполненность 6 обязательных полей заявки (причины, содержание, цели, результат,</li>
+</ul>
+<p>   срок, риски);</p>
+<ul>
+<li>по ключевым словам в тексте заявки определяет признаки проекта (новый продукт/услуга,</li>
+</ul>
+<p>   интеграция между системами, требуется отдельная команда, внедрение нового инструмента) и</p>
+<p>   выдаёт рекомендацию «задача» или «проект» — без окончательного решения, оно остаётся за</p>
+<p>   человеком или Проектным комитетом;</p>
+<ul>
+<li>блокирует итоговый статус «готово к передаче», если обязательные поля не заполнены;</li>
+<li>ищет в локальном реестре текстово похожие заявки и предупреждает о возможном дубле (не</li>
+</ul>
+<p>   блокирует);</p>
+<ul>
+<li>собирает результат в один читаемый файл «Пакет заявки» с предпросмотром.</li>
+</ul>
+
+<p>Проверено на 4 синтетических сценариях (обычная заявка, неполная заявка, дубликат с признаком</p>
+<p>интеграции, несколько признаков проекта сразу) — фактический результат каждого запуска совпал с</p>
+<p>ожидаемым. Журнал тестов — <code>Р1/tests/test_log.md</code>.</p>
+
+<h4>Какую ручную работу убирает</h4>
+
+<p>Раньше содержание заявки оставалось только во вложении: сотрудник вручную открывал файл, проверял</p>
+<p>заполненность 6 обязательных полей, вручную решал, задача это или проект, и вручную просматривал</p>
+<p>реестр в поисках повторов — ориентировочно 5–10 минут на одну заявку, без структурированного</p>
+<p>поиска и контроля дублей. Теперь эти три проверки выполняются автоматически за секунды, сотруднику</p>
+<p>остаётся только просмотреть готовый пакет и принять итоговое решение.</p>
+
+<h4>С какими системами и данными работает</h4>
+
+<p>Работает полностью локально, без подключения к Битрикс24 или другим рабочим системам, без выхода</p>
+<p>в интернет. Входные данные:</p>
+
+<ul>
+<li>ответы заказчика по форме заявки — вносятся вручную (простой текстовый шаблон, заполняется в</li>
+</ul>
+<p>  Блокноте через меню запуска);</p>
+<ul>
+<li>локальный CSV-реестр ранее поданных заявок — опционален, используется только для поиска</li>
+</ul>
+<p>  похожих заявок.</p>
+
+<p>Ничего не записывается обратно ни в одну систему — результат всегда новый локальный файл, исходные</p>
+<p>данные не изменяются.</p>
+
+<h4>Как запустить</h4>
+
+<ul>
+<li>Открыть папку <code>Р1</code>.</li>
+<li>Дважды кликнуть <code>Запустить.bat</code>.</li>
+<li>В меню выбрать «1» (заполнить новую заявку по шаблону) или «2» (демо на готовом примере).</li>
+<li>Результат — файл «Пакет заявки» в подпапке <code>output</code>, открывается автоматически.</li>
+</ul>
+
+<p>Подробная техническая документация, ограничения версии и оценка времени — <code>Р1/README.md</code>.</p></div></details><details class="doc"><summary>MVP-PMO-02 — Описание реализации — План проекта в пакет черновиков задач.md</summary><div class="md"><p>created: 2026-08-12</p>
+<p>mvp_id: &quot;MVP-PMO-02&quot;</p>
+<p>title: &quot;План проекта в пакет черновиков задач&quot;</p>
+<p>owner: &quot;Щербакова Татьяна Евгеньевна&quot;</p>
+<p>department: &quot;Проектное управление&quot;</p>
+<p>document_type: implementation-description</p>
+<p>status: реализовано, протестировано</p>
+<p>implementation_path: &quot;Р2/&quot;</p>
+
+<h3>MVP-PMO-02 — Описание реализации</h3>
+
+<p>&gt; Реализованный и работающий инструмент, не план и не техническое задание. Исходный код,</p>
+<p>&gt; синтетические тестовые данные и полная техническая документация — в папке <code>Р2/</code>.</p>
+
+<h4>Что фактически сделано и как работает</h4>
+
+<p>Реализован и протестирован локальный инструмент на Python (<code>Р2/src/mvp_pmo_02.py</code>, запускается</p>
+<p>через <code>Р2/Запустить.bat</code> без набора команд). На входе — план проекта в XLSX по шаблону. Инструмент:</p>
+
+<ul>
+<li>читает из плана этап, задачу, ответственного, участников, даты и зависимости для каждой строки;</li>
+<li>проверяет, что у каждой строки указан ответственный;</li>
+<li>проверяет формат дат и их порядок (дата окончания не раньше даты начала) — поддерживает и</li>
+</ul>
+<p>   текстовые даты, и обычные Excel-даты;</p>
+<ul>
+<li>присваивает каждой строке уникальный черновой ID;</li>
+<li>собирает всё в файл «Пакет черновиков» с предпросмотром — ни одна строка не теряется, даже с</li>
+</ul>
+<p>   ошибкой (она просто помечается и остаётся видна человеку).</p>
+
+<p>Проверено на 4 синтетических сценариях (обычный план, пустой ответственный, неверный/обратный</p>
+<p>порядок дат, план из 20 строк) — фактический результат каждого запуска совпал с ожидаемым, включая</p>
+<p>проверку «20 строк дают 20 черновиков». Журнал тестов — <code>Р2/tests/test_log.md</code>.</p>
+
+<h4>Какую ручную работу убирает</h4>
+
+<p>Раньше администратор вручную переносил из внешнего плана участников, сроки и описание и вручную</p>
+<p>создавал задачи в Битрикс24 по одной — ориентировочно 3–7 минут на задачу, то есть от часа на план</p>
+<p>из 15–20 задач, без проверки корректности дат и заполненности ответственного. Теперь весь план</p>
+<p>обрабатывается за секунды: сотрудник получает готовый проверенный пакет черновиков и переносит</p>
+<p>задачи в Битрикс24 по уже выверенным данным.</p>
+
+<h4>С какими системами и данными работает</h4>
+
+<p>Работает полностью локально, без подключения к Битрикс24 или другим рабочим системам, без выхода</p>
+<p>в интернет. Входные данные:</p>
+
+<ul>
+<li>план проекта в формате XLSX (заполняется в Excel по готовому шаблону — колонки: Этап, Задача,</li>
+</ul>
+<p>  Ответственный, Участники, Дата начала, Дата окончания, Зависимости).</p>
+
+<p>XLSX читается собственным кодом на стандартной библиотеке Python, без установки сторонних</p>
+<p>библиотек. Ничего не записывается обратно ни в одну систему и не изменяется в исходном плане —</p>
+<p>результат всегда новый локальный файл.</p>
+
+<h4>Как запустить</h4>
+
+<ul>
+<li>Открыть папку <code>Р2</code>.</li>
+<li>Дважды кликнуть <code>Запустить.bat</code>.</li>
+<li>В меню выбрать «1» (открыть пустой шаблон плана в Excel и заполнить), «2» (обработать уже</li>
+</ul>
+<p>   заполненный файл — выбор через диалог) или «3» (демо на готовом примере).</p>
+<ul>
+<li>Результат — файл «Пакет черновиков задач» в подпапке <code>output</code>, открывается автоматически.</li>
+</ul>
+
+<p>Подробная техническая документация, ограничения версии и оценка времени — <code>Р2/README.md</code>.</p></div></details><details class="doc"><summary>MVP-PMO-X01 — Описание реализации — Сверка закрытых задач Битрикс24 с реестром проектов.md</summary><div class="md"><p>created: 2026-08-12</p>
+<p>mvp_id: &quot;MVP-PMO-X01&quot;</p>
+<p>title: &quot;Сверка закрытых задач Битрикс24 с реестром проектов&quot;</p>
+<p>owner: &quot;Щербакова Татьяна Евгеньевна&quot;</p>
+<p>department: &quot;Проектное управление&quot;</p>
+<p>document_type: implementation-description</p>
+<p>status: реализовано, протестировано</p>
+<p>implementation_path: &quot;Р3/&quot;</p>
+
+<h3>MVP-PMO-X01 — Описание реализации</h3>
+
+<p>&gt; Реализованный и работающий инструмент, не план и не техническое задание. Исходный код,</p>
+<p>&gt; синтетические тестовые данные и полная техническая документация — в папке <code>Р3/</code>.</p>
+
+<h4>Что фактически сделано и как работает</h4>
+
+<p>Реализован и протестирован локальный инструмент на Python (<code>Р3/src/mvp_pmo_x01.py</code>, запускается</p>
+<p>через <code>Р3/Запустить.bat</code> без набора команд). На входе — CSV-выгрузка закрытых задач Битрикс24 за</p>
+<p>период и текущий локальный реестр проектов. Инструмент:</p>
+
+<ul>
+<li>проверяет ID, название, подразделение, даты и обязательные поля в выгрузке Битрикс24;</li>
+<li>сопоставляет задачи из выгрузки с записями реестра по неизменяемому ID;</li>
+<li>находит задачи, которых ещё нет в реестре, дубликаты ID и расхождения в значениях полей;</li>
+<li>формирует отдельно строки для ручного добавления и список конфликтов;</li>
+<li>собирает результат в XLSX с двумя листами — «К добавлению» и «Конфликты» — с предпросмотром и</li>
+</ul>
+<p>   краткой статистикой обработки в консоли.</p>
+
+<p>Проверено на 4 синтетических сценариях (обычная сверка, ошибки данных, дубликат ID и расхождение</p>
+<p>поля, объём 20 строк) — фактический результат каждого запуска совпал с ожидаемым; итоговый XLSX</p>
+<p>дополнительно проверен «в обратную сторону» — прочитан программой заново и сверен с консольным</p>
+<p>предпросмотром. Журнал тестов — <code>Р3/tests/test_log.md</code>.</p>
+
+<h4>Какую ручную работу убирает</h4>
+
+<p>Раньше закрытые задачи Битрикс24 вручную построчно сверялись с реестром проектов — сотрудник</p>
+<p>глазами искал пропущенные и задваивающиеся записи, при повторном копировании неизбежно появлялись</p>
+<p>пропуски и расхождения — ориентировочно 15–30 минут на выгрузку из 20–30 задач. Теперь сверка</p>
+<p>занимает секунды: сотрудник получает готовый XLSX с чётким разделением на «что добавить» и «что</p>
+<p>требует проверки», ничего не приходится искать вручную построчно.</p>
+
+<h4>С какими системами и данными работает</h4>
+
+<p>Работает полностью локально, без подключения к Битрикс24 или другим рабочим системам, без выхода</p>
+<p>в интернет. Входные данные:</p>
+
+<ul>
+<li>CSV-выгрузка закрытых задач Битрикс24 за один период (готовится вручную через штатный экспорт</li>
+</ul>
+<p>  отчёта из Битрикс24 — инструмент не подключается к Битрикс24 напрямую и не запрашивает данные</p>
+<p>  сам, статусы задач не интерпретирует, доверяет тому, что выгрузка уже содержит только закрытые</p>
+<p>  задачи);</p>
+<ul>
+<li>текущий локальный реестр проектов в формате CSV.</li>
+</ul>
+
+<p>XLSX-результат формируется собственным кодом на стандартной библиотеке Python, без установки</p>
+<p>сторонних библиотек. Ничего не записывается обратно ни в Битрикс24, ни в исходный реестр —</p>
+<p>результат всегда новый локальный файл.</p>
+
+<h4>Как запустить</h4>
+
+<ul>
+<li>Открыть папку <code>Р3</code>.</li>
+<li>Дважды кликнуть <code>Запустить.bat</code>.</li>
+<li>В меню выбрать «1» (сверить свои файлы — выбор выгрузки Битрикс24 и реестра через диалог) или</li>
+</ul>
+<p>   «2» (демо на готовом примере).</p>
+<ul>
+<li>Результат — файл <code>sverka_&lt;дата-время&gt;.xlsx</code> с листами «К добавлению» и «Конфликты» в подпапке</li>
+</ul>
+<p>   <code>output</code>, открывается автоматически.</p>
+
+<p>Подробная техническая документация, ограничения версии и оценка времени — <code>Р3/README.md</code>.</p></div></details></div></details></div>
+    </article>
+    <article class="card good"><div class="card-h">
       <div><div class="card-t">Финансовый дашборд ООО «СКС Ломбард»</div><div class="card-p">Балтабаева Елена Талгатовна <span class="dot">·</span> Планово-экономический отдел</div></div>
-      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span></div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">2026-08-12-описание-реализованной-автоматизации.md</div><p>Решение реализовано, опубликовано и используется в работе.</p><p>• Работающий инструмент: &lt;https://financial-dashboard-7-tabs.working-elena-0809.chatgpt.site/&gt;</p><p>• Владелец и автор: Балтабаева Елена Талгатовна, ведущий экономист-финансист Планово-экономического отдела.</p><p>• Дата проверки опубликованной версии и исходного проекта: 12.08.2026.</p><p>• Доступ к опубликованному дашборду: любой пользователь, у которого есть ссылка.</p><p>Создан интерактивный веб-дашборд для комплексного анализа финансовых и операционных показателей ООО «СКС Ломбард». Решение работает в браузере и содержит 13 разделов:</p><p>1. Обзор.</p><p>2. Активы.</p><p>3. Ликвидность.</p></div></details></div></div>
       <p class="card-d">Интерактивный веб-дашборд из 13 разделов: обзор, активы, ликвидность, пассивы, финансовая устойчивость, доходы и расходы, деловая активность, рентабельность, выводы, история, ЛМБ, подразделения, структура залога. Есть выбор периода, сравнение с предыдущим периодом, автоматические выводы и визуальные сигналы риска. Опубликован и используется в работе.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручную сборку финансовой аналитики и сравнение показателей по периодам.</div><div><b>Проверка:</b> в архиве страница-переход, сам дашборд опубликован по внешней ссылке и, по описанию, используется в работе</div>
       <div class="sys">Excel · веб-дашборд</div><div><b>В комплекте:</b> HTML-дашборд + описание реализованной автоматизации</div></div>
@@ -5511,7 +5889,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card good"><div class="card-h">
       <div><div class="card-t">Два MVP: «Финансовый контроль» и «Внутригрупповые займы»</div><div class="card-p">Газизова Наиля Маратовна <span class="dot">·</span> Планово-экономический отдел</div></div>
-      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span></div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">README.md</div><p>Локальный демонстрационный продукт для руководителя. Рабочий модуль — MVP-PEO-X01.</p><p>1. Откройте `Финансовый контроль — MVP 1.0.html` двойным щелчком.</p><p>2. Встроенное демо открывается сразу.</p><p>3. Для демонстрации загрузки выберите `demo_data/balances.csv` и `demo_data/needs.csv`.</p><p>4. Нажмите `Провести контроль`.</p><p>5. Нажмите `Скачать результат XLSX`.</p><p>Интернет и установка программ не нужны.</p><p>Проверяет и нормализует данные, выявляет отрицательные остатки, значения ниже утверждённого порога, неактуальные данные и потребность без остатка; формирует объяснимую очередь исключений. Исходники не изменяются.</p><p>Первая версия принимает CSV как минимальный браузерный вход. Нет подключений к 1С/АРМ/банкам, нет платежей, заявок и автоматических финансовых решений. Все демо-данные синтетические.</p></div></details></div></div>
       <p class="card-d">Два локальных HTML-инструмента, работающих без интернета и установки. «Финансовый контроль» проверяет и нормализует данные по остаткам и потребностям, выявляет отрицательные остатки, значения ниже утверждённого порога, неактуальные данные и потребность без остатка, формирует объяснимую очередь исключений и выгружает результат в XLSX. «Внутригрупповые займы» — дашборд и реестр договоров с поиском, карточкой займа и расчётом текущей задолженности.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручную проверку остатков и потребностей при пополнении кассы и ручной учёт внутригрупповых займов.</div><div><b>Проверка:</b> таблица открывается, но формул нет; HTML-инструмент 20 КБ, ~38 функций</div>
       <div class="sys">АРМ · Excel/CSV · браузер (локально)</div><div><b>В комплекте:</b> 2 архива: HTML-инструменты, демо-данные, README, журналы тестов, сценарии демонстрации руководителю, исходные ТЗ</div></div>
@@ -5609,7 +5987,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card good"><div class="card-h">
       <div><div class="card-t">Автономные калькуляторы зарплаты товароведов</div><div class="card-p">Абдеев Айдар Расимович <span class="dot">·</span> Супервайзеры</div></div>
-      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span></div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">README.md</div><p>Обезличенный MVP для предварительного расчёта зарплаты и анализа точек роста двух категорий сотрудников:</p><p>• товаровед;</p><p>• старший товаровед.</p><p>Приложения поставляются в виде двух самостоятельных HTML-файлов. Для работы не нужны установка, сервер, интернет или учётная запись.</p><p>1. Откройте папку `apps`.</p><p>2. Дважды щёлкните по нужному файлу:</p><p>• `employee-salary-calculator.html` — товаровед;</p><p>• `senior-employee-salary-calculator.html` — старший товаровед.</p><p>3. Заполните показатели вручную и нажмите «Рассчитать зарплату».</p></div></details></div></div>
       <p class="card-d">Два HTML-калькулятора (для товароведа и старшего товароведа) для самостоятельного предварительного расчёта зарплаты, когда исходные показатели нельзя получить из учётной системы автоматически. Инструмент не только считает сумму, но и объясняет структуру начисления, показывает источники заработка, ближайшие пороги и даёт рекомендации, какой показатель улучшить и какой это даст эффект. Данные обезличены, есть автотест verify.mjs.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручной расчёт зарплаты по нескольким зависимым компонентам (часы, рейтинг, стаж, планы, коэффициент нагрузки, премии) и ошибки двойного учёта выплат.</div><div><b>Проверка:</b> HTML-инструмент 42 КБ, ~54 функций</div>
       <div class="sys">HTML/браузер · данные вводятся вручную</div><div><b>В комплекте:</b> 2 HTML-калькулятора, описание проекта, README, автотест (verify.mjs), файл версии</div></div>
@@ -6067,8 +6445,373 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
 </div></details></div></details></div>
     </article>
     <article class="card good"><div class="card-h">
+      <div><div class="card-t">Учёт открытия точки (мобильное приложение) и обзвон по просрочке</div><div class="card-p">Васьков Максим Игоревич <span class="dot">·</span> Супервайзеры</div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">README.md</div><p>Демонстрационная копия проекта для показа коллегам. Не содержит</p><p>реальных названий точек, ФИО сотрудников или боевых серверных</p><p>адресов — только примеры-плейсхолдеры.</p><p>• applicationId изменён на `com.pawnshop.unlocktracker.demo` —</p><p>можно установить рядом с рабочей версией на одном телефоне, они</p><p>не будут конфликтовать.</p><p>• Название приложения — &quot;Учёт открытия ОП (демо)&quot;.</p><p>• Подсказки в полях ввода — обезличенные примеры (&quot;Точка 1 (демо)&quot;</p><p>вместо реальных названий точек).</p></div></details></div></div>
+      <p class="card-d">Два проекта. UnlockTracker — демонстрационная сборка мобильного приложения для учёта открытия обособленных подразделений: обезличена (плейсхолдеры вместо реальных точек и ФИО), отдельный applicationId, чтобы ставиться рядом с рабочей версией. Второй — обезличенный инструмент по обзвону клиентов с просроченной задолженностью на Google Apps Script (Code.gs + index.html).</p>
+      <div class="card-f"><div><b>Убирает:</b> Убирает ручной сбор отметок об открытии точек и ручное ведение обзвона по просроченной задолженности.</div><div><b>Проверка:</b> HTML-инструмент 57 КБ, ~99 функций</div>
+      <div class="sys">мобильное приложение · Google Apps Script · Битрикс24</div><div><b>В комплекте:</b> 2 архива: демо-сборка приложения с README, веб-инструмент обзвона (Code.gs, index.html), описание проекта</div></div>
+      <div class="card-act"><span class="hint">файлов с описанием: 3</span><details class="docbox"><summary>Открыть описание</summary><div class="docwrap"><div class="dh">Описание реализации</div><details class="doc"><summary>README.md</summary><div class="md"><h3>Учёт открытия точки — ДЕМО-версия</h3>
+
+<p>Демонстрационная копия проекта для показа коллегам. Не содержит</p>
+<p>реальных названий точек, ФИО сотрудников или боевых серверных</p>
+<p>адресов — только примеры-плейсхолдеры.</p>
+
+<h4>Отличия от рабочей версии</h4>
+
+<ul>
+<li>applicationId изменён на <code>com.pawnshop.unlocktracker.demo</code> —</li>
+</ul>
+<p>  можно установить рядом с рабочей версией на одном телефоне, они</p>
+<p>  не будут конфликтовать.</p>
+<ul>
+<li>Название приложения — &quot;Учёт открытия ОП (демо)&quot;.</li>
+<li>Подсказки в полях ввода — обезличенные примеры (&quot;Точка 1 (демо)&quot;</li>
+</ul>
+<p>  вместо реальных названий точек).</p>
+<ul>
+<li>Бэкенд (backend/Code.gs) — идентичен по логике рабочему, но</li>
+</ul>
+<p>  комментарии и подписи в дашборде помечены как демонстрационные.</p>
+
+<h4>Как показать коллегам</h4>
+
+<ul>
+<li>Разверните отдельную демо-таблицу Google (backend/Code.gs) —</li>
+</ul>
+<p>   инструкция внутри файла, в самом верху.</p>
+<ul>
+<li>Соберите apk в Android Studio (Build → Build APK(s)).</li>
+<li>Установите на любой тестовый телефон, впишите произвольную</li>
+</ul>
+<p>   демо-точку и полученный демо-URL.</p>
+<ul>
+<li>Заблокируйте/разблокируйте телефон, покажите, как событие</li>
+</ul>
+<p>   появляется в таблице и на дашборде.</p>
+
+<h4>Структура проекта</h4>
+
+<p>Полностью совпадает с рабочей версией — те же файлы, та же логика</p>
+<p>(фиксация первой разблокировки после длительной блокировки,</p>
+<p>отправка в Google Таблицу, дашборд с подсветкой опозданий).</p></div></details><details class="doc"><summary>README.md</summary><div class="md"><h3>Звонки по ДЗ — учёт звонков и SMS по взысканию дебиторской задолженности</h3>
+
+<p>Мобильное веб-приложение для полевых сотрудников (товароведов) розничной сети: фиксация звонков и SMS клиентам-должникам, автоматический учёт времени контакта, сводная отчётность для супервайзера.</p>
+
+<p>&gt; В этой версии все идентифицирующие данные (ключи облачного проекта, PIN-код, имена сотрудников, названия точек продаж) заменены обезличенными плейсхолдерами. Файл <code>index.html</code> — рабочий код приложения, готовый к повторному использованию после подстановки собственных значений.</p>
+
+
+<h4>1. Для чего нужен проект</h4>
+
+<p>В сети розничных точек товароведы регулярно обзванивают клиентов с просроченной задолженностью. До внедрения приложения учёт таких звонков велся вручную (бумага/таблицы), из-за чего:</p>
+
+<ul>
+<li>терялась история контактов с конкретным клиентом;</li>
+<li>супервайзер не имел оперативной картины по всей сети;</li>
+<li>невозможно было быстро выгрузить отчёт по обзвону за период;</li>
+<li>не фиксировалось, кто именно и когда звонил, при передаче рабочего телефона между сменами.</li>
+</ul>
+
+<p>Проект решает эти проблемы, не требуя от сотрудников ничего, кроме браузера на обычном рабочем телефоне.</p>
+
+<h4>2. Что делает приложение</h4>
+
+<h5>Роль «Товаровед»</h5>
+<ul>
+<li>Подтверждает свою личность при каждом открытии приложения и перед каждым новым контактом с клиентом (телефон общий, сотрудники сменяются) — с кнопкой быстрого повторного подтверждения «Это снова я».</li>
+<li>Начинает исходящий звонок или SMS в один-два касания: имя клиента, автоматический подбор номера из истории (или из системных контактов телефона, если браузер поддерживает Contact Picker API).</li>
+<li>Полуавтоматическая фиксация звонка: приложение засекает момент начала (открытие звонилки или явный старт для входящего) и автоматически считает длительность при возврате в приложение — вручную остаётся дописать только резюме разговора и ожидаемый результат.</li>
+<li>Отдельная быстрая кнопка для входящих звонков — минимум действий в момент, когда клиент уже звонит.</li>
+<li>Для SMS: текст, набранный в приложении, подставляется в системное SMS-приложение и сохраняется в лог без повторного ввода.</li>
+<li>Указывает точку продаж, с которой сделан звонок (актуально при подменах на другой точке).</li>
+<li>Видит и редактирует только свои записи.</li>
+</ul>
+
+<h5>Роль «Супервайзер»</h5>
+<ul>
+<li>Вход по PIN-коду, доступ к звонкам и SMS <b>всех</b> товароведов в режиме только для чтения.</li>
+<li>Фильтрация по сотруднику, точке продаж, статусу результата.</li>
+<li>Выгрузка отчёта в Excel с разбивкой по месяцам (отдельный лист на каждый месяц).</li>
+</ul>
+
+<h5>Общее</h5>
+<ul>
+<li>Данные синхронизируются между всеми телефонами в реальном времени через общую облачную базу.</li>
+<li>Приложение работает офлайн — несинхронизированные записи отправляются в базу автоматически при появлении связи.</li>
+<li>Установка не требуется — открывается по ссылке в браузере, может быть добавлено на главный экран как обычное приложение (PWA-подобное поведение).</li>
+</ul>
+
+<h4>3. Как это реализовано</h4>
+
+<p>Проект сознательно сделан без сборки, бэкенда и фреймворков — единый файл <code>index.html</code>, который отдаётся статическим хостингом.</p>
+
+<ul>
+<li><b>Frontend</b>: чистый HTML/CSS/JavaScript (без React/Vue и сборщиков) — минимальная точка отказа, лёгкость распространения одним файлом.</li>
+<li><b>Хранение и синхронизация данных</b>: Firebase Firestore (документо-ориентированная NoSQL база), доступ через Firebase JS SDK (compat-версия, подключается напрямую тегами <code>&lt;script&gt;</code>).</li>
+<li><b>Аутентификация</b>: анонимная аутентификация Firebase (Firebase Anonymous Auth) — устройство получает временный технический идентификатор для доступа к базе; контроль личности внутри приложения (кто товаровед, кто супервайзер) реализован на уровне интерфейса и PIN-кода, а не через полноценную серверную авторизацию пользователей.</li>
+<li><b>Офлайн-режим</b>: встроенный офлайн-кеш Firestore (<code>enablePersistence</code>) — запись работает без сети, синхронизация происходит при восстановлении соединения.</li>
+<li><b>Хостинг</b>: Firebase Hosting (бесплатный тариф) — отдаёт файл по HTTPS-адресу, что также снимает браузерные ограничения, характерные для локально открытых файлов.</li>
+<li><b>Экспорт в Excel</b>: библиотека SheetJS (<code>xlsx</code>), подключаемая с CDN, формирование <code>.xlsx</code>-файла полностью на стороне клиента.</li>
+<li><b>Автоматическая фиксация длительности звонка</b>: сочетание <code>tel:</code> / <code>sms:</code> URI-схем (запуск звонилки/SMS-приложения телефона) и события <code>visibilitychange</code> (определение момента возврата пользователя в приложение) — таймер считается на клиенте, без доступа к системному журналу звонков (у веб-страниц такого доступа в принципе нет).</li>
+<li><b>Контакты телефона</b>: опциональная интеграция через <code>navigator.contacts</code> (Contact Picker API) — работает только в Chrome для Android, на остальных платформах элемент интерфейса скрывается сам (progressive enhancement).</li>
+<li><b>Диагностика сбоев</b>: глобальный перехватчик ошибок (<code>window.onerror</code>) и сторожевой таймер загрузки — при сбое пользователь видит текст ошибки прямо на экране, а не пустой экран, что критично при поддержке пользователей без доступа к консоли разработчика.</li>
+</ul>
+
+<h5>Модель данных (Firestore, коллекция <code>calls</code>)</h5>
+
+<pre class="tbl">
+| Поле | Назначение |
+|---|---|
+| <code>owner</code>, <code>ownerPoint</code> | кто и с какой точки продаж контактировал с клиентом |
+| <code>channel</code> | способ связи: <code>call</code> (звонок) / <code>sms</code> |
+| <code>direction</code> | направление: <code>in</code> (входящее) / <code>out</code> (исходящее) |
+| <code>clientName</code>, <code>clientPhone</code> | клиент и его номер (нормализуется к формату <code>+7 XXX XXX-XX-XX</code>) |
+| <code>callDate</code>, <code>callTime</code>, <code>durationMin</code> | дата, время, длительность (для SMS не применяется) |
+| <code>debtAmount</code> | сумма задолженности, если указана |
+| <code>summary</code> | резюме звонка / текст SMS |
+| <code>resultKey</code> | ожидаемый результат (обещал оплатить / отказ / недозвон / и т.д.) |
+| <code>nextContactDate</code> | дата следующего контакта |
+</pre>
+
+<h4>4. Ограничения (важно понимать)</h4>
+
+<ul>
+<li>Веб-приложение технически не может: читать системный журнал звонков телефона, определять факт и длительность реального разговора без участия пользователя, читать содержимое отправленных SMS после перехода в системное приложение. Все подобные данные — это то, что пользователь подтвердил или ввёл сам, а не то, что снято автоматически с телефона.</li>
+<li>Анонимная аутентификация Firebase — не полноценная многопользовательская авторизация; в текущем виде решение полагается на PIN и добросовестность пользователей, а не на серверную проверку личности.</li>
+<li>Разбор <code>.xlsx</code> и вся синхронизация зависят от подключения к нескольким внешним CDN (Firebase, SheetJS, шрифты) — в сетях с ограничениями к google-доменам это может потребовать хостинга собственной копии библиотек.</li>
+</ul>
+
+<h4>5. Ключевые решения по UX (почему сделано именно так)</h4>
+
+<ul>
+<li>Личность товароведа не «залипает» на устройстве навсегда — телефон физически общий для нескольких сотрудников, поэтому подтверждение запрашивается заново при каждом открытии и перед каждым новым контактом (с ускоряющей кнопкой «Это снова я», а для срочных входящих звонков — с временной «грасией» в 30 минут).</li>
+<li>Разделение ролей «товаровед / супервайзер» на уровне интерфейса, а не через сложную систему прав — соответствует реальному масштабу команды.</li>
+<li>Супервайзер не может редактировать чужие записи — данные защищены от случайного искажения при просмотре.</li>
+</ul>
+
+<h4>6. Стек технологий (кратко)</h4>
+
+<p><code>HTML5</code> · <code>CSS3</code> (кастомные свойства, без препроцессоров) · <code>JavaScript (ES2017+, без сборки)</code> · <code>Firebase Firestore</code> · <code>Firebase Authentication (Anonymous)</code> · <code>Firebase Hosting</code> · <code>SheetJS (xlsx)</code> · <code>Web APIs: tel: / sms: URI, Page Visibility API, Contact Picker API</code></p>
+
+<h4>7. Возможные направления развития (roadmap после MVP)</h4>
+
+<p>Текущая версия — рабочий MVP, закрывающий основной сценарий. Дальнейшее развитие может включать:</p>
+
+<ul>
+<li>Полноценная серверная авторизация пользователей вместо PIN-кода и анонимной аутентификации.</li>
+<li>Интеграция с реальным SMS-шлюзом (например, через облачную функцию) для подтверждённой (а не декларируемой) отправки и фиксации SMS.</li>
+<li>Push-уведомления о датах повторного контакта («перезвонить сегодня»).</li>
+<li>Ролевая аналитика и дашборды (конверсия по товароведам/точкам, динамика погашения задолженности).</li>
+<li>Массовый импорт базы клиентов-должников из учётной системы вместо накопления справочника только из истории звонков.</li>
+<li>Автоматическое архивирование/удаление старых записей по политике хранения персональных данных.</li>
+<li>Экспорт в форматы, отличные от Excel (PDF-отчёт, интеграция с BI-системами).</li>
+</ul>
+
+
+<p>*Файл <code>index.html</code> в этом архиве — обезличенная версия рабочего проекта. Перед использованием необходимо: создать собственный проект Firebase, подставить его конфигурацию в блок <code>FIREBASE_CONFIG</code>, задать реальный PIN супервайзера и заполнить списки сотрудников (<code>EMPLOYEE_NAMES</code>) и точек продаж (<code>POINTS</code>) в начале файла.*</p></div></details><details class="doc"><summary>PROJECT_DESCRIPTION.md</summary><div class="md"><h3>Учёт открытия точки (Unlock Tracker)</h3>
+
+<p>Мобильное приложение для автоматического, объективного учёта времени</p>
+<p>открытия торговых точек — без звонков, отчётов &quot;на словах&quot; и</p>
+<p>человеческого фактора.</p>
+
+
+<h4>1. Для чего нужен проект</h4>
+
+<p>В сети точек (ломбарды, магазины, любые точки с фиксированным</p>
+<p>графиком открытия) руководителю сложно проверить, во сколько</p>
+<p>реально была открыта точка — обычно это либо основано на устном</p>
+<p>отчёте сотрудника, либо требует ручных звонков каждое утро.</p>
+
+<p>Проект решает эту задачу автоматически: система фиксирует момент,</p>
+<p>когда сотрудник впервые разблокирует рабочий телефон после ночи —</p>
+<p>это косвенный, но объективный и не зависящий от человека индикатор</p>
+<p>времени прихода на точку.</p>
+
+<h4>2. Что делает</h4>
+
+<h5>На телефоне сотрудника (Android-приложение)</h5>
+
+<ul>
+<li>Работает в фоне, не требует никаких действий от сотрудника после</li>
+</ul>
+<p>  первоначальной настройки.</p>
+<ul>
+<li>Отслеживает системные события блокировки/разблокировки экрана.</li>
+<li>Фиксирует **только первую разблокировку после длительного периода</li>
+</ul>
+<p>  блокировки** (по умолчанию — дольше 4 часов, то есть ночь), чтобы</p>
+<p>  не путать её со случайными блокировками в течение дня.</p>
+<ul>
+<li>Отправляет событие (дата, время, название точки) на сервер.</li>
+<li>Работает автономно — переживает перезагрузку телефона, устойчиво</li>
+</ul>
+<p>  к фоновым ограничениям Android (при корректной настройке</p>
+<p>  энергосбережения).</p>
+
+<h5>На стороне руководителя (дашборд)</h5>
+
+<ul>
+<li>Все события стекаются в единую Google Таблицу — бесплатное,</li>
+</ul>
+<p>  не требующее отдельного сервера хранилище.</p>
+<ul>
+<li>Доступен веб-дашборд (та же таблица, открытая по ссылке в</li>
+</ul>
+<p>  браузере): дата, время, точка, ожидаемое время, статус.</p>
+<ul>
+<li>Автоматическая подсветка &quot;Опоздание&quot; / &quot;Вовремя&quot; — на основе</li>
+</ul>
+<p>  сравнения фактического времени с ожидаемым (настраивается по</p>
+<p>  каждой точке отдельно).</p>
+<ul>
+<li>Данные накапливаются по датам — можно анализировать динамику</li>
+</ul>
+<p>  дисциплины по каждой точке за любой период.</p>
+
+<h4>3. Как это реализовано</h4>
+
+<h5>Принцип работы (логика)</h5>
+
+<ul>
+<li>Foreground-сервис на телефоне слушает системные широковещательные</li>
+</ul>
+<p>   события <code>ACTION_SCREEN_OFF</code> и <code>ACTION_USER_PRESENT</code>.</p>
+<ul>
+<li>При каждом выключении экрана запоминается временная метка.</li>
+<li>При разблокировке вычисляется, сколько телефон был заблокирован</li>
+</ul>
+<p>   непрерывно.</p>
+<ul>
+<li>Если это больше порога (настраиваемое значение, по умолчанию</li>
+</ul>
+<p>   4 часа) и событие ещё не было отправлено сегодня — данные летят</p>
+<p>   на сервер по HTTP.</p>
+<ul>
+<li>Сервер (Google Apps Script) записывает событие в таблицу и</li>
+</ul>
+<p>   отдаёт HTML-дашборд по тому же URL.</p>
+
+<h5>Архитектура</h5>
+
+<p>``<code></p>
+<p>[Android-приложение]  --HTTP POST (JSON)--&gt;  [Google Apps Script Web App]</p>
+<p>                                                        |</p>
+<p>                                                        v</p>
+<p>                                              [Google Таблица: Log, Settings]</p>
+<p>                                                        |</p>
+<p>                                                        v</p>
+<p>                                        [Дашборд: HTML, отдаётся тем же Web App через GET]</p>
+<p></code>`<code></p>
+
+<p>Решение сознательно спроектировано <b>без выделенного сервера</b>:</p>
+<p>серверную часть заменяет бесплатный Google Apps Script, а базу</p>
+<p>данных — Google Таблица. Это снижает стоимость и сложность</p>
+<p>внедрения до нуля (не требуется хостинг, администрирование БД,</p>
+<p>SSL-сертификаты и т.д.), что критично для MVP.</p>
+
+<h4>4. Технологический стек</h4>
+
+<pre class="tbl">
+| Компонент | Технология |
+|---|---|
+| Мобильное приложение | Android (Kotlin), минимальный SDK 24 (Android 7.0+) |
+| Фоновая работа | Foreground Service + BroadcastReceiver |
+| Автозапуск после перезагрузки | BroadcastReceiver (</code>BOOT_COMPLETED<code>) |
+| Хранение локальных настроек | SharedPreferences |
+| Сетевой слой | </code>HttpURLConnection<code>, JSON (</code>org.json<code>) |
+| Сборка | Gradle 8.4, Android Gradle Plugin 8.2.2 |
+| Бэкенд | Google Apps Script (JavaScript, серверный рантайм Google) |
+| Хранилище данных | Google Sheets |
+| Дашборд | Серверный рендеринг HTML внутри Apps Script (</code>doGet`) |
+</pre>
+
+<h4>5. Формат MVP — что уже есть и на что сознательно не тратили время</h4>
+
+<h5>Реализовано (ядро MVP)</h5>
+
+<ul>
+<li>[x] Фиксация первой разблокировки после длительной блокировки</li>
+<li>[x] Настраиваемый порог &quot;длительной блокировки&quot;</li>
+<li>[x] Передача данных на сервер без выделенного бэкенда</li>
+<li>[x] Просмотр журнала в виде дашборда без установки доп. софта</li>
+<li>[x] Автоматическое определение статуса &quot;Опоздание/Вовремя&quot;</li>
+<li>[x] Устойчивость к перезагрузке телефона</li>
+<li>[x] Работа полностью в фоне без участия сотрудника после настройки</li>
+</ul>
+
+<h5>Сознательно упрощено / не входит в MVP</h5>
+
+<ul>
+<li>[ ] Push-уведомления руководителю при опоздании</li>
+<li>[ ] Геолокация в момент разблокировки (подтверждение, что</li>
+</ul>
+<p>      сотрудник физически на точке)</p>
+<ul>
+<li>[ ] Централизованное управление настройками с одного экрана</li>
+</ul>
+<p>      (сейчас каждый телефон настраивается вручную)</p>
+<ul>
+<li>[ ] История версий / удалённое обновление конфигурации без</li>
+</ul>
+<p>      переустановки приложения</p>
+<ul>
+<li>[ ] Аналитика и графики динамики (сейчас — только табличный</li>
+</ul>
+<p>      журнал)</p>
+<ul>
+<li>[ ] Публикация в Google Play (сейчас — прямая установка apk)</li>
+<li>[ ] Полноценная БД вместо Google Таблиц (при росте объёма</li>
+</ul>
+<p>      данных может понадобиться миграция)</p>
+
+<h5>Известные ограничения текущей версии</h5>
+
+<ul>
+<li>Событие фиксируется по факту разблокировки <b>экрана</b>, а не по</li>
+</ul>
+<p>  физическому присутствию на точке — косвенный, а не абсолютный</p>
+<p>  показатель.</p>
+<ul>
+<li>На части производителей телефонов (Xiaomi, Huawei, Oppo и т.д.)</li>
+</ul>
+<p>  требуется дополнительная ручная настройка энергосбережения —</p>
+<p>  иначе агрессивные системы оптимизации могут останавливать</p>
+<p>  фоновый процесс.</p>
+<ul>
+<li>Порог &quot;длительной блокировки&quot; считается от последнего выключения</li>
+</ul>
+<p>  экрана — если сотрудник ночью брал телефон в руки, отсчёт</p>
+<p>  сбрасывается (известное ограничение алгоритма, кандидат на</p>
+<p>  доработку — переход на логику &quot;первая разблокировка в заданном</p>
+<p>  временном окне&quot;).</p>
+
+<h4>6. Юридический аспект</h4>
+
+<p>Приложение осуществляет мониторинг рабочего устройства сотрудника.</p>
+<p>Рекомендуется закрепить факт использования такой системы в</p>
+<p>локальном нормативном акте компании и ознакомить сотрудников под</p>
+<p>подпись — это стандартная практика при внедрении систем учёта</p>
+<p>рабочего времени и снижает риски трудовых споров.</p>
+
+<h4>7. Дальнейшее развитие</h4>
+
+<p>Возможные направления для развития проекта после MVP:</p>
+<ul>
+<li>Push-уведомления руководителю о срыве графика в реальном времени</li>
+<li>Единая административная панель вместо ручной настройки каждого</li>
+</ul>
+<p>  телефона</p>
+<ul>
+<li>Переход с Google Таблиц на полноценную БД при масштабировании</li>
+</ul>
+<p>  на большое количество точек</p>
+<ul>
+<li>Верификация присутствия через геолокацию/Wi-Fi точки продаж</li>
+<li>Публикация в закрытый корпоративный каталог приложений (MDM)</li>
+</ul></div></details></div></details></div>
+    </article>
+    <article class="card good"><div class="card-h">
       <div><div class="card-t">Шесть проектов: диспетчерская курьеров, агенты рутины, аналитика Битрикс, разбор резюме, склад ломбарда</div><div class="card-p">Заляков Ренат Асгатович <span class="dot">·</span> Управление тех.инфраструктуры и мат.обеспечения</div></div>
-      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span></div></div>
+      <div class="badges"><span class="badge good">Проект с описанием</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">README.md</div><p>Программа собирает задачи из Bitrix24 (доставка золота, доставка техники, мелкосрочный ремонт),</p><p>превращает их в тикеты, раскладывает по карте с фильтрами по типу и помогает диспетчеру</p><p>распределять нагрузку между курьерами и техниками. Курьеры видят свои задачи с телефона.</p><p>Реализация ТЗ из вики: `Проекты/Логистика курьеров/Диспетчерская тикет-система — контекст.md`.</p><p>Двойной клик по `Запустить диспетчерскую.bat` — сервер поднимется, браузер откроется сам на</p><p>`http://127.0.0.1:8770`. При первом запуске система сама наливает демо-данные по Уфе, чтобы было</p><p>что посмотреть без живого Bitrix.</p><p>Вручную:</p><p>cd courier-dispatch\backend</p></div></details></div></div>
       <p class="card-d">Самый крупный вклад: 6 архивов, 310 файлов, из них 179 с кодом. Диспетчерская тикет-система курьеров и техников собирает задачи из Битрикс24 (доставка золота и техники, мелкосрочный ремонт), раскладывает их по карте с фильтрами и помогает распределять нагрузку; курьеры видят задачи с телефона. Агенты рутинных действий работают по принципу «обучение по показу»: один раз показываешь повторяющееся действие — агент повторяет его сам по кнопке или расписанию, с любой Windows-программой и без интернета. Плюс аналитика и дашборд по Битрикс24, агент разбора резюме и учёт склада ломбарда.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручное распределение заявок между курьерами и техниками, ручное повторение рутинных операций в программах, ручную сборку аналитики из Битрикс24 и ручной разбор резюме.</div><div><b>Проверка:</b> HTML-инструмент 14 КБ, ~8 функций; скрипт app.py: синтаксис ок; автотесты не прошли</div>
       <div class="sys">Битрикс24 · Python · веб-интерфейс · Windows-автоматизация · карты</div><div><b>В комплекте:</b> 6 архивов: серверная часть и веб-интерфейс диспетчерской, агенты автоматизации, дашборд Битрикс24, разбор резюме, склад; запускающие .bat, README по каждому проекту, тесты</div></div>
@@ -6732,7 +7475,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card warn"><div class="card-h">
       <div><div class="card-t">Контроль открытия подразделений через мессенджер MAX (облачная функция)</div><div class="card-p">Камаров Антон Александрович <span class="dot">·</span> Супервайзеры</div></div>
-      <div class="badges"><span class="badge warn">Проект без описания</span><span class="badge good">проверено: работает</span></div></div>
+      <div class="badges"><span class="badge warn">Проект без описания</span><span class="badge good">проверено: работает</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">PROJECT_DESCRIPTION.md</div><p>Проект автоматизирует ежедневный контроль открытия территориально</p><p>распределённых подразделений по сообщениям сотрудников в групповых чатах</p><p>MAX.</p><p>В ручном процессе руководителю необходимо открывать несколько рабочих</p><p>чатов, проверять наличие отметок об открытии каждого подразделения,</p><p>сопоставлять их с графиком и отдельно фиксировать отсутствующие отметки.</p><p>MVP переносит эту проверку в автоматический сценарий: система читает</p><p>сообщения, распознаёт отметки подразделений, сравнивает их с ожидаемым</p><p>списком и отправляет ответственному сотруднику краткий отчёт.</p></div></details></div></div>
       <p class="card-d">Облачная функция (Yandex Cloud) на Python: обращается к API мессенджера MAX, собирает отчёты об открытии обособленных подразделений по контрольным слотам времени (08:50, 09:20, 09:50, 10:50) и формирует сводку по территориям. Конфигурация территорий и точек вынесена в отдельный файл, есть сертификаты и зависимости. Отдельного описания реализации в чат не приложено.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручной сбор и сверку отчётов об открытии точек по чатам территорий.</div><div><b>Проверка:</b> скрипт delivery_store.py: синтаксис ок</div>
       <div class="sys">MAX (мессенджер) · Yandex Cloud Functions · Python</div><div><b>В комплекте:</b> Функция (index.py), сборщик отчётов на 508 строк, конфигурация территорий, сертификаты, requirements.txt. README отсутствует</div></div>
@@ -7156,7 +7899,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card warn2"><div class="card-h">
       <div><div class="card-t">Учёт облигаций «Отчёт брокера → проводки»</div><div class="card-p">Мухамадисламова Эльвира Верновна <span class="dot">·</span> Бухгалтерия</div></div>
-      <div class="badges"><span class="badge warn2">Описание без проекта</span><span class="badge mut">не проверялось</span></div></div>
+      <div class="badges"><span class="badge warn2">Описание без проекта</span><span class="badge mut">не проверялось</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">09_1_Учет_облигаций_MVP.md</div><p>Направление: Бухгалтерия и финансы · Процесс: CAP-01 (выпуск и обслуживание облигаций)</p><p>Статус: v1 собрана и сверена на реальных данных</p><p>1. Что уже автоматизировано — ничего отдельного: ручная работа плюс типовой функционал 1С/АРМ, по всем процессам FIN-01–FIN-07.</p><p>2. Что раздражает больше всего — зависание программ, долгое формирование отчётов (инфраструктурная проблема, вне рамок MVP — требует ИТ-разбора).</p><p>3. Ручной перенос между системами — сверка АРМ и 1С вручную; ручные проводки по операциям с облигациями; ручные проводки по элиминации счетов при консолидации (КОРП18).</p><p>4. Дополнительно выявлено — ошибки при выгрузке банковских выписок из клиент-банка: операции неверно отражаются на счетах учёта либо совсем не отражаются, комиссия банка садится неверно.</p></div></details></div></div>
       <p class="card-d">Описан Excel-шаблон для учёта облигаций: считает номинал, НКД, затраты по сделке, чистую сумму признания и проценты по дням, формирует сводку за период и сверяет расчётное начисление с фактически выплаченным купоном. Заявлено, что версия собрана и сверена на реальных данных по выпуску RU000A10F8R5.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручную построчную обработку отчёта брокера и ручной расчёт НКД и процентов.</div><div><b>Проверка:</b> работающий артефакт не приложен</div>
       <div class="sys">Excel · 1С · АРМ</div><div><b>В комплекте:</b> Только описание (.md). Сам шаблон не приложен</div></div>
@@ -7229,7 +7972,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card warn2"><div class="card-h">
       <div><div class="card-t">Журнал постановки и снятия залога ТС в ФНП (MVP-AUTO-01)</div><div class="card-p">Бажанов Алексей Владимирович <span class="dot">·</span> Отдел автозайм</div></div>
-      <div class="badges"><span class="badge warn2">Описание без проекта</span><span class="badge mut">не проверялось</span></div></div>
+      <div class="badges"><span class="badge warn2">Описание без проекта</span><span class="badge mut">не проверялось</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">README.md</div><p>implementation_date: 2026-08-12</p><p>Реализация по готовому MVP-ТЗ MVP-AUTO-01 (владелец: Бажанов А.В., направление «Автоломбард», приоритет P1) из пакета `AUTO — Бажанов`. Ничего заранее реализованного сотрудник не указал, поэтому решение сделано с нуля строго в границах ТЗ, без расширения объёма.</p><p>Проблема, которую закрывает: регистрация и снятие уведомлений в ФНП сейчас ведётся вручную, зависит от способа регистрации и требует повторной утренней проверки — пропуск действия создаёт риск некорректного статуса залога.</p><p>Цель: дать прозрачный список обязательных действий по каждому договору и исключить забытые проверки.</p><p>Все пять пунктов раздела «MVP обязательно делает» из ТЗ выполнены и проверены на синтетическом примере.</p></div></details></div></div>
       <p class="card-d">Реализация по готовому ТЗ MVP-AUTO-01: журнал ведёт обезличенный идентификатор договора, даты и способ регистрации, рассчитывает срок постановки, снятия и следующей утренней проверки, даёт список обязательных действий по каждому договору. Статус — прототип реализован, ожидает утверждения владельцем перед продуктивным использованием.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручной контроль сроков регистрации и снятия уведомлений в ФНП и повторные утренние проверки.</div><div><b>Проверка:</b> приложено только описание реализации; артефакт не приложен</div>
       <div class="sys">ФНП · CSV/Excel</div><div><b>В комплекте:</b> Только README с описанием реализации. Сам инструмент в чат не приложен</div></div>
@@ -7408,7 +8151,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card warn2"><div class="card-h">
       <div><div class="card-t">Система мониторинга утечек данных (darkweb)</div><div class="card-p">Мохамедов Исмаил <span class="dot">·</span> Отдел информационной безопасности</div></div>
-      <div class="badges"><span class="badge warn2">Описание без проекта</span><span class="badge mut">не проверялось</span></div></div>
+      <div class="badges"><span class="badge warn2">Описание без проекта</span><span class="badge mut">не проверялось</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">darkweb_leak_monitoring_project_status_ru.md</div><p>Статус проекта: В РАЗРАБОТКЕ</p><p>Назначение: выявление утечек данных, компрометации корпоративных учётных записей, секретов и внешних упоминаний организаций и контролируемых объектов.</p><p>Дата отчёта: 13.08.2026</p><p>&gt; Проект уже находится в работе. Базовая логика поиска и мониторинга сформирована. Текущий этап посвящён расширению источников, автоматизации регулярных проверок, ускорению поиска и разработке удобного Dashboard для аналитика.</p><p>Система предназначена для поиска и постоянного мониторинга внешних источников на предмет утечек и компрометации данных.</p><p>В систему можно добавлять разные объекты мониторинга:</p><p>• домены;</p><p>• корпоративные e-mail;</p><p>• названия организаций и брендов;</p></div></details></div></div>
       <p class="card-d">Описан проект системы поиска и постоянного мониторинга внешних источников на предмет утечек и компрометации: домены, корпоративные почтовые ящики, названия организаций и брендов, рабочие телефоны, перечень сотрудников, ключевые слова. Статус — в разработке: базовая логика поиска сформирована, идёт расширение источников и автоматизация регулярных проверок.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручной поиск упоминаний и утечек по внешним источникам.</div><div><b>Проверка:</b> работающий артефакт не приложен</div>
       <div class="sys">внешние источники · мониторинг</div><div><b>В комплекте:</b> Только статусный отчёт по проекту (.md). Инструмент не приложен</div></div>
@@ -7875,7 +8618,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card warn2"><div class="card-h">
       <div><div class="card-t">Кнопка «Управленческий отчёт ГК СКС»</div><div class="card-p">Петров Дмитрий Юрьевич <span class="dot">·</span> Отдел финансового анализа</div></div>
-      <div class="badges"><span class="badge warn2">Описание без проекта</span><span class="badge mut">не проверялось</span></div></div>
+      <div class="badges"><span class="badge warn2">Описание без проекта</span><span class="badge mut">не проверялось</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">Итог брифинга.md</div><p>12 августа 2026 · направление «Бухгалтерия и финансы» (методичка 09, путь B — своя идея) · статус: инструмент готов, ждёт боевого прогона за июль</p><p>Автоматизировать месячную управленческую отчётность ГК СКС до состояния «нажал кнопку — получил отчёт»: `Отчёт_СКС_&lt;месяц&gt;_&lt;год&gt;.xlsx` с дашбордом, P&amp;L по 14 юрлицам, счетами группы, расходами по статьям и листами контроля «Источники»/«Проверки».</p><p>Программа\-оболочка «Управленческий отчёт ГК СКС.exe» уже существовала, но при запуске падала, а июльский автопрогон 3 августа не собрался по трём причинам: 1С Корп 4 не пускала по COM («Внешнее соединение не разрешено для указанного пользователя»), к Бух 3.0 не подходил пароль, не было выгрузки имущества из АРМ.</p></div></details></div></div>
       <p class="card-d">Восстановлены и переписаны сборочные скрипты управленческой отчётности, добавлен обход запрета COM через клиент 1С, обновлена программа-оболочка и сделан запуск одной кнопкой (bat-файл). На июньских данных восстановленные сборщики воспроизводят эталонный отчёт один в один. Осталось провести боевой прогон за июль.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручную сборку месячного управленческого отчёта и консолидированной ОСВ по группе.</div><div><b>Проверка:</b> работающий артефакт не приложен</div>
       <div class="sys">1С · АРМ (SQL) · Excel · Python</div><div><b>В комплекте:</b> Только описание (.md). Сами скрипты и программа лежат на рабочем компьютере автора</div></div>
@@ -7944,7 +8687,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card warn2"><div class="card-h">
       <div><div class="card-t">LEGAL-X01 — сравнение двух редакций договора</div><div class="card-p">Деев Виталий Валерьевич <span class="dot">·</span> Правовой отдел</div></div>
-      <div class="badges"><span class="badge warn2">Описание без проекта</span><span class="badge mut">не проверялось</span></div></div>
+      <div class="badges"><span class="badge warn2">Описание без проекта</span><span class="badge mut">не проверялось</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">LEGAL-X01_Описание_реализованной_автоматизации.md</div><p>Наименование: Сравнение двух редакций договора</p><p>Код: LEGAL-X01</p><p>Направление: Правовой отдел</p><p>Статус: MVP реализован и протестирован</p><p>Режим: локальная read-only обработка без записи в Bitrix24</p><p>LEGAL-X01 автоматически сравнивает две редакции договора в формате DOCX и создаёт новую HTML-карту изменений для последующей проверки юристом.</p><p>1. предыдущая редакция DOCX;</p><p>2. новая редакция DOCX.</p><p>Порядок версий фиксируется как `предыдущая → новая`.</p></div></details></div></div>
       <p class="card-d">Инструмент сравнивает две редакции договора в формате DOCX и строит HTML-карту изменений: добавления, удаления и правки по пунктам, группировка по разделам (предмет, цена, сроки, ответственность и др.), контрольные суммы SHA-256 обеих редакций. Таблицы и приложения в первой версии не сравниваются и перечисляются как исключённые.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручное построчное сличение редакций договора юристом.</div><div><b>Проверка:</b> работающий артефакт не приложен</div>
       <div class="sys">Word/DOCX · HTML</div><div><b>В комплекте:</b> Только описание реализации (.md). Сам инструмент не приложен</div></div>
@@ -8044,7 +8787,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card warn2"><div class="card-h">
       <div><div class="card-t">Калькулятор корпоративных сроков АО «ГК СКС»</div><div class="card-p">Каюмов Тимур Тимербаевич <span class="dot">·</span> Правовой отдел</div></div>
-      <div class="badges"><span class="badge warn2">Описание без проекта</span><span class="badge warn">проверено: частично</span></div></div>
+      <div class="badges"><span class="badge warn2">Описание без проекта</span><span class="badge warn">проверено: частично</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">Описание реализованного калькулятора корпоративных сроков.md</div><p>На основании проведенного брифинга и подготовленного технического задания создана первая рабочая версия веб-приложения «Калькулятор корпоративных сроков АО „ГК СКС“».</p><p>Калькулятор предназначен для Правового отдела и должен помогать рассчитывать юридически значимые даты корпоративных процедур по заранее проверенным и утвержденным правилам.</p><p>Рабочая версия опубликована по адресу:</p><p>[https://gk-sks-corporate-deadlines.tkaumov83.chatgpt.site](https://gk-sks-corporate-deadlines.tkaumov83.chatgpt.site)</p><p>Доступ к опубликованной версии настроен как приватный.</p><p>Калькулятор является расчетным инструментом, а не системой автоматического толкования законодательства.</p><p>Он должен:</p><p>• применять только заранее внесенные и утвержденные Правовым отделом правила;</p></div></details></div></div>
       <p class="card-d">По подготовленному техническому заданию создана первая рабочая версия веб-приложения для Правового отдела: расчёт юридически значимых дат корпоративных процедур по заранее утверждённым правилам. Инструмент опубликован по ссылке с приватным доступом. Приложены ТЗ и описание реализации; сами файлы приложения в чат не приложены.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручной расчёт сроков корпоративных процедур по производственному календарю.</div><div><b>Проверка:</b> приложение опубликовано по внешней приватной ссылке; файлы в чат не приложены — локально проверить нечего</div>
       <div class="sys">веб-приложение · Excel · PDF</div><div><b>В комплекте:</b> Техническое задание (.md) и описание реализации (.md). Приложение опубликовано по внешней ссылке</div></div>
@@ -9246,7 +9989,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card warn2"><div class="card-h">
       <div><div class="card-t">Опросник расчёта заработной платы</div><div class="card-p">Никифоров Денис Андреевич <span class="dot">·</span> Управление безопасности</div></div>
-      <div class="badges"><span class="badge warn2">Описание без проекта</span><span class="badge mut">не проверялось</span></div></div>
+      <div class="badges"><span class="badge warn2">Описание без проекта</span><span class="badge mut">не проверялось</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">Учет_юруслуг_README.md</div><p>Excel-таблица (`.xlsx`) для учёта клиентов, дел, оплат и выплат в юридической фирме.</p><p>Состоит из 6 связанных листов с автоматическими формулами и выпадающими списками.</p><p>Ничего вручную не суммируется — все итоги на «Дашборде» считаются сами по данным других листов.</p><p>1. Не трогайте формулы (чёрный текст) — вводите данные только в ячейки для заполнения (обычно выделены синим).</p><p>2. Основные данные вносятся на лист «Клиенты и дела» — из него всё остальное считается автоматически.</p><p>3. Список юристов, источников клиентов и статусов настраивается один раз на листе «Справочники» — дальше он сам подтянется в выпадающие меню везде.</p><p>4. Лист «Дашборд» ничего не нужно трогать — он просто показывает сводку.</p><p>Сводная панель руководителя, полностью строится формулами по данным остальных листов.</p></div></details></div></div>
       <p class="card-d">Инструмент в виде одного HTML-файла: задаёт вопросы по одному (план/факт по KPI, часы, количество единиц), сам считает премию по заданным правилам, показывает итоговую таблицу по сотрудникам с возможностью ручной правки и сохраняет расчёт в CSV. Прогресс сохраняется автоматически.</p>
       <div class="card-f"><div><b>Убирает:</b> Убирает ручной ежемесячный расчёт премий по KPI.</div><div><b>Проверка:</b> работающий артефакт не приложен</div>
       <div class="sys">HTML · Excel/CSV</div><div><b>В комплекте:</b> Только документация (.md). Сам HTML-файл не приложен</div></div>
@@ -9584,7 +10327,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card neg"><div class="card-h">
       <div><div class="card-t">Пакет документов «Скупка и оборот ДМДК» v3</div><div class="card-p">Кузьмина Айгуль Казбековна <span class="dot">·</span> КМ Золото</div></div>
-      <div class="badges"><span class="badge neg">ТЗ без проекта</span><span class="badge mut">не проверялось</span></div></div>
+      <div class="badges"><span class="badge neg">ТЗ без проекта</span><span class="badge mut">не проверялось</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">README.md</div><p>Версия пакета: 3.0</p><p>Дата подготовки: 12.08.2026</p><p>Статус: проект для согласования владельцем процесса, ИТ, ИБ/ПДн, юристом/ОФМ и специалистом по ГИИС ДМДК.</p><p>1. `01_Аудит_исходного_ТЗ` — проверка полноты, противоречий и рисков исходного файла.</p><p>2. `02_Скорректированное_MVP-ТЗ` — исполнимое ТЗ на рекомендуемый пилот: сверка квитанций АРМ ↔ ГИИС с контролем сроков.</p><p>3. `03_Регламент_бизнес-процесса` — целевой порядок выполнения и контроля сквозного процесса.</p><p>4. `04_Матрица_требований_и_UAT` — трассировка требований, приемочные сценарии и шаблон протокола испытаний.</p><p>5. `05_Вопросы_и_реестр_решений` — вопросы по приоритетам и журнал решений.</p><p>6. `06_Свод_согласованных_решений_редакция_3` — обязательное дополнение с решениями по ротации конкретных изделий, интеграции АРМ–ГИИС, УИН, очередям, аудиту, ролям, испытаниям и сопровождению.</p></div></details></div></div>
       <p class="card-d">Комплект из шести документов: аудит исходного ТЗ (оценка готовности 15 из 50), скорректированное MVP-ТЗ на сверку квитанций АРМ ↔ ГИИС ДМДК, регламент процесса, матрица требований и UAT, реестр вопросов и свод согласованных решений. Работающего инструмента в пакете нет.</p>
       <div class="card-f"><div><b>Убирает:</b> Подготовка к автоматизации сверки квитанций скупки с ГИИС ДМДК.</div><div><b>Проверка:</b> работающий артефакт не приложен</div>
       <div class="sys">АРМ · ГИИС ДМДК · Excel</div><div><b>В комплекте:</b> 14 документов (DOCX + Markdown). Инструмент не разработан</div></div>
@@ -10016,7 +10759,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card neg"><div class="card-h">
       <div><div class="card-t">Требования к автоматизации «Управление табелем учёта рабочего времени»</div><div class="card-p">Костюхина Елена Александровна <span class="dot">·</span> Отдел операционного управления и методологии</div></div>
-      <div class="badges"><span class="badge neg">ТЗ без проекта</span><span class="badge mut">не проверялось</span></div></div>
+      <div class="badges"><span class="badge neg">ТЗ без проекта</span><span class="badge mut">не проверялось</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">trebovaniya_upravlenie_tabelem_ucheta_rabochego_vremeni (2).txt</div><p>﻿# Требования к автоматизации процесса «Управление табелем учета рабочего времени»</p><p>Контур: Управляющая организация и пять дочерних обществ</p><p>Домен: L0 — Управление персоналом и внутренними административными процессами</p><p>Процесс: L1 — Управление учетом рабочего времени сотрудников</p><p>Версия: 1.0</p><p>Статус: проект целевой модели</p><p>Назначение: основа для технического задания, настройки СЭД, интеграций, приемочных испытаний и регламента процесса</p><p>Цель процесса — обеспечить централизованный, прозрачный и контролируемый учет рабочего времени сотрудников Управляющей организации и пяти дочерних обществ с учетом распределенных офисов, индивидуальных графиков, отсутствий и отклонений, а также передачу подтвержденных данных в финансово-экономический или расчетный контур.</p></div></details></div></div>
       <p class="card-d">Проект целевой модели процесса для управляющей организации и пяти дочерних обществ: цепочка «событие → основание → проверка → подтверждённое отклонение → табель → расчётный пакет», разграничение СЭД и расчётной системы, принципы работы с данными камер. Реализации нет.</p>
       <div class="card-f"><div><b>Убирает:</b> Подготовка к автоматизации табельного учёта.</div><div><b>Проверка:</b> работающий артефакт не приложен</div>
       <div class="sys">СЭД · 1С · Excel</div><div><b>В комплекте:</b> Один текстовый файл требований (.txt)</div></div>
@@ -10451,7 +11194,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card neg"><div class="card-h">
       <div><div class="card-t">Методология процесса «Управление репутацией и отзывами»</div><div class="card-p">Фахретдинова Лена Ренатовна <span class="dot">·</span> Отдел привлечения клиентов</div></div>
-      <div class="badges"><span class="badge neg">ТЗ без проекта</span><span class="badge mut">не проверялось</span></div></div>
+      <div class="badges"><span class="badge neg">ТЗ без проекта</span><span class="badge mut">не проверялось</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">reputaciya-otzyvy.md</div><p>id:          PROC-reputaciya-otzyvy</p><p>process:     Управление репутацией и отзывами — мониторинг и обработка негативных отзывов о точках сети</p><p>domain:      Маркетинг и привлечение</p><p>module:      Репутация и отзывы (CRM-04)</p><p>owner:       Фахретдинова Лена Ренатовна, руководитель отдела привлечения клиентов</p><p>source:      expert</p><p>date:        2026-08-13</p><p>confidence:  0.6</p><p>status:      draft</p></div></details></div></div>
       <p class="card-d">Описание процесса мониторинга и обработки негативных отзывов о точках сети на 2ГИС, Яндекс Картах, Google и отзовиках: роль сервиса Pinbox (автоопределение тона, автоответ, автожалоба), маршрутизация отзыва руководителю направления, проверка факта визита клиента товароведом смены, эскалация острых случаев. Документ описывает процесс «как есть» (Слой 1А), это не реализованная автоматизация.</p>
       <div class="card-f"><div><b>Убирает:</b> Пока ничего: документ фиксирует процесс и его разрывы, автоматизация из него ещё не собрана.</div><div><b>Проверка:</b> проверять нечего: это описание процесса, а не инструмент</div>
       <div class="sys">Pinbox · 2ГИС / Яндекс Карты / Google · Битрикс24 · Excel · почта</div><div><b>В комплекте:</b> Одна методологическая карта процесса (.md). Инструмента нет</div></div>
@@ -10885,7 +11628,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card neg"><div class="card-h">
       <div><div class="card-t">Четыре методологии процессов эксплуатации и строительства</div><div class="card-p">Гареев Айрат <span class="dot">·</span> Отдел эксплуатации и строительства</div></div>
-      <div class="badges"><span class="badge neg">ТЗ без проекта</span><span class="badge mut">не проверялось</span></div></div>
+      <div class="badges"><span class="badge neg">ТЗ без проекта</span><span class="badge mut">не проверялось</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">demontazh-i-rastorzhenie-arendy.md</div><p>id:          PROC-demontazh-i-rastorzhenie-arendy</p><p>process:     Демонтаж помещений и расторжение договоров аренды</p><p>domain:      Строительство и эксплуатация</p><p>module:      Административно-хозяйственное обеспечение</p><p>owner:       Гареев Айрат, специалист по строительству и эксплуатации</p><p>source:      expert</p><p>date:        2026-07-30</p><p>confidence:  0.7</p><p>status:      draft</p></div></details></div></div>
       <p class="card-d">Описания процессов «как есть» (Слой 1А): демонтаж помещений и расторжение договоров аренды, организация дежурств специалистов в выходные и нерабочее время, перемещение ТМЦ между офисом и складом, совещание с руководителями. Это материалы обследования процессов, а не реализованная автоматизация.</p>
       <div class="card-f"><div><b>Убирает:</b> Пока ничего: документы фиксируют процессы и их разрывы, автоматизация из них не собрана.</div><div><b>Проверка:</b> работающий артефакт не приложен</div>
       <div class="sys">Битрикс24 · Excel · телефон</div><div><b>В комплекте:</b> 4 методологические карты процессов (.md). Инструмента нет</div></div>
@@ -11259,7 +12002,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card neg"><div class="card-h">
       <div><div class="card-t">Помощник подготовки иска и письма по данным из АРМ</div><div class="card-p">Месхи Дмитрий Валерьевич <span class="dot">·</span> Правовой отдел</div></div>
-      <div class="badges"><span class="badge neg">ТЗ без проекта</span><span class="badge mut">не проверялось</span></div></div>
+      <div class="badges"><span class="badge neg">ТЗ без проекта</span><span class="badge mut">не проверялось</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">Итог_брифинга_MVP_подготовка_исков.md</div><p>Название: Помощник подготовки иска и письма по данным из АРМ.</p><p>Направление: Право и документооборот.</p><p>Цель: сократить ручное оформление исков и работу с почтой.</p><p>Пользователь переносит данные из АРМ в простую форму, получает</p><p>проверенный набор реквизитов для переноса в выбранный Word-шаблон и</p><p>готовый текст письма.</p><p>Формат первого MVP: максимально простой локальный инструмент, не</p><p>требующий навыков программирования. Предпочтительно --- локальная</p><p>HTML-страница, открываемая в браузере.</p></div></details></div></div>
       <p class="card-d">Итог брифинга: выбран проект локальной HTML-страницы, куда юрист переносит данные из АРМ и получает проверенный набор реквизитов для Word-шаблона и готовый текст письма. Зафиксировано решение не менять существующие шаблоны исков. Реализация не приложена.</p>
       <div class="card-f"><div><b>Убирает:</b> Сокращение ручного оформления исков и сопроводительных писем.</div><div><b>Проверка:</b> работающий артефакт не приложен</div>
       <div class="sys">АРМ · Word · Битрикс24</div><div><b>В комплекте:</b> Итог брифинга (.md)</div></div>
@@ -11696,7 +12439,7 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card neg"><div class="card-h">
       <div><div class="card-t">Общий дашборд показателей «Восток»</div><div class="card-p">Напалкова Валерия Евгеньевна <span class="dot">·</span> Супервайзеры</div></div>
-      <div class="badges"><span class="badge neg">ТЗ без проекта</span><span class="badge mut">не проверялось</span></div></div>
+      <div class="badges"><span class="badge neg">ТЗ без проекта</span><span class="badge mut">не проверялось</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">Описание реализованной автоматизации.md</div><p>Проект представляет собой интерактивный веб-виджет для контроля выполнения планов сети условных подразделений. Решение автоматически обрабатывает показатели из Excel, рассчитывает выполнение, формирует рейтинги и визуализирует результаты в виде спидометров, шкал и сводной таблицы.</p><p>Демонстрационная версия проекта полностью обезличена. Названия подразделений и стартовые значения являются смоделированными и не относятся к реальным организациям, клиентам, базам данных или производственным серверам.</p><p>До автоматизации анализ планов требовал ручного переноса данных из Excel, расчёта процентов выполнения, подготовки рейтингов и визуального выделения отклонений.</p><p>Разработанное решение автоматизирует следующие операции:</p></div></details></div></div>
       <p class="card-d">Проект требований (версия 0.1) на дашборд по всем ОП территориального образования «Восток»: объединение планов и факта из выгрузок АРМ, расчёт выполнения плана, сравнение с предыдущим днём и аналогичной датой прошлого месяца, агрегация по дивизионам и ОП. Реализации нет.</p>
       <div class="card-f"><div><b>Убирает:</b> Подготовка к отказу от ручного переноса показателей из АРМ в ежедневный Excel-отчёт.</div><div><b>Проверка:</b> работающий артефакт не приложен</div>
       <div class="sys">АРМ · Excel</div><div><b>В комплекте:</b> Техническое задание (.md)</div></div>
@@ -12477,9 +13220,9 @@ footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-si
     </article>
     <article class="card neg"><div class="card-h">
       <div><div class="card-t">Семь методологий процессов склада, ОП и финмониторинга</div><div class="card-p">Рахимова Анна Андреевна <span class="dot">·</span> Товароведы</div></div>
-      <div class="badges"><span class="badge neg">ТЗ без проекта</span><span class="badge mut">не проверялось</span></div></div>
+      <div class="badges"><span class="badge neg">ТЗ без проекта</span><span class="badge mut">не проверялось</span><details class="brief"><summary>Кратко</summary><div class="briefbox"><div class="bh">inventarizaciya-pri-zakrytii-tochki.md</div><p>id:          PROC-inventarizaciya-pri-zakrytii-tochki</p><p>process:     Инвентаризация остатков при закрытии или переезде точки</p><p>domain:      Склад</p><p>module:      Хозяйственный блок / Складской учет</p><p>owner:       Рахимова Ксения Ильдаровна, заведующий складом</p><p>source:      expert</p><p>date:        2026-07-29</p><p>confidence:  0.75</p><p>status:      draft</p></div></details></div></div>
       <p class="card-d">Описания процессов «как есть» (Слой 1А): инвентаризация при закрытии или переезде точки, открытие и перемещение ОП (ИТ-часть), приёмка ТМЦ от поставщиков, приход товара на списание, мониторинг сомнительных операций ломбарда, согласование договоров ОФМ и СВК, выдача ТМЦ. Материалы обследования, а не автоматизация.</p>
-      <div class="card-f"><div><b>Убирает:</b> Пока ничего: документы фиксируют процессы и их разрывы.</div><div><b>Проверка:</b> работающий артефакт не приложен</div>
+      <div class="card-f"><div><b>Убирает:</b> Пока ничего: документы фиксируют процессы и их разрывы.</div><div><b>Проверка:</b> проверять нечего: это описания процессов, а не инструмент</div>
       <div class="sys">АРМ · Битрикс24 · Excel</div><div><b>В комплекте:</b> 7 методологических карт процессов (.md). Инструмента нет</div></div>
       <div class="card-act"><span class="hint">файлов с описанием: 3</span><details class="docbox"><summary>Открыть описание</summary><div class="docwrap"><div class="dh">Описание реализации</div><details class="doc"><summary>inventarizaciya-pri-zakrytii-tochki.md</summary><div class="md"><p>id:          PROC-inventarizaciya-pri-zakrytii-tochki</p>
 <p>process:     Инвентаризация остатков при закрытии или переезде точки</p>
