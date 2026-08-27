@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="svod-snapshot" content="27.08.2026">
+<title>Внедрение ИИ — результаты автоматизации — СКС Ломбард</title>
+<style>
+:root{
+  --bg:#eef1f6; --panel:#fff; --panel2:#f7f9fc; --ink:#1a2130; --ink2:#3a4457; --muted:#6a7488;
+  --line:#e3e8f0; --line2:#eef1f7;
+  --accent:#37567d; --accent2:#5b81b0; --accent-soft:#e8eef6;
+  --good:#2f8f66; --warn:#c08a1e; --neg:#c1544f;
+  --track:#e7ebf2;
+  --shadow:0 1px 2px rgba(20,30,55,.05), 0 8px 24px rgba(20,30,55,.06);
+  --radius:16px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0f1218; --panel:#171c26; --panel2:#1c222e; --ink:#e9edf4; --ink2:#bfc8d8; --muted:#828da0;
+    --line:#262e3b; --line2:#20262f;
+    --accent:#7ea3d1; --accent2:#9db9dc; --accent-soft:#212f41;
+    --good:#5cbf92; --warn:#d8ad57; --neg:#df7d79;
+    --track:#232a36;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.3);
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg)}
+body{color:var(--ink);font:15px/1.5 "Segoe UI",-apple-system,BlinkMacSystemFont,Inter,Roboto,Arial,sans-serif;
+     -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.page{padding:30px 20px 60px}
+.wrap{max-width:1120px;margin:0 auto}
+code{font-family:ui-monospace,Consolas,monospace;font-size:.88em;background:var(--line2);padding:1px 5px;border-radius:5px}
+
+header.top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:22px}
+.brand{font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+.brand .mark{background:var(--accent);color:#fff;border-radius:5px;padding:2px 7px;margin-right:6px;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){ .brand .mark{color:#0f1218} }
+.h-title{font-size:27px;font-weight:770;letter-spacing:-.5px;line-height:1.12;margin:0}
+.h-sub{color:var(--muted);font-size:13px;margin-top:8px;max-width:70ch}
+.h-meta{text-align:right;font-size:12.5px;color:var(--muted);white-space:nowrap}
+.h-meta .d{color:var(--ink2);font-weight:600}
+.anon{display:inline-flex;align-items:center;gap:7px;background:var(--accent-soft);color:var(--accent);
+      border-radius:20px;padding:4px 12px;font-size:11.5px;font-weight:650;margin-top:10px}
+.anon::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent)}
+
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:12px;margin-bottom:8px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:15px 16px;box-shadow:var(--shadow)}
+.kpi .n{font-size:29px;font-weight:780;line-height:1;letter-spacing:-.6px}
+.kpi .n small{font-size:15px;font-weight:600;color:var(--muted)}
+.kpi .l{font-size:11.5px;color:var(--muted);margin-top:7px;line-height:1.35}
+.kpi.accent .n{color:var(--accent)} .kpi.good .n{color:var(--good)}
+.kpi.warn .n{color:var(--warn)} .kpi.neg .n{color:var(--neg)}
+
+h2.sec{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);
+       margin:28px 0 13px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+h2.sec .hint{font-weight:500;text-transform:none;letter-spacing:0;font-size:12px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 22px}
+.note{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--accent2);
+      border-radius:10px;padding:13px 16px;font-size:13px;color:var(--ink2);margin-top:14px}
+.note b{color:var(--ink)}
+
+table.t{width:100%;border-collapse:collapse;font-size:13.5px}
+table.t th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);
+           font-weight:700;padding:0 10px 9px;border-bottom:1px solid var(--line)}
+table.t th.n,table.t td.n{text-align:right}
+table.t td{padding:9px 10px;border-bottom:1px solid var(--line2)}
+table.t tr:last-child td{border-bottom:none}
+table.t tr.tot td{font-weight:750;background:var(--panel2)}
+table.t td.name{font-weight:600;color:var(--ink)}
+table.t td.name small{font-weight:500;color:var(--muted);display:block;font-size:11.5px;margin-top:1px}
+.tbl-scroll{overflow-x:auto}
+
+.pct{display:flex;align-items:center;gap:9px;justify-content:flex-end}
+.pct .bar{width:74px;height:6px;border-radius:3px;background:var(--track);overflow:hidden;flex:none}
+.pct .bar i{display:block;height:100%;border-radius:3px;background:var(--accent)}
+.pct .bar i.good{background:var(--good)} .pct .bar i.warn{background:var(--warn)} .pct .bar i.neg{background:var(--neg)}
+.pct .v{min-width:38px;font-weight:650}
+
+.bars{display:grid;gap:9px}
+.brow{display:grid;grid-template-columns:minmax(150px,240px) 1fr auto;gap:12px;align-items:center;font-size:13.5px}
+.brow .bn{color:var(--ink2)} .brow .bn.major{font-weight:650;color:var(--ink)}
+.brow .bt{height:9px;border-radius:5px;background:var(--track);overflow:hidden}
+.brow .bt i{display:block;height:100%;border-radius:5px;background:var(--accent2)}
+.brow .bt i.major{background:var(--accent)}
+.brow .bv{font-weight:700;min-width:46px;text-align:right}
+
+footer.f{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);line-height:1.6}
+footer.f b{color:var(--ink2)}
+@media(max-width:620px){ .h-meta{text-align:left} .brow{grid-template-columns:1fr auto} .brow .bt{display:none} }
+</style>
+</head>
+<body><div class="page"><div class="wrap">
+  <header class="top">
+    <div>
+      <div class="brand"><span class="mark">СКС</span>Ломбард</div>
+      <h1 class="h-title">Внедрение ИИ — результаты автоматизации</h1>
+      <div class="h-sub">Итоги задачи Битрикс24 «Автоматизация описанных бизнес-процессов»: сколько работающих прототипов сдано и как результаты распределены по подразделениям.</div>
+      <div class="anon">Обезличенный свод — без персональных данных</div>
+    </div>
+    <div class="h-meta"><div class="d">снимок на 27.08.2026</div><div>Битрикс24, задача 120433</div></div>
+  </header>
+
+  <div class="kpis"><div class="kpi good"><div class="n">93</div><div class="l">подтверждённых рабочих<br>проектов</div></div><div class="kpi good"><div class="n">54</div><div class="l">сотрудников с зачётом</div></div><div class="kpi warn"><div class="n">7</div><div class="l">прототипов на доработку</div></div><div class="kpi warn"><div class="n">21</div><div class="l">только описание</div></div><div class="kpi neg"><div class="n">17</div><div class="l">только ТЗ</div></div><div class="kpi accent"><div class="n">100</div><div class="l">всего участников</div></div></div>
+
+  
+  <h2 class="sec">Что необходимо для зачёта</h2>
+  <div class="panel">
+    <div style="font-size:16px;font-weight:700;margin-bottom:6px">Зачёт = готовый работающий прототип</div>
+    <div style="color:var(--muted);font-size:13.5px">Прототип должен открываться или запускаться и
+    позволять проверить заявленный рабочий сценарий. Описание или ТЗ без работающего прототипа
+    к зачёту не принимаются.</div>
+    <div class="note"><b>Проверка фактическая.</b> Скрипты запускались, таблицы открывались,
+    страницы проверялись на рабочую логику — зачёт ставился только по результату запуска.</div>
+  </div>
+
+  <h2 class="sec">Результаты по участникам <span class="hint">в разрезе статусов</span></h2>
+  <div class="panel"><div class="bars"><div class="brow"><div class="bn">Рабочие проекты (зачтено)</div><div class="bt"><i class="" style="width:100.0%"></i></div><div class="bv">54 чел</div></div><div class="brow"><div class="bn">Прототип требует доработки</div><div class="bt"><i class="" style="width:13.0%"></i></div><div class="bv">7 чел</div></div><div class="brow"><div class="bn">Только описание</div><div class="bt"><i class="" style="width:38.9%"></i></div><div class="bv">21 чел</div></div><div class="brow"><div class="bn">Только ТЗ</div><div class="bt"><i class="" style="width:31.5%"></i></div><div class="bv">17 чел</div></div></div></div>
+
+  <h2 class="sec">Разрез по отделам <span class="hint">только подразделения от 5 человек</span></h2>
+  <div class="panel"><div class="tbl-scroll"><table class="t"><thead><tr><th>Отдел</th><th class="n">Участников</th><th class="n">Штат</th><th class="n">Зачтено</th><th class="n">Доработка</th><th class="n">Только описание</th><th class="n">Только ТЗ</th><th class="n">Доля зачтённых</th></tr></thead><tbody><tr><td class="name">Бухгалтерия</td><td class="n">11</td><td class="n">14</td><td class="n">9</td><td class="n">1</td><td class="n">1</td><td class="n">0</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:81.8%"></i></span><span class="v">81.8%</span></span></td></tr><tr><td class="name">Колл-центр</td><td class="n">9</td><td class="n">12</td><td class="n">4</td><td class="n">5</td><td class="n">0</td><td class="n">0</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:44.4%"></i></span><span class="v">44.4%</span></span></td></tr><tr><td class="name">Отдел оборота ДМДК</td><td class="n">7</td><td class="n">8</td><td class="n">0</td><td class="n">0</td><td class="n">0</td><td class="n">7</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:0.0%"></i></span><span class="v">0%</span></span></td></tr><tr><td class="name">Отдел безопасности</td><td class="n">6</td><td class="n">7</td><td class="n">3</td><td class="n">1</td><td class="n">1</td><td class="n">1</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:50.0%"></i></span><span class="v">50%</span></span></td></tr><tr><td class="name">Отдел операционного управления и методологии</td><td class="n">6</td><td class="n">5</td><td class="n">5</td><td class="n">0</td><td class="n">0</td><td class="n">1</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:83.3%"></i></span><span class="v">83.3%</span></span></td></tr><tr><td class="name">Супервайзеры</td><td class="n">6</td><td class="n">7</td><td class="n">6</td><td class="n">0</td><td class="n">0</td><td class="n">0</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:100.0%"></i></span><span class="v">100%</span></span></td></tr><tr><td class="name">Отдел системного администрирования</td><td class="n">5</td><td class="n">15</td><td class="n">3</td><td class="n">0</td><td class="n">2</td><td class="n">0</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:60.0%"></i></span><span class="v">60%</span></span></td></tr><tr><td class="name">Правовой отдел</td><td class="n">5</td><td class="n">6</td><td class="n">1</td><td class="n">0</td><td class="n">3</td><td class="n">1</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:20.0%"></i></span><span class="v">20%</span></span></td></tr><tr><td class="name">Отдел ревизии</td><td class="n">5</td><td class="n">6</td><td class="n">0</td><td class="n">0</td><td class="n">2</td><td class="n">3</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:0.0%"></i></span><span class="v">0%</span></span></td></tr><tr><td class="name">Отдел автозайм</td><td class="n">3</td><td class="n">8</td><td class="n">2</td><td class="n">0</td><td class="n">1</td><td class="n">0</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:66.7%"></i></span><span class="v">66.7%</span></span></td></tr><tr><td class="name">Отдел продаж техники</td><td class="n">2</td><td class="n">25</td><td class="n">2</td><td class="n">0</td><td class="n">0</td><td class="n">0</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:100.0%"></i></span><span class="v">100%</span></span></td></tr><tr><td class="name">Сектор видеонаблюдения</td><td class="n">2</td><td class="n">7</td><td class="n">0</td><td class="n">0</td><td class="n">2</td><td class="n">0</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:0.0%"></i></span><span class="v">0%</span></span></td></tr><tr><td class="name">Склад техники Центр</td><td class="n">1</td><td class="n">5</td><td class="n">1</td><td class="n">0</td><td class="n">0</td><td class="n">0</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:100.0%"></i></span><span class="v">100%</span></span></td></tr><tr><td class="name">Управление тех.инфраструктуры и мат.обеспечения</td><td class="n">1</td><td class="n">5</td><td class="n">1</td><td class="n">0</td><td class="n">0</td><td class="n">0</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:100.0%"></i></span><span class="v">100%</span></span></td></tr><tr><td class="name">Товароведы</td><td class="n">1</td><td class="n">193</td><td class="n">0</td><td class="n">0</td><td class="n">1</td><td class="n">0</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:0.0%"></i></span><span class="v">0%</span></span></td></tr><tr><td class="name">Отдел эксплуатации и строительства</td><td class="n">1</td><td class="n">7</td><td class="n">0</td><td class="n">0</td><td class="n">0</td><td class="n">1</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:0.0%"></i></span><span class="v">0%</span></span></td></tr><tr><td class="name">Прочие подразделения<small>19 отделов, где меньше 5 участников — объединены</small></td><td class="n">29</td><td class="n">—</td><td class="n">17</td><td class="n">0</td><td class="n">8</td><td class="n">3</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:58.6%"></i></span><span class="v">58.6%</span></span></td></tr><tr class="tot"><td>Итого</td><td class="n">100</td><td class="n">—</td><td class="n">54</td><td class="n">7</td><td class="n">21</td><td class="n">17</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:54.0%"></i></span><span class="v">54%</span></span></td></tr></tbody></table></div></div>
+
+  <div class="note"><b>Как читать.</b> Работу прислали <b>100 сотрудников</b>.
+  Представлено 100 прототипов, из них рабочими подтверждены <b>93</b>
+  (у части сотрудников проектов несколько) — это 54 сотрудников.
+  Ещё 7 прототипов требуют доработки, 21 сотрудников прислали только описание,
+  17 — только ТЗ.</div>
+
+
+  <footer class="f">
+    <b>Почему здесь нет фамилий.</b> Страница публичная (доступна по ссылке), поэтому содержит
+    только агрегаты: итоги, проценты и разрезы по управлениям и отделам, где работает
+    5 и более человек. Подразделения меньшего размера объединены в «Прочие
+    подразделения» — по ним нельзя вычислить конкретного сотрудника.
+    Персональные данные (ФИО, должности, индивидуальные результаты) на этой странице не
+    публикуются и в репозиторий не попадают.<br>
+    <b>Детальный отчёт «кто сколько прошёл»</b> с фамилиями ведётся отдельно, во внутренней базе
+    знаний с ограниченным доступом, и предоставляется руководству в виде документа.
+    <br>
+    <span style="opacity:.8">Внутренний ресурс ООО «СКС Ломбард». Из поисковой выдачи скрыто (<code>noindex</code>).
+    Собрано 27.08.2026.</span>
+  </footer>
+</div></div></body></html>

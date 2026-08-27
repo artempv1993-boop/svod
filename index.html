@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="svod-snapshot" content="13.08.2026">
+<title>Свод по опросу владельцев процессов — СКС Ломбард</title>
+<style>
+:root{
+  --bg:#eef1f6; --panel:#fff; --panel2:#f7f9fc; --ink:#1a2130; --ink2:#3a4457; --muted:#6a7488;
+  --line:#e3e8f0; --line2:#eef1f7;
+  --accent:#37567d; --accent2:#5b81b0; --accent-soft:#e8eef6;
+  --good:#2f8f66; --warn:#c08a1e; --neg:#c1544f;
+  --track:#e7ebf2;
+  --shadow:0 1px 2px rgba(20,30,55,.05), 0 8px 24px rgba(20,30,55,.06);
+  --radius:16px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0f1218; --panel:#171c26; --panel2:#1c222e; --ink:#e9edf4; --ink2:#bfc8d8; --muted:#828da0;
+    --line:#262e3b; --line2:#20262f;
+    --accent:#7ea3d1; --accent2:#9db9dc; --accent-soft:#212f41;
+    --good:#5cbf92; --warn:#d8ad57; --neg:#df7d79;
+    --track:#232a36;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.3);
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg)}
+body{color:var(--ink);font:15px/1.5 "Segoe UI",-apple-system,BlinkMacSystemFont,Inter,Roboto,Arial,sans-serif;
+     -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.page{padding:30px 20px 60px}
+.wrap{max-width:1120px;margin:0 auto}
+code{font-family:ui-monospace,Consolas,monospace;font-size:.88em;background:var(--line2);padding:1px 5px;border-radius:5px}
+
+header.top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:22px}
+.brand{font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+.brand .mark{background:var(--accent);color:#fff;border-radius:5px;padding:2px 7px;margin-right:6px;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){ .brand .mark{color:#0f1218} }
+.h-title{font-size:27px;font-weight:770;letter-spacing:-.5px;line-height:1.12;margin:0}
+.h-sub{color:var(--muted);font-size:13px;margin-top:8px;max-width:70ch}
+.h-meta{text-align:right;font-size:12.5px;color:var(--muted);white-space:nowrap}
+.h-meta .d{color:var(--ink2);font-weight:600}
+.anon{display:inline-flex;align-items:center;gap:7px;background:var(--accent-soft);color:var(--accent);
+      border-radius:20px;padding:4px 12px;font-size:11.5px;font-weight:650;margin-top:10px}
+.anon::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent)}
+
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:12px;margin-bottom:8px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:15px 16px;box-shadow:var(--shadow)}
+.kpi .n{font-size:29px;font-weight:780;line-height:1;letter-spacing:-.6px}
+.kpi .n small{font-size:15px;font-weight:600;color:var(--muted)}
+.kpi .l{font-size:11.5px;color:var(--muted);margin-top:7px;line-height:1.35}
+.kpi.accent .n{color:var(--accent)} .kpi.good .n{color:var(--good)}
+.kpi.warn .n{color:var(--warn)} .kpi.neg .n{color:var(--neg)}
+
+h2.sec{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);
+       margin:28px 0 13px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+h2.sec .hint{font-weight:500;text-transform:none;letter-spacing:0;font-size:12px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 22px}
+.note{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--accent2);
+      border-radius:10px;padding:13px 16px;font-size:13px;color:var(--ink2);margin-top:14px}
+.note b{color:var(--ink)}
+
+table.t{width:100%;border-collapse:collapse;font-size:13.5px}
+table.t th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);
+           font-weight:700;padding:0 10px 9px;border-bottom:1px solid var(--line)}
+table.t th.n,table.t td.n{text-align:right}
+table.t td{padding:9px 10px;border-bottom:1px solid var(--line2)}
+table.t tr:last-child td{border-bottom:none}
+table.t tr.tot td{font-weight:750;background:var(--panel2)}
+table.t td.name{font-weight:600;color:var(--ink)}
+table.t td.name small{font-weight:500;color:var(--muted);display:block;font-size:11.5px;margin-top:1px}
+.tbl-scroll{overflow-x:auto}
+
+.pct{display:flex;align-items:center;gap:9px;justify-content:flex-end}
+.pct .bar{width:74px;height:6px;border-radius:3px;background:var(--track);overflow:hidden;flex:none}
+.pct .bar i{display:block;height:100%;border-radius:3px;background:var(--accent)}
+.pct .bar i.good{background:var(--good)} .pct .bar i.warn{background:var(--warn)} .pct .bar i.neg{background:var(--neg)}
+.pct .v{min-width:38px;font-weight:650}
+
+.bars{display:grid;gap:9px}
+.brow{display:grid;grid-template-columns:minmax(150px,240px) 1fr auto;gap:12px;align-items:center;font-size:13.5px}
+.brow .bn{color:var(--ink2)} .brow .bn.major{font-weight:650;color:var(--ink)}
+.brow .bt{height:9px;border-radius:5px;background:var(--track);overflow:hidden}
+.brow .bt i{display:block;height:100%;border-radius:5px;background:var(--accent2)}
+.brow .bt i.major{background:var(--accent)}
+.brow .bv{font-weight:700;min-width:46px;text-align:right}
+
+footer.f{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);line-height:1.6}
+footer.f b{color:var(--ink2)}
+@media(max-width:620px){ .h-meta{text-align:left} .brow{grid-template-columns:1fr auto} .brow .bt{display:none} }
+</style>
+</head>
+<body><div class="page"><div class="wrap">
+  <header class="top">
+    <div>
+      <div class="brand"><span class="mark">СКС</span>Ломбард</div>
+      <h1 class="h-title">Свод по опросу владельцев процессов</h1>
+      <div class="h-sub">Слой 1А — методология бизнес-процессов ERP «АРМ». Первая волна: чат Битрикс24 «Интервью по процессам» и Telegram-бот для товароведов. Показано, сколько описаний сдано и какая доля сотрудников охвачена.</div>
+      <div class="anon">Обезличенный свод — без персональных данных</div>
+    </div>
+    <div class="h-meta"><div class="d">снимок на 13.08.2026</div><div>первая волна опроса</div></div>
+  </header>
+
+  <div class="kpis"><div class="kpi accent"><div class="n">762</div><div class="l">документов сдано<br>всего по компании</div></div><div class="kpi "><div class="n">339</div><div class="l">через чат Битрикс24</div></div><div class="kpi "><div class="n">423</div><div class="l">через Telegram-бот</div></div><div class="kpi good"><div class="n">179</div><div class="l">человек предоставили<br>хотя бы одно описание</div></div><div class="kpi good"><div class="n">59.7<small>%</small></div><div class="l">охват от штата<br>участвующих подразделений</div></div><div class="kpi "><div class="n">9</div><div class="l">управлений<br>участвовали</div></div></div>
+
+  
+  <h2 class="sec">Каналы сбора <span class="hint">откуда пришли документы</span></h2>
+  <div class="panel"><div class="bars"><div class="brow"><div class="bn">Чат Битрикс24</div><div class="bt"><i class="" style="width:80.1%"></i></div><div class="bv">339 док</div></div><div class="brow"><div class="bn">Telegram-бот</div><div class="bt"><i class="" style="width:100.0%"></i></div><div class="bv">423 док</div></div></div></div>
+
+  <h2 class="sec">Направления <span class="hint">по теме описанного процесса</span></h2>
+  <div class="panel"><div class="bars"><div class="brow"><div class="bn major">Займы</div><div class="bt"><i class="major" style="width:100.0%"></i></div><div class="bv">386</div></div><div class="brow"><div class="bn major">Скупка</div><div class="bt"><i class="major" style="width:28.0%"></i></div><div class="bv">108</div></div><div class="brow"><div class="bn major">Обеспечивающие процессы</div><div class="bt"><i class="major" style="width:21.0%"></i></div><div class="bv">81</div></div><div class="brow"><div class="bn">CRM и маркетинг</div><div class="bt"><i class="" style="width:14.8%"></i></div><div class="bv">57</div></div><div class="brow"><div class="bn">ЗУП и кадры</div><div class="bt"><i class="" style="width:10.6%"></i></div><div class="bv">41</div></div><div class="brow"><div class="bn">Розница и реализация</div><div class="bt"><i class="" style="width:10.6%"></i></div><div class="bv">41</div></div><div class="brow"><div class="bn">Склад и товарный учёт</div><div class="bt"><i class="" style="width:9.3%"></i></div><div class="bv">36</div></div><div class="brow"><div class="bn">Касса и банк</div><div class="bt"><i class="" style="width:1.6%"></i></div><div class="bv">6</div></div><div class="brow"><div class="bn">Бюджетирование</div><div class="bt"><i class="" style="width:0.8%"></i></div><div class="bv">3</div></div><div class="brow"><div class="bn">Общие (ПОД/ФТ)</div><div class="bt"><i class="" style="width:0.8%"></i></div><div class="bv">3</div></div></div></div>
+
+  <h2 class="sec">Разрез по управлениям</h2>
+  <div class="panel"><div class="tbl-scroll"><table class="t"><thead><tr><th>Управление</th><th class="n">Документов</th><th class="n">Человек сдали</th><th class="n">Штат</th><th class="n">Охват</th></tr></thead><tbody><tr><td class="name">Коммерческое управление</td><td class="n">577</td><td class="n">117</td><td class="n">183</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:63.9%"></i></span><span class="v">63.9%</span></span></td></tr><tr><td class="name">Управление маркетинга</td><td class="n">45</td><td class="n">7</td><td class="n">17</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:41.2%"></i></span><span class="v">41.2%</span></span></td></tr><tr><td class="name">Управление безопасности</td><td class="n">36</td><td class="n">18</td><td class="n">29</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:62.1%"></i></span><span class="v">62.1%</span></span></td></tr><tr><td class="name">Управление тех.инфраструктуры и мат.обеспечения</td><td class="n">30</td><td class="n">7</td><td class="n">14</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:50.0%"></i></span><span class="v">50%</span></span></td></tr><tr><td class="name">Управление персонала</td><td class="n">22</td><td class="n">5</td><td class="n">12</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:41.7%"></i></span><span class="v">41.7%</span></span></td></tr><tr><td class="name">Финансовое управление</td><td class="n">17</td><td class="n">11</td><td class="n">16</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:68.8%"></i></span><span class="v">68.8%</span></span></td></tr><tr><td class="name">Управление цифрового развития</td><td class="n">14</td><td class="n">7</td><td class="n">20</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:35.0%"></i></span><span class="v">35%</span></span></td></tr><tr><td class="name">Операционное управление</td><td class="n">11</td><td class="n">5</td><td class="n">7</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:71.4%"></i></span><span class="v">71.4%</span></span></td></tr><tr><td class="name">Прочие подразделения<small>1 — где меньше 5 человек, объединены</small></td><td class="n">4</td><td class="n">1</td><td class="n">2</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:50.0%"></i></span><span class="v">50%</span></span></td></tr><tr class="tot"><td>Итого</td><td class="n">762</td><td class="n">179</td><td class="n">300</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:59.7%"></i></span><span class="v">59.7%</span></span></td></tr></tbody></table></div></div>
+
+  <h2 class="sec">Разрез по отделам <span class="hint">только подразделения от 5 человек</span></h2>
+  <div class="panel"><div class="tbl-scroll"><table class="t"><thead><tr><th>Отдел</th><th class="n">Документов</th><th class="n">Человек сдали</th><th class="n">Штат</th><th class="n">Охват</th></tr></thead><tbody><tr><td class="name">Товароведы<small>Коммерческое управление</small></td><td class="n">413</td><td class="n">92</td><td class="n">131</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:70.2%"></i></span><span class="v">70.2%</span></span></td></tr><tr><td class="name">Супервайзеры<small>Коммерческое управление</small></td><td class="n">54</td><td class="n">7</td><td class="n">7</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:100.0%"></i></span><span class="v">100%</span></span></td></tr><tr><td class="name">КМ Золото<small>Коммерческое управление</small></td><td class="n">31</td><td class="n">4</td><td class="n">5</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:80.0%"></i></span><span class="v">80%</span></span></td></tr><tr><td class="name">Отдел оборота ДМДК<small>Коммерческое управление</small></td><td class="n">25</td><td class="n">1</td><td class="n">7</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:14.3%"></i></span><span class="v">14.3%</span></span></td></tr><tr><td class="name">Отдел автозайм<small>Коммерческое управление</small></td><td class="n">21</td><td class="n">6</td><td class="n">8</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:75.0%"></i></span><span class="v">75%</span></span></td></tr><tr><td class="name">Отдел продаж техники<small>Коммерческое управление</small></td><td class="n">15</td><td class="n">4</td><td class="n">22</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:18.2%"></i></span><span class="v">18.2%</span></span></td></tr><tr><td class="name">Отдел подбора<small>Управление персонала</small></td><td class="n">12</td><td class="n">2</td><td class="n">5</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:40.0%"></i></span><span class="v">40%</span></span></td></tr><tr><td class="name">Правовой отдел<small>Управление безопасности</small></td><td class="n">11</td><td class="n">5</td><td class="n">6</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:83.3%"></i></span><span class="v">83.3%</span></span></td></tr><tr><td class="name">Отдел операционного управления и методологии<small>Операционное управление</small></td><td class="n">11</td><td class="n">5</td><td class="n">7</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:71.4%"></i></span><span class="v">71.4%</span></span></td></tr><tr><td class="name">Бухгалтерия<small>Финансовое управление</small></td><td class="n">10</td><td class="n">9</td><td class="n">14</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:64.3%"></i></span><span class="v">64.3%</span></span></td></tr><tr><td class="name">Отдел ревизии<small>Управление безопасности</small></td><td class="n">9</td><td class="n">5</td><td class="n">6</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:83.3%"></i></span><span class="v">83.3%</span></span></td></tr><tr><td class="name">Колл-центр<small>Управление маркетинга</small></td><td class="n">8</td><td class="n">1</td><td class="n">10</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:10.0%"></i></span><span class="v">10%</span></span></td></tr><tr><td class="name">Отдел технической поддержки<small>Управление цифрового развития</small></td><td class="n">8</td><td class="n">3</td><td class="n">11</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:27.3%"></i></span><span class="v">27.3%</span></span></td></tr><tr><td class="name">Сектор видеонаблюдения<small>Управление безопасности</small></td><td class="n">3</td><td class="n">2</td><td class="n">7</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:28.6%"></i></span><span class="v">28.6%</span></span></td></tr><tr><td class="name">Отдел безопасности<small>Управление безопасности</small></td><td class="n">3</td><td class="n">3</td><td class="n">6</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:50.0%"></i></span><span class="v">50%</span></span></td></tr><tr><td class="name">Отдел эксплуатации и строительства<small>Управление тех.инфраструктуры и мат.обеспечения</small></td><td class="n">2</td><td class="n">1</td><td class="n">6</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:16.7%"></i></span><span class="v">16.7%</span></span></td></tr><tr><td class="name">Прочие подразделения<small>22 отделов, где меньше 5 человек — объединены</small></td><td class="n">120</td><td class="n">28</td><td class="n">42</td><td class="n"><span class="pct"><span class="bar"><i class="good" style="width:66.7%"></i></span><span class="v">66.7%</span></span></td></tr></tbody></table></div></div>
+
+  <h2 class="sec">Направления в Telegram-боте</h2>
+  <div class="panel"><div class="bars"><div class="brow"><div class="bn">Займы</div><div class="bt"><i class="" style="width:100.0%"></i></div><div class="bv">318</div></div><div class="brow"><div class="bn">Скупка</div><div class="bt"><i class="" style="width:28.0%"></i></div><div class="bv">89</div></div><div class="brow"><div class="bn">Розница и реализация</div><div class="bt"><i class="" style="width:3.5%"></i></div><div class="bv">11</div></div><div class="brow"><div class="bn">Обеспечивающие процессы</div><div class="bt"><i class="" style="width:0.6%"></i></div><div class="bv">2</div></div><div class="brow"><div class="bn">Касса и банк</div><div class="bt"><i class="" style="width:0.6%"></i></div><div class="bv">2</div></div><div class="brow"><div class="bn">Склад и товарный учёт</div><div class="bt"><i class="" style="width:0.3%"></i></div><div class="bv">1</div></div></div></div>
+
+  <div class="note"><b>Как читать.</b> «Документов» — сколько описаний процессов сдано всего
+  (у одного человека их может быть несколько). «Человек сдали» — сколько сотрудников
+  предоставили хотя бы одно описание. «Охват» — доля таких сотрудников от штата подразделения.
+  Прочерк в графе «Штат» означает, что подразделение с тех пор переименовано или
+  реорганизовано и в текущей оргструктуре не находится.</div>
+
+
+  <footer class="f">
+    <b>Почему здесь нет фамилий.</b> Страница публичная (доступна по ссылке), поэтому содержит
+    только агрегаты: итоги, проценты и разрезы по управлениям и отделам, где работает
+    5 и более человек. Подразделения меньшего размера объединены в «Прочие
+    подразделения» — по ним нельзя вычислить конкретного сотрудника.
+    Персональные данные (ФИО, должности, индивидуальные результаты) на этой странице не
+    публикуются и в репозиторий не попадают.<br>
+    <b>Детальный отчёт «кто сколько прошёл»</b> с фамилиями ведётся отдельно, во внутренней базе
+    знаний с ограниченным доступом, и предоставляется руководству в виде документа.
+    <br>
+    <span style="opacity:.8">Внутренний ресурс ООО «СКС Ломбард». Из поисковой выдачи скрыто (<code>noindex</code>).
+    Собрано 27.08.2026.</span>
+  </footer>
+</div></div></body></html>
